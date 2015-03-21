@@ -1,0 +1,30 @@
+.login label {
+  display: block;
+  @extend %clearfix;
+}
+
+.login-header {
+    display: block;
+    float: none;
+}
+
+.login-logo {
+    margin: auto;
+    display: block;
+}
+
+.page-header {
+    position: relative;
+    top: 10px;
+    text-align: center;
+}
+
+.login-row {
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+
+.full {
+    width: 100%;
+}
