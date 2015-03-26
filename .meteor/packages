@@ -24,4 +24,8 @@ service-configuration
 http
 email
 sinda:fancybox
+aldeed:simple-schema
+aldeed:collection2
+aldeed:autoform
 
+mbish:badge-builder
