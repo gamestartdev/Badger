@@ -23,3 +23,7 @@ Example.deny
   fetch: ['locked']
   transform: () ->
       # ...
+
+@images = new Mongo.Collection("images")
+@orginizations = new Mongo.Collection("issuerOrganizations")
+@badgeClasses = new Mongo.Collection("badgeClasses")

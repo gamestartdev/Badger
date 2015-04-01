@@ -9,10 +9,10 @@ Template.signInWithEmailModal.rendered = ->
         required: true
     messages:
       emailAddress:
-        required: "Gonna need an email, there, friend!"
-        email: "Is that a real email? What a trickster!"
+        required: "Please enter an email"
+        email: "Please enter a valid email address"
       password:
-        required: "Pop in a passwordarooni for me there, will ya?"
+        required: "Please enter a password"
     submitHandler: ->
       console.log("submit handler called")
       # Once our validation passes, we need to make a decision on

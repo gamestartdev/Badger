@@ -23,7 +23,7 @@ checkUserLoggedIn = ->
 ###
 userAuthenticated = ->
   if not Meteor.loggingIn() and Meteor.user()
-    Router.go '/dashboard'
+    Router.go '/create'
   else
     @next()
 

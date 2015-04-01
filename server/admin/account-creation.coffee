@@ -23,6 +23,7 @@ determineEmail = (user)->
 # Function: Accounts.onCreateUser()
 # Hook into Meteor's account creation event to fire off a "welcome email"
 # to new user's.
+identityObjects = new Mongo.Collection("identityObjects")
 Accounts.onCreateUser((options,user)->
   # Pass our user over to our determineEmail function to see if we can
   # find an address to send our "welcome email" to. We also call up the profile
@@ -40,8 +41,19 @@ Accounts.onCreateUser((options,user)->
   # as the profile, just like Meteor would if we *didn't* use this function.
   if options.profile
     user.profile = options.profile
-  # Return the user to Meteor.
-  user
+
+  salt = CryptoJS.enc.Hex.stringify(CryptoJS.lib.WordArray.random(16))
+  id = "sha256$" +
+    CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(userData.email + salt))
+  identityObjectID = identityObjects.insert({
+    identity: id,
+    type: "email",
+    hashed: true,
+    salt: salt
+  })
+  user.identity = id
+
+  return user
 )
 
 # Methods
@@ -52,7 +64,8 @@ Meteor.methods(
     # Check our userData argument against our expected pattern.
     check(userData,{email: String, name: String})
     # Compile and render our email template using meteorhacks:ssr.
-    SSR.compileTemplate('welcomeEmail', Assets.getText('email/welcome-email.html'))
+    SSR.compileTemplate('welcomeEmail',
+                        Assets.getText('email/welcome-email.html'))
     emailTemplate = SSR.render('welcomeEmail',
       name: if userData.name != "" then userData.name else null
       url: "http://localhost:3000"

@@ -1,0 +1,72 @@
+<template name="account">
+    {{> createOrginizationModal }}
+    {{> joinOrginization }}
+</template>
+
+<template name="createOrginizationModal">
+    <button type="button" class="btn btn-success btn-default" data-toggle="modal" data-target="#create-orginization-modal">Create Orginization</button>
+  <div class="modal fade" id="create-orginization-modal" tabindex="-1" role="dialog" aria-labelledby="create-orginiziation-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Create Orginization</h4>
+        </div>
+        <form id="create-orginization">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="orginizationName">Name</label>
+              <input type="text" name="orginizationName" class="form-control" placeholder="Orginization Name">
+            </div>
+
+            <div class="form-group">
+              <label for="orginizationEmailAddress">Admininistrator Email Address</label>
+              <input type="email" name="orginizationEmailAddress" class="form-control" placeholder="Administrator Email">
+
+            </div>
+            <div class="form-group">
+              <label for="orginizationURL">Website</label>
+              <input type="url" name="orginizationURL" class="form-control" placeholder="Orginization URL">
+            </div>
+            <div class="form-group">
+              <label for="orginizationDescription">Description</label>
+              <input type="text" name="orginizationDescription" class="form-control" placeholder="A breif description of the orginization">
+            </div>
+
+            <div class="form-group">
+              <label for="orginizationImage">Image</label>
+              <input type="text" name="orginizationImage" class="form-control" placeholder="FIX ME: Needs to be image upload">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-create-orginization">Create</button>
+            <button type="submit" class="btn btn-default btn-sign-in">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="joinOrginization">
+    <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#join-orginization-modal">Join Orginization</button>
+    <div class="modal fade" id="join-orginization-modal" tabindex="-1" role="dialog" aria-labelledby="join-orginiziation-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Join Orginization</h4>
+            </div>
+            <div class="modal-body">
+                {{#each orginizations }}
+                    <h2>{{ name }}</h2> <h3>({{ url }})</h3>
+                {{/each}}
+            </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary btn-create-orginization">Join</button>
+              <button type="submit" class="btn btn-default btn-sign-in">Cancel</button>
+          </div>
+        </div>
+    </div>
+</div>
+</template>

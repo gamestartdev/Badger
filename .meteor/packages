@@ -25,7 +25,9 @@ http
 email
 sinda:fancybox
 aldeed:simple-schema
-aldeed:collection2
 aldeed:autoform
 
 mbish:badge-builder
+jparker:crypto-sha256
+jparker:crypto-base64
+fongandrew:find-and-modify

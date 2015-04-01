@@ -5,9 +5,8 @@ accounts-google@1.0.4
 accounts-oauth@1.1.4
 accounts-password@1.1.0
 accounts-twitter@1.0.4
-aldeed:autoform@5.0.3
-aldeed:collection2@2.3.2
-aldeed:simple-schema@1.3.1
+aldeed:autoform@5.1.1
+aldeed:simple-schema@1.3.2
 audit-argument-checks@1.0.3
 autoupdate@1.2.0
 base64@1.0.3
@@ -24,6 +23,7 @@ ejson@1.0.6
 email@1.0.6
 facebook@1.2.0
 fastclick@1.0.3
+fongandrew:find-and-modify@0.2.0
 geojson-utils@1.0.3
 github@1.1.3
 google@1.1.5
@@ -39,6 +39,9 @@ iron:location@1.0.7
 iron:middleware-stack@1.0.7
 iron:router@1.0.7
 iron:url@1.0.7
+jparker:crypto-base64@0.1.0
+jparker:crypto-core@0.1.0
+jparker:crypto-sha256@0.1.1
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
