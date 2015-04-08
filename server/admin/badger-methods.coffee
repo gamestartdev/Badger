@@ -21,7 +21,8 @@ Meteor.methods(
                       description: String, image: Match.Any})
 
     if(orginizations.findOne({url: org.url}))
-      throw new Meteor.Error("orginization-exists", "An orginization already exists with that URL")
+      throw new Meteor.Error(
+        "orginization-exists", "An orginization already exists with that URL")
 
     oid = orginizations.insert({
       name: org.name
@@ -29,5 +30,19 @@ Meteor.methods(
       email: org.email
       description: org.description
       image: org.image
+    })
+
+  joinOrginization: (user, org) ->
+    check(org, {name: String, url: String, users: Array, _id: String})
+    check(user, {_id: String, emails: Array, services: Object})
+    orginizations.update({_id: org._id}, {
+      $addToSet: { users: user._id }
+    })
+
+  leaveOrginization: (user, org) ->
+    check(org, {name: String, url: String, users: Array, _id: String})
+    check(user, {_id: String, emails: Array, services: Object})
+    orginizations.update({_id: org._id}, {
+      $pull: { users: user._id }
     })
 )

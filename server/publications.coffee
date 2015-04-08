@@ -25,3 +25,7 @@ Meteor.publish('userData', ->
   else
     this.ready()
 )
+
+Meteor.publish('orginizations', ->
+  return orginizations.find({}, {fields: {name: 1, url: 1, users: 1}})
+)

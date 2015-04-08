@@ -33,4 +33,37 @@ Template.createOrginizationModal.rendered = ->
           if response.error
             alert(response.error)
   )
+Template.createOrginizationModal.events(
+  'submit form': (e) ->
+    e.preventDefault()
 
+  'click .btn-cancel': ->
+    $('.modal-backdrop').hide()
+)
+
+
+Template.joinOrginization.events(
+  'click .btn-cancel': ->
+    $('.modal-backdrop').hide()
+
+  'click .btn-join': (e,t) ->
+    orginization = Blaze.getData(event.target)
+    console.log(orginization)
+    user = Meteor.user()
+    if _.contains(orginization.users, user._id)
+      $(e.target).text('Leave')
+      Meteor.call 'leaveOrginization', user, orginization, (error, response) ->
+        if error
+          alert(error.reason)
+        else
+          if response.error
+            alert(response.error)
+    else
+      $(e.target).text('Join')
+      Meteor.call 'joinOrginization', user, orginization, (error, response) ->
+        if error
+          alert(error.reason)
+        else
+          if response.error
+            alert(response.error)
+)
