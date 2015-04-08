@@ -13,6 +13,7 @@ Router.route('account',
   template: 'account'
   waitOn: ->
     Meteor.subscribe 'userData'
+    Meteor.subscribe 'orginizations'
   onBeforeAction: ->
     Session.set 'currentRoute', 'account'
     @next()

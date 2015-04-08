@@ -34,13 +34,3 @@ Template.createOrginizationModal.rendered = ->
             alert(response.error)
   )
 
-# Events
-Template.createOrginizationModal.events(
-  'submit form': (e) ->
-    e.preventDefault()
-)
-
-Template.joinOrginization.helpers(
-  orginizations: ->
-    return orginizations.find({}, {name: 1, url: 1})
-)
