@@ -1,46 +1,46 @@
 <template name="account">
-    {{> createOrginizationModal }}
-    {{> joinOrginization }}
+    {{> createOrganizationModal }}
+    {{> joinOrganization }}
 </template>
 
-<template name="createOrginizationModal">
-    <button type="button" class="btn btn-success btn-default" data-toggle="modal" data-target="#create-orginization-modal">Create Orginization</button>
-  <div class="modal fade" id="create-orginization-modal" tabindex="-1" role="dialog" aria-labelledby="create-orginiziation-modal" aria-hidden="true">
+<template name="createOrganizationModal">
+    <button type="button" class="btn btn-success btn-default" data-toggle="modal" data-target="#create-organization-modal">Create Organization</button>
+  <div class="modal fade" id="create-organization-modal" tabindex="-1" role="dialog" aria-labelledby="create-orginiziation-modal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="myModalLabel">Create Orginization</h4>
+          <h4 class="modal-title" id="myModalLabel">Create Organization</h4>
         </div>
-        <form id="create-orginization">
+        <form id="create-organization">
           <div class="modal-body">
             <div class="form-group">
-              <label for="orginizationName">Name</label>
-              <input type="text" name="orginizationName" class="form-control" placeholder="Orginization Name">
+              <label for="organizationName">Name</label>
+              <input type="text" name="organizationName" class="form-control" placeholder="Organization Name">
             </div>
 
             <div class="form-group">
-              <label for="orginizationEmailAddress">Admininistrator Email Address</label>
-              <input type="email" name="orginizationEmailAddress" class="form-control" placeholder="Administrator Email">
+              <label for="organizationEmailAddress">Admininistrator Email Address</label>
+              <input type="email" name="organizationEmailAddress" class="form-control" placeholder="Administrator Email">
 
             </div>
             <div class="form-group">
-              <label for="orginizationURL">Website</label>
-              <input type="url" name="orginizationURL" class="form-control" placeholder="Orginization URL">
+              <label for="organizationURL">Website</label>
+              <input type="url" name="organizationURL" class="form-control" placeholder="Organization URL">
             </div>
             <div class="form-group">
-              <label for="orginizationDescription">Description</label>
-              <input type="text" name="orginizationDescription" class="form-control" placeholder="A breif description of the orginization">
+              <label for="organizationDescription">Description</label>
+              <input type="text" name="organizationDescription" class="form-control" placeholder="A breif description of the organization">
             </div>
 
             <div class="form-group">
-              <label for="orginizationImage">Image</label>
-              <input type="text" name="orginizationImage" class="form-control" placeholder="FIX ME: Needs to be image upload">
+              <label for="organizationImage">Image</label>
+              <input type="text" name="organizationImage" class="form-control" placeholder="FIX ME: Needs to be image upload">
             </div>
 
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary btn-create-orginization">Create</button>
+            <button type="submit" class="btn btn-primary btn-create-organization">Create</button>
             <button type="submit" data-dismiss="modal" class="btn btn-default btn-cancel">Cancel</button>
           </div>
         </form>
@@ -49,16 +49,16 @@
   </div>
 </template>
 
-<template name="joinOrginization">
-    <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#join-orginization-modal">Join Orginization</button>
-    <div class="modal fade" id="join-orginization-modal" tabindex="-1" role="dialog" aria-labelledby="join-orginiziation-modal" aria-hidden="true">
+<template name="joinOrganization">
+    <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#join-organization-modal">Join Organization</button>
+    <div class="modal fade" id="join-organization-modal" tabindex="-1" role="dialog" aria-labelledby="join-orginiziation-modal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">Join Orginization</h4>
+              <h4 class="modal-title" id="myModalLabel">Join Organization</h4>
             </div>
             <div class="modal-body">
-                {{#each orginizations }}
+                {{#each organizations }}
                     <h3 class="">{{ name }}</h3> 
                     <button type="button" class="btn btn-join">Join</button>
                     <h4>({{ url }})</h4>

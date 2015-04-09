@@ -1,39 +1,39 @@
-Template.createOrginizationModal.rendered = ->
-  $("#create-orginization").validate(
+Template.createOrganizationModal.rendered = ->
+  $("#create-organization").validate(
     rules:
-      orginizationName:
+      organizationName:
         required: true
-      orginizationURL:
+      organizationURL:
         required: false
-      orginizationEmailAddress:
+      organizationEmailAddress:
         required: true
         email: true
-      orginizationDescription:
+      organizationDescription:
         required: false
-      orginizationImage:
+      organizationImage:
         required: false
     messages:
-      orginizationEmailAddress:
+      organizationEmailAddress:
         required: "Please enter an email"
         email: "The email address you have entered is invalid"
-      orginizationName:
+      organizationName:
         required: "Please enter a name for your orignization"
     submitHandler: ->
-      orginization =
-        name: $('[name="orginizationName"]').val()
-        url: $('[name="orginizationURL"]').val()
-        email: $('[name="orginizationEmailAddress"]').val()
-        description: $('[name="orginizationDescription"]').val()
+      organization =
+        name: $('[name="organizationName"]').val()
+        url: $('[name="organizationURL"]').val()
+        email: $('[name="organizationEmailAddress"]').val()
+        description: $('[name="organizationDescription"]').val()
         image: ""
       $('.modal-backdrop').hide()
-      Meteor.call 'createOrginization', orginization, (error, response)->
+      Meteor.call 'createOrganization', organization, (error, response)->
         if error
           alert(error.reason)
         else
           if response.error
             alert(response.error)
   )
-Template.createOrginizationModal.events(
+Template.createOrganizationModal.events(
   'submit form': (e) ->
     e.preventDefault()
 
@@ -42,17 +42,16 @@ Template.createOrginizationModal.events(
 )
 
 
-Template.joinOrginization.events(
+Template.joinOrganization.events(
   'click .btn-cancel': ->
     $('.modal-backdrop').hide()
 
   'click .btn-join': (e,t) ->
-    orginization = Blaze.getData(event.target)
-    console.log(orginization)
+    organization = Blaze.getData(event.target)
     user = Meteor.user()
-    if _.contains(orginization.users, user._id)
+    if _.contains(organization.users, user._id)
       $(e.target).text('Leave')
-      Meteor.call 'leaveOrginization', user, orginization, (error, response) ->
+      Meteor.call 'leaveOrganization', user, organization, (error, response) ->
         if error
           alert(error.reason)
         else
@@ -60,7 +59,7 @@ Template.joinOrginization.events(
             alert(response.error)
     else
       $(e.target).text('Join')
-      Meteor.call 'joinOrginization', user, orginization, (error, response) ->
+      Meteor.call 'joinOrganization', user, organization, (error, response) ->
         if error
           alert(error.reason)
         else

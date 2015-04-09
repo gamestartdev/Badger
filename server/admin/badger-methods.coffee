@@ -1,7 +1,8 @@
 Meteor.methods(
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
-                      origin: String, layerData: Match.Any})
+                      origin: String, layerData: Match.Any, \
+                      issuer: String})
     imageID = images.findAndModify({
       query: { data: badgeData.image },
       update: { $setOnInsert: { data: badgeData.image } },
@@ -12,19 +13,20 @@ Meteor.methods(
       name: badgeData.name,
       image: "/badges/images/" + imageID._id,#TODO
       criteria: "/", #TODO
-      issuser: "/", #TODO
+      issuer: badgeData.issuer, #TODO
       alignment: [],
       tags: [],
     })
-  createOrginization: (org) ->
+    return true
+  createOrganization: (org) ->
     check(org, {name: String, url: String, email: String, \
                       description: String, image: Match.Any})
 
-    if(orginizations.findOne({url: org.url}))
+    if(organizations.findOne({url: org.url}))
       throw new Meteor.Error(
-        "orginization-exists", "An orginization already exists with that URL")
+        "organization-exists", "An organization already exists with that URL")
 
-    oid = orginizations.insert({
+    oid = organizations.insert({
       name: org.name
       url: org.url
       email: org.email
@@ -32,17 +34,19 @@ Meteor.methods(
       image: org.image
     })
 
-  joinOrginization: (user, org) ->
-    check(org, {name: String, url: String, users: Array, _id: String})
+  joinOrganization: (user, org) ->
+    check(org, {name: String, url: String, \
+                users: Match.Optional(Array), _id: String})
     check(user, {_id: String, emails: Array, services: Object})
-    orginizations.update({_id: org._id}, {
+    organizations.update({_id: org._id}, {
       $addToSet: { users: user._id }
     })
 
-  leaveOrginization: (user, org) ->
-    check(org, {name: String, url: String, users: Array, _id: String})
+  leaveOrganization: (user, org) ->
+    check(org, {name: String, url: String, \
+                users: Match.Optional(Array), _id: String})
     check(user, {_id: String, emails: Array, services: Object})
-    orginizations.update({_id: org._id}, {
+    organizations.update({_id: org._id}, {
       $pull: { users: user._id }
     })
 )

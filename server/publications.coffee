@@ -26,6 +26,22 @@ Meteor.publish('userData', ->
     this.ready()
 )
 
-Meteor.publish('orginizations', ->
-  return orginizations.find({}, {fields: {name: 1, url: 1, users: 1}})
+Meteor.publish('organizations', ->
+  return organizations.find({}, {fields: {name: 1, url: 1, users: 1}})
+)
+
+Meteor.publish('organizationBadges', ->
+  userOrgs = organizations.find({ users: @userId }).fetch()
+  urls = []
+  if userOrgs.length > 0
+    urls = _.map(userOrgs, (org) ->
+      return org.url
+    )
+  else
+    return []
+  return badgeClasses.find({ issuer: { $in: urls }})
+)
+
+Meteor.publish('allUsers', ->
+  return Meteor.users.find({}, {fields: {emails: 1, _id: 1}})
 )

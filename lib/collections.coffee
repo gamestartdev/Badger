@@ -25,5 +25,5 @@ Example.deny
       # ...
 
 @images = new Mongo.Collection("images")
-@orginizations = new Mongo.Collection("issuerOrganizations")
+@organizations = new Mongo.Collection("issuerOrganizations")
 @badgeClasses = new Mongo.Collection("badgeClasses")

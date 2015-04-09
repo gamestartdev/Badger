@@ -1,0 +1,8 @@
+<template name="organization_selector">
+    <label>Organization:</label>
+    <select id="selectedOrganization">
+    {{#each userOrganizations}}
+        <option value="{{ url }}">{{ name }} ({{ url }})</option>
+    {{/each}}
+    </select>
+</template>

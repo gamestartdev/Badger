@@ -1,7 +1,8 @@
 Router.route('/badges/images/:imageid',
   ->
     image = images.findOne({_id: @params.imageid})
-    @response.writeHead(200, { 'Content-Type': 'text/html' })
-    @response.end('<img src="'+image.data+'"/>')
+    data = new Buffer(image.data.substr(image.data.indexOf(",") + 1), 'base64')
+    @response.writeHead(200, { 'Content-Type': 'image/png' })
+    @response.end(data)
   where: 'server',
 )
