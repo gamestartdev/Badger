@@ -1,10 +1,15 @@
 <template name="badgeActions">
-    {{#each badge}}
-        <img src="{{ image }}"/>
-    {{/each}}
+    {{#with badge}}
+        {{> badge_cell }}
+    {{/with}}
     {{#each users}}
         <div>
-            <h3>
+            {{#if hasBadge}}
+                <button type="submit" class="btn btn-grant-badge">Revoke</button>
+            {{else}}
+                <button type="submit" class="btn btn-primary btn-grant-badge">Grant</button>
+            {{/if}}
+            <h3 class="inline">
             {{ address }}
             </h3>
         </div>

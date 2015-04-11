@@ -1,0 +1,31 @@
+.inline {
+    display: inline-block;
+}
+
+.navbar-header {
+    width: 50%;    
+}
+
+.navbar {
+    min-height: 20px;
+}
+
+.navbar.tab {
+    display: inline-block;
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.row {
+   display: block; 
+   padding-left: 10px;
+}
+
+.badge_name {
+    text-align: center;
+}
+
+.badge_cell {
+    width: 200px;
+    height: 220px;
+}

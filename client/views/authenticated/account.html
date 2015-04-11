@@ -1,6 +1,13 @@
 <template name="account">
     {{> createOrganizationModal }}
     {{> joinOrganization }}
+    {{> myBadges}}
+</template>
+
+<template name="myBadges">
+    {{#each badges}}
+        {{> badge_cell }}
+    {{/each}}
 </template>
 
 <template name="createOrganizationModal">
@@ -50,18 +57,24 @@
 </template>
 
 <template name="joinOrganization">
-    <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#join-organization-modal">Join Organization</button>
+    <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#join-organization-modal">View Organizations</button>
     <div class="modal fade" id="join-organization-modal" tabindex="-1" role="dialog" aria-labelledby="join-orginiziation-modal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">Join Organization</h4>
+              <h4 class="modal-title" id="myModalLabel">View Organizations</h4>
             </div>
             <div class="modal-body">
                 {{#each organizations }}
-                    <h3 class="">{{ name }}</h3> 
-                    <button type="button" class="btn btn-join">Join</button>
-                    <h4>({{ url }})</h4>
+                <div class="row">
+                    {{#if hasUser}}
+                        <button type="button" class="btn btn-join">Leave</button>
+                    {{else}}
+                        <button type="button" class="btn-primary btn-join">Join</button>
+                    {{/if}}
+                    <h3 class="inline">{{ name }}</h3> 
+                    <h4 class="inline">({{ url }})</h4>
+                </div>
                 {{/each}}
             </div>
           <div class="modal-footer">

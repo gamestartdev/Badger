@@ -50,7 +50,7 @@ Template.joinOrganization.events(
     organization = Blaze.getData(event.target)
     user = Meteor.user()
     if _.contains(organization.users, user._id)
-      $(e.target).text('Leave')
+      $(e.target).text('Join')
       Meteor.call 'leaveOrganization', user, organization, (error, response) ->
         if error
           alert(error.reason)
@@ -58,7 +58,7 @@ Template.joinOrganization.events(
           if response.error
             alert(response.error)
     else
-      $(e.target).text('Join')
+      $(e.target).text('Leave')
       Meteor.call 'joinOrganization', user, organization, (error, response) ->
         if error
           alert(error.reason)

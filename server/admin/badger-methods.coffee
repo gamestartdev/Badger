@@ -11,9 +11,9 @@ Meteor.methods(
     })
     bid = badgeClasses.insert({
       name: badgeData.name,
-      image: "/badges/images/" + imageID._id,#TODO
+      image: "/v1/data/badges/images/" + imageID._id,
       criteria: "/", #TODO
-      issuer: badgeData.issuer, #TODO
+      issuer: badgeData.issuer,
       alignment: [],
       tags: [],
     })
@@ -36,17 +36,61 @@ Meteor.methods(
 
   joinOrganization: (user, org) ->
     check(org, {name: String, url: String, \
-                users: Match.Optional(Array), _id: String})
-    check(user, {_id: String, emails: Array, services: Object})
+                users: Match.Optional(Array), _id: String, \
+                hasUser: Boolean})
+    check(user, {_id: String, emails: Array, services: Object, \
+                 identity: String})
     organizations.update({_id: org._id}, {
       $addToSet: { users: user._id }
     })
 
   leaveOrganization: (user, org) ->
     check(org, {name: String, url: String, \
-                users: Match.Optional(Array), _id: String})
-    check(user, {_id: String, emails: Array, services: Object})
+                users: Match.Optional(Array), _id: String, \
+                hasUser: Boolean})
+    check(user, {_id: String, emails: Array, services: Object, \
+                 identity: String})
     organizations.update({_id: org._id}, {
       $pull: { users: user._id }
     })
+  grantBadge: (uid, bid) ->
+    check(uid, String)
+    check(bid, String)
+    toUser = Meteor.users.findOne({_id: uid},
+                               {_id: 1, identity: 1})
+    if(badgeAssertions.findOne({uid: bid,\
+                                "recipient.identity": toUser.identity }))
+      throw new Meteor.Error("assertion-exists",
+                             "This user has already earned that badge")
+
+    badge = badgeClasses.findOne({_id: bid})
+    identityObject = identityObjects.findOne({identity: toUser.identity},
+                                             {_id: 0})
+    time = new Date().getTime()
+    assertionId = badgeAssertions.insert({
+      uid: badge._id,
+      recipient: identityObject,
+      badge: "/v1/data/badges/classes/" + badge._id,
+      issuedOn: time,
+      evidence: "", #TODO
+    })
+    badgeAssertions.update({ _id: assertionId }, {
+      $set: {
+        verify: {
+          type: "hosted",
+          url: "/v1/data/badges/assertions/" + assertionId
+        }
+      }
+    })
+  revokeBadge: (uid, bid) ->
+    check(uid, String)
+    check(bid, String)
+    toUser = Meteor.users.findOne({_id: uid},
+                               {_id: 1, identity: 1})
+    if(!badgeAssertions.remove({uid: bid,\
+                                "recipient.identity": toUser.identity }))
+      throw new Meteor.Error("assertion-does-not-exist",
+                             "This user doesn't have this badge")
+    return true
+
 )

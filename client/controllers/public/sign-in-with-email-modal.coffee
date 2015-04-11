@@ -14,7 +14,6 @@ Template.signInWithEmailModal.rendered = ->
       password:
         required: "Please enter a password"
     submitHandler: ->
-      console.log("submit handler called")
       # Once our validation passes, we need to make a decision on
       # whether we want to sign the user up, or, log them in. To do
       # this, we look at a session variable `createOrSignIn` to

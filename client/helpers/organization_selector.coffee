@@ -1,10 +1,7 @@
 Template.organization_selector.helpers(
   userOrganizations: ->
-    organizations.find({})
-)
-
-Template.organization_selector.events(
-  'change select': (e,t) ->
-    Session.set('selectedOrganization', \
-                $("#selectedOrganization").val())
+    user = Meteor.user()
+    organizations.find({users: user._id})
+  selectedOrganization: ->
+    return Serssion.get('selectedOrganization')
 )

@@ -20,6 +20,20 @@ Router.route('account',
     @next()
 )
 
+Router.route('viewBadges',
+  path: '/view'
+  template: 'viewBadges'
+  waitOn: ->
+    Meteor.subscribe 'userData'
+    Meteor.subscribe 'organizations'
+    Meteor.subscribe 'organizationBadges'
+    Meteor.subscribe 'userBadgeAssertions'
+    Meteor.subscribe 'userBadges'
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'viewBadges'
+    @next()
+)
+
 Router.route('badges',
   path: '/badges'
   template: 'badges'
@@ -27,8 +41,10 @@ Router.route('badges',
     Meteor.subscribe 'userData'
     Meteor.subscribe 'organizations'
     Meteor.subscribe 'organizationBadges'
+    Meteor.subscribe 'userBadgeAssertions'
+    Meteor.subscribe 'userBadges'
   onBeforeAction: ->
-    Session.set 'currentRoute', 'grant'
+    Session.set 'currentRoute', 'badges'
     @next()
 )
 
@@ -36,13 +52,15 @@ Router.route('badge',
   path: '/badges/:badgeId'
   template: 'badgeActions'
   data: ->
-    console.log(@params.badgeId)
     Meteor.subscribe 'organizationBadges'
-    return badgeClasses.find({_id: @params.badgeId})
+    return {
+      badge: badgeClasses.findOne({_id: @params.badgeId})
+    }
   waitOn: ->
     Meteor.subscribe 'userData'
     Meteor.subscribe 'allUsers'
     Meteor.subscribe 'organizationBadges'
+    Meteor.subscribe 'assertionKeys'
   onBeforeAction: ->
     Session.set 'currentRoute', 'badgeActions'
     @next()

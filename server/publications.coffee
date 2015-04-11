@@ -20,6 +20,7 @@ Meteor.publish('userData', ->
         "services.twitter.screenName": 1
         "emails.address[0]": 1
         "profile": 1
+        "identity": 1
       }
     })
   else
@@ -43,5 +44,21 @@ Meteor.publish('organizationBadges', ->
 )
 
 Meteor.publish('allUsers', ->
-  return Meteor.users.find({}, {fields: {emails: 1, _id: 1}})
+  return Meteor.users.find({}, {fields: {emails: 1, identity: 1, _id: 1}})
+)
+
+Meteor.publish('assertionKeys', ->
+  return badgeAssertions.find({}, field: {uid: 1, "recpient.identity": 1})
+)
+
+Meteor.publish('userBadgeAssertions', ->
+  user = Meteor.users.findOne({_id: @userId})
+  return badgeAssertions.find({"recipient.identity": user.identity})
+)
+Meteor.publish('userBadges', ->
+  user = Meteor.users.findOne({_id: @userId})
+  assertions = badgeAssertions.find(
+    {"recipient.identity": user.identity}).fetch()
+  ids = _.pluck(assertions, 'uid')
+  return badgeClasses.find({_id: { $in: ids}})
 )

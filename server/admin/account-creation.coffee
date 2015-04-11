@@ -23,7 +23,6 @@ determineEmail = (user)->
 # Function: Accounts.onCreateUser()
 # Hook into Meteor's account creation event to fire off a "welcome email"
 # to new user's.
-identityObjects = new Mongo.Collection("identityObjects")
 Accounts.onCreateUser((options,user)->
   # Pass our user over to our determineEmail function to see if we can
   # find an address to send our "welcome email" to. We also call up the profile
