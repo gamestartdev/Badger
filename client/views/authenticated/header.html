@@ -9,14 +9,14 @@
 	        <span class="icon-bar"></span>
 	      </button>
 	      <a class="navbar-brand inline" href="{{pathFor 'create'}}">Badger</a>
+	    </div>
+	    <div class="collapse navbar-collapse">
+          {{#if currentUser}}
 	      <a class="navbar tab" href="{{pathFor 'account'}}">Join</a>
 	      <a class="navbar tab" href="{{pathFor 'create'}}">Create</a>
 	      <a class="navbar tab" href="{{pathFor 'badges'}}">Give</a>
 	      <a class="navbar tab" href="{{pathFor 'viewBadges'}}">View</a>
-	    </div>
-	    <div class="collapse navbar-collapse">
-	    	{{#if currentUser}}
-	      <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">
 					{{#if userIdentity currentUser._id}}
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{userIdentity currentUser._id}} <span class="caret"></span></a>
