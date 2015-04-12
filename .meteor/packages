@@ -14,7 +14,7 @@ audit-argument-checks
 iron:router
 pinglamb:bootstrap3
 themeteorchef:jquery-validation
-particle4dev:sass@0.3.0
+
 accounts-facebook
 accounts-github
 accounts-google
