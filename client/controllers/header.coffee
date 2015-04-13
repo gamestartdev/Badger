@@ -4,9 +4,12 @@
 ###
 
 # Events
-Template.header.events(
+Template.header.events
   'click .logout': (e,t) ->
-    Meteor.logout((error)->
+    Meteor.logout (error)->
       alert error.reason if error
-    )
-)
+
+Template.header.helpers
+  isAdmin: ->
+    console.log Meteor.user().admin
+    return Meteor.user() and Meteor.user().admin

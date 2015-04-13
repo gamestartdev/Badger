@@ -85,11 +85,10 @@ Meteor.startup(->
     # If an existing user is not found, create the account.
     if not checkUser
 
-      id = Accounts.createUser(
+      id = Accounts.createUser
         email: user.email
         password: user.password
         profile:
           name: user.name
-      )
 
 )
