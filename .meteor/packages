@@ -8,6 +8,7 @@ coffeescript
 underscore
 accounts-password
 accounts-base
+accounts-ui
 jquery
 check
 audit-argument-checks
@@ -30,4 +31,5 @@ mbish:badge-builder
 jparker:crypto-sha256
 jparker:crypto-base64
 fongandrew:find-and-modify
+
 ewall:foundation

@@ -1,4 +1,4 @@
-Template.joinOrganization.helpers(
+Template.join_organization.helpers(
   organizations: ->
     user = Meteor.user()
     return _.map(organizations.find({}, {name: 1, url: 1}).fetch(), (org) ->

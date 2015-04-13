@@ -28,7 +28,7 @@ Template.signInWithEmailModal.rendered = ->
 
       # Take the correct path according to what the user clicked and
       # our session variable is equal to.
-      if createOrSignIn == "create"
+      if createOrSignIn == "create" or true
         # Before we do the insert, we call to the server to validate our email
         # address. This isn't *required*, but it's a good feature to have. This
         # allows us to ensure that users are signing up with legitimate email

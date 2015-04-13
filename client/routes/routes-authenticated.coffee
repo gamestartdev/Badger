@@ -9,14 +9,14 @@ Router.route('create',
     @next()
 )
 
-Router.route('account',
-  path: '/account'
-  template: 'account'
+Router.route('organization',
+  path: '/organization'
+  template: 'organization'
   waitOn: ->
     Meteor.subscribe 'userData'
     Meteor.subscribe 'organizations'
   onBeforeAction: ->
-    Session.set 'currentRoute', 'account'
+    Session.set 'currentRoute', 'organization'
     @next()
 )
 

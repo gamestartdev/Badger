@@ -42,7 +42,7 @@ Template.createOrganizationModal.events(
 )
 
 
-Template.joinOrganization.events(
+Template.join_organization.events(
   'click .btn-cancel': ->
     $('.modal-backdrop').hide()
 
@@ -59,7 +59,7 @@ Template.joinOrganization.events(
             alert(response.error)
     else
       $(e.target).text('Leave')
-      Meteor.call 'joinOrganization', user, organization, (error, response) ->
+      Meteor.call 'join_organization', user, organization, (error, response) ->
         if error
           alert(error.reason)
         else

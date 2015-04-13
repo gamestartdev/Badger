@@ -34,7 +34,7 @@ Meteor.methods(
       image: org.image
     })
 
-  joinOrganization: (user, org) ->
+  join_organization: (user, org) ->
     check(org, {name: String, url: String, \
                 users: Match.Optional(Array), _id: String, \
                 hasUser: Boolean})
