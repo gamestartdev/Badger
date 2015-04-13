@@ -15,10 +15,6 @@ audit-argument-checks
 iron:router
 themeteorchef:jquery-validation
 
-accounts-facebook
-accounts-github
-accounts-google
-accounts-twitter
 meteorhacks:ssr
 service-configuration
 http
@@ -33,3 +29,4 @@ jparker:crypto-base64
 fongandrew:find-and-modify
 
 ewall:foundation
+useraccounts:foundation
