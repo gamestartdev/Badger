@@ -12,7 +12,6 @@ jquery
 check
 audit-argument-checks
 iron:router
-pinglamb:bootstrap3
 themeteorchef:jquery-validation
 
 accounts-facebook
@@ -31,3 +30,4 @@ mbish:badge-builder
 jparker:crypto-sha256
 jparker:crypto-base64
 fongandrew:find-and-modify
+ewall:foundation
