@@ -23,9 +23,13 @@ checkUserLoggedIn = ->
 ###
 userAuthenticated = ->
   if not Meteor.loggingIn() and Meteor.user()
-    Router.go '/create'
+    Router.go '/view'
   else
     @next()
+
+isAdmin = ->
+
+  return Meteor.user() and Meteor.user().admin
 
 # Run Filters
 Router.onBeforeAction checkUserLoggedIn, except: [
