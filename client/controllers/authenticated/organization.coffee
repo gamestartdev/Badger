@@ -1,4 +1,4 @@
-Template.createOrganizationModal.rendered = ->
+Template.create_organization.rendered = ->
   $("#create-organization").validate(
     rules:
       organizationName:
@@ -33,7 +33,7 @@ Template.createOrganizationModal.rendered = ->
           if response.error
             alert(response.error)
   )
-Template.createOrganizationModal.events(
+Template.create_organization.events(
   'submit form': (e) ->
     e.preventDefault()
 
