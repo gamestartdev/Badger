@@ -1,5 +1,9 @@
 <template name="index">
 
-    {{> atForm }}
+    {{#if currentUser }}
+        {{> myBadges}}
+    {{else}}
+        {{> atForm }}
+    {{/if}}
 
 </template>

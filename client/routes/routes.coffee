@@ -5,8 +5,15 @@ Router.configure
 Router.route 'index',
   path: '/'
   template: 'index'
+  waitOn: ->
+    Meteor.subscribe 'userData'
+    Meteor.subscribe 'organizations'
+    Meteor.subscribe 'organizationBadges'
+    Meteor.subscribe 'userBadgeAssertions'
+    Meteor.subscribe 'userBadges'
   onBeforeAction: ->
     # Code to run before route goes here.
+    Session.set 'currentRoute', 'index'
     @next()
 
 Router.route('create',
@@ -28,20 +35,6 @@ Router.route('organization',
     Meteor.subscribe 'organizations'
   onBeforeAction: ->
     Session.set 'currentRoute', 'organization'
-    @next()
-)
-
-Router.route('viewBadges',
-  path: '/view'
-  template: 'viewBadges'
-  waitOn: ->
-    Meteor.subscribe 'userData'
-    Meteor.subscribe 'organizations'
-    Meteor.subscribe 'organizationBadges'
-    Meteor.subscribe 'userBadgeAssertions'
-    Meteor.subscribe 'userBadges'
-  onBeforeAction: ->
-    Session.set 'currentRoute', 'viewBadges'
     @next()
 )
 
