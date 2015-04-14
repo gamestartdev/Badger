@@ -53,12 +53,17 @@ Meteor.publish('assertionKeys', ->
 
 Meteor.publish('userBadgeAssertions', ->
   user = Meteor.users.findOne({_id: @userId})
-  return badgeAssertions.find({"recipient.identity": user.identity})
+  if user
+    return badgeAssertions.find({"recipient.identity": user.identity})
+  return []
 )
+
 Meteor.publish('userBadges', ->
   user = Meteor.users.findOne({_id: @userId})
-  assertions = badgeAssertions.find(
-    {"recipient.identity": user.identity}).fetch()
-  ids = _.pluck(assertions, 'uid')
-  return badgeClasses.find({_id: { $in: ids}})
+  if user
+    assertions = badgeAssertions.find(
+      {"recipient.identity": user.identity}).fetch()
+    ids = _.pluck(assertions, 'uid')
+    return badgeClasses.find({_id: { $in: ids}})
+  return []
 )

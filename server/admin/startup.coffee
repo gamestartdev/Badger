@@ -1,9 +1,12 @@
 Meteor.startup ->
 
+  Meteor.users.remove({})
   users = [
-    { username:"Admin", email: "admin@admin.com", password: "asdfasdf", roles:['admin']},
-    { username:"Nate", email: "asdf@asdf.com", password: "asdfasdf", roles:['nothing'] }
+    { username:"admin", email: "a@a.com", password: "a", roles:['admin']},
+    { username:"nate", email: "i@a.com", password: "a", roles:['issuer'] },
+    { username:"leo", email: "u@a.com", password: "a", roles:[] }
   ]
+
   # Loop through array of user accounts.
   for user in users
 

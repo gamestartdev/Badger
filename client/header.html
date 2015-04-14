@@ -12,9 +12,12 @@
         <section class="top-bar-section">
             <ul class="right">
                 {{#if isAdmin }}
-                    <li class="{{currentRoute}}"><a href="{{pathFor 'organization'}}">Organization</a></li>
-                    <li class="{{currentRoute}}"><a href="{{pathFor 'create'}}">Create</a></li>
-                    <li class="{{currentRoute}}"><a href="{{pathFor 'badges'}}">Award</a></li>
+                    <li><a href="{{pathFor 'organization'}}" class="{{currentRoute 'organization'}} nav-button">Organization</a></li>
+                {{/if}}
+
+                {{#if isIssuer }}
+                    <li><a href="{{pathFor 'create'}}" class="{{currentRoute 'create'}} nav-button">Create</a></li>
+                    <li><a href="{{pathFor 'badges'}}" class="{{currentRoute 'badges'}} nav-button">Award</a></li>
                 {{/if}}
 
                 <li class="has-dropdown">

@@ -1,7 +1,9 @@
 <template name="index">
 
     {{#if currentUser }}
+
         {{> badge_grid }}
+
     {{else}}
         {{> atForm }}
     {{/if}}

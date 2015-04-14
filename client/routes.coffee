@@ -1,6 +1,6 @@
 Router.configure
   notFoundTemplate: 'notFound'
-  layoutTemplate: 'layoutDefault'
+  layoutTemplate: 'layout'
 
 Router.route 'index',
   path: '/'

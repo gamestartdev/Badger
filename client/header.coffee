@@ -13,4 +13,7 @@ Template.header.events
 Template.header.helpers
   isAdmin: ->
     return Meteor.user() and Roles.userIsInRole(Meteor.user(), ['admin'])
-  currentRoute: -> Session.get('currentRoute')
+  isIssuer: ->
+    return Meteor.user() and Roles.userIsInRole(Meteor.user(), ['issuer', 'admin'])
+  currentRoute: (route) ->
+    return if Session.equals("currentRoute", route) then "active"
