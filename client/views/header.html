@@ -17,12 +17,11 @@
                         <li class="{{currentRoute}}"><a href="{{pathFor 'create'}}">Create</a></li>
                         <li class="{{currentRoute}}"><a href="{{pathFor 'badges'}}">Give</a></li>
                     {{/if}}
-
-                    <li class="{{currentRoute}}"><a href="{{pathFor 'viewBadges'}}">Earned</a></li>
-
+                    <li class="{{currentRoute}}"><a href="{{pathFor 'viewBadges'}}" class="earned-nav-link">Earned</a></li>
 
                     <li class="has-dropdown">
-                        <a href="#">{{userIdentity currentUser._id}}</a>
+
+                        <a href="#">{{currentUser.username}}</a>
                         <ul class="dropdown">
                             <li class="logout"><a href="#">Logout</a></li>
                         </ul>

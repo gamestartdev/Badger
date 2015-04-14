@@ -19,8 +19,7 @@ Meteor.methods(
     })
     return true
   createOrganization: (org) ->
-    check(org, {name: String, url: String, email: String, \
-                      description: String, image: Match.Any})
+    check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
 
     if(organizations.findOne({url: org.url}))
       throw new Meteor.Error(
@@ -34,25 +33,15 @@ Meteor.methods(
       image: org.image
     })
 
-  join_organization: (user, org) ->
-    check(org, {name: String, url: String, \
-                users: Match.Optional(Array), _id: String, \
-                hasUser: Boolean})
-    check(user, {_id: String, emails: Array, services: Object, \
-                 identity: String})
-    organizations.update({_id: org._id}, {
-      $addToSet: { users: user._id }
-    })
+  joinOrganization: (userId, orgId) ->
+    check(userId, String)
+    check(orgId, String)
+    organizations.update {_id: orgId}, { $addToSet: { users: userId } }
+  leaveOrganization: (userId, orgId) ->
+    check(userId, String)
+    check(orgId, String)
+    organizations.update {_id: orgId}, { $pull: { users: userId } }
 
-  leaveOrganization: (user, org) ->
-    check(org, {name: String, url: String, \
-                users: Match.Optional(Array), _id: String, \
-                hasUser: Boolean})
-    check(user, {_id: String, emails: Array, services: Object, \
-                 identity: String})
-    organizations.update({_id: org._id}, {
-      $pull: { users: user._id }
-    })
   grantBadge: (uid, bid) ->
     check(uid, String)
     check(bid, String)

@@ -26,23 +26,16 @@ Template.create_organization.rendered = ->
         description: $('[name="organizationDescription"]').val()
         image: ""
       $('.modal-backdrop').hide()
-      Meteor.call 'createOrganization', organization, (error, response)->
-        if error
-          alert(error.reason)
-        else
-          if response.error
-            alert(response.error)
+      Meteor.call 'createOrganization', organization, alert_problem
   )
-Template.create_organization.events(
+Template.create_organization.events
   'submit form': (e) ->
     e.preventDefault()
 
   'click .btn-cancel': ->
     $('.modal-backdrop').hide()
-)
 
-
-Template.join_organization.events(
+Template.join_organization.events
   'click .btn-cancel': ->
     $('.modal-backdrop').hide()
 
@@ -51,18 +44,15 @@ Template.join_organization.events(
     user = Meteor.user()
     if _.contains(organization.users, user._id)
       $(e.target).text('Join')
-      Meteor.call 'leaveOrganization', user, organization, (error, response) ->
-        if error
-          alert(error.reason)
-        else
-          if response.error
-            alert(response.error)
+      Meteor.call 'leaveOrganization', user._id, organization._id, alert_problem
     else
       $(e.target).text('Leave')
-      Meteor.call 'join_organization', user, organization, (error, response) ->
-        if error
-          alert(error.reason)
-        else
-          if response.error
-            alert(response.error)
-)
+      Meteor.call 'joinOrganization', user._id, organization._id, alert_problem
+
+
+alert_problem = (error, response) ->
+  if error
+    alert(error.reason)
+  else
+    if response.error
+      alert(response.error)

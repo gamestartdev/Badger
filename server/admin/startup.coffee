@@ -1,12 +1,9 @@
 Meteor.startup ->
 
   users = [
-    { name: "Admin", email: "admin@admin.com", password: "asdfasdf", roles:['admin']},
-    { name: "Nate", email: "asdf@asdf.com", password: "asdfasdf", roles:['nothing'] }
+    { username:"Admin", email: "admin@admin.com", password: "asdfasdf", roles:['admin']},
+    { username:"Nate", email: "asdf@asdf.com", password: "asdfasdf", roles:['nothing'] }
   ]
-  Meteor.users.remove({})
-  console.log Meteor.users.find().count()
-
   # Loop through array of user accounts.
   for user in users
 
@@ -18,8 +15,7 @@ Meteor.startup ->
       id = Accounts.createUser
         email: user.email
         password: user.password
-        profile:
-          name: user.name
+        username: user.username
 
       if user.roles.length > 0
         Roles.addUsersToRoles(id, user.roles);
