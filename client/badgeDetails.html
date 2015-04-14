@@ -1,6 +1,8 @@
 <template name="badgeDetails">
+
     {{#with badge}}
-        {{> badge_cell }}
+        <h2 class="badge_name">{{name}}</h2>
+        <img src="{{image}}"/>
     {{/with}}
 
     {{#each users}}

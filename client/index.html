@@ -1,9 +1,7 @@
 <template name="index">
 
     {{#if currentUser }}
-        {{#each badges}}
-            {{> badge_cell }}
-        {{/each}}
+        {{> badge_grid }}
     {{else}}
         {{> atForm }}
     {{/if}}

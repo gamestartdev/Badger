@@ -1,17 +1,11 @@
 <template name="badge_grid">
     <div id="badge_grid_container" class="row">
         {{#each badges}}
-            <div class="large-3 columns">
-                {{> badge_icon }}
+            <div class="medium-4 small-6 columns">
+                {{> badge_cell }}
             </div>
         {{/each}}
     </div>
-</template>
-
-<template name="badge_icon">
-    {{#if badge_visible}}
-        {{> badge_cell }}
-    {{/if}}
 </template>
 
 <template name="badge_cell">
