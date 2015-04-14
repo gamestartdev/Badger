@@ -1,7 +1,6 @@
 accounts-base@1.2.0
 accounts-password@1.1.1
-accounts-ui@1.1.5
-accounts-ui-unstyled@1.1.7
+alanning:roles@1.2.13
 aldeed:autoform@5.1.2
 aldeed:simple-schema@1.3.2
 audit-argument-checks@1.0.3
@@ -34,9 +33,6 @@ iron:location@1.0.7
 iron:middleware-stack@1.0.7
 iron:router@1.0.7
 iron:url@1.0.7
-jparker:crypto-base64@0.1.0
-jparker:crypto-core@0.1.0
-jparker:crypto-sha256@0.1.1
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
@@ -47,7 +43,6 @@ logging@1.0.7
 mbish:badge-builder@0.0.2
 meteor@1.1.6
 meteor-platform@1.2.2
-meteorhacks:ssr@2.1.2
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
@@ -65,7 +60,6 @@ routepolicy@1.0.5
 service-configuration@1.0.4
 session@1.1.0
 sha@1.0.3
-sinda:fancybox@1.0.1
 softwarerero:accounts-t9n@1.0.9
 spacebars@1.0.6
 spacebars-compiler@1.0.6

@@ -1,3 +1,14 @@
+Router.configure
+  notFoundTemplate: 'notFound'
+  layoutTemplate: 'layoutDefault'
+
+Router.route 'index',
+  path: '/'
+  template: 'index'
+  onBeforeAction: ->
+    # Code to run before route goes here.
+    @next()
+
 Router.route('create',
   path: '/create'
   template: 'create'
@@ -54,7 +65,7 @@ Router.route('badge',
   data: ->
     Meteor.subscribe 'organizationBadges'
     return {
-      badge: badgeClasses.findOne({_id: @params.badgeId})
+    badge: badgeClasses.findOne({_id: @params.badgeId})
     }
   waitOn: ->
     Meteor.subscribe 'userData'
@@ -65,3 +76,33 @@ Router.route('badge',
     Session.set 'currentRoute', 'badgeActions'
     @next()
 )
+
+checkUserLoggedIn = ->
+  if not Meteor.loggingIn() and not Meteor.user()
+    Router.go '/'
+  else
+    @next()
+
+userAuthenticated = ->
+  if not Meteor.loggingIn() and Meteor.user()
+    Router.go '/view'
+  else
+    @next()
+
+
+# Run Filters
+Router.onBeforeAction checkUserLoggedIn, except: [
+  'index',
+  'signup',
+  'login',
+  'recover-password',
+  'reset-password'
+]
+
+Router.onBeforeAction userAuthenticated, only: [
+  'index',
+  'signup',
+  'login',
+  'recover-password',
+  'reset-password'
+]

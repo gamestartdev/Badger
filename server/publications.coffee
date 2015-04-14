@@ -21,7 +21,6 @@ Meteor.publish('userData', ->
         "emails.address[0]": 1
         "profile": 1
         "identity": 1
-        "admin": 1
       }
     })
   else

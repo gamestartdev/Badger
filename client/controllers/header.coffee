@@ -11,5 +11,5 @@ Template.header.events
 
 Template.header.helpers
   isAdmin: ->
-    console.log Meteor.user().admin
-    return Meteor.user() and Meteor.user().admin
+    console.log Roles.userIsInRole(Meteor.user(), ['admin'])
+    return Meteor.user() and Roles.userIsInRole(Meteor.user(), ['admin'])
