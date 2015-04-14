@@ -68,13 +68,15 @@
 <template name="join_organization">
     {{#each organizations }}
         <div class="row">
+            <div class="large-4 columns">{{ name }}</div>
+            <div class="large-4 columns">{{ url }}</div>
+            <div class="large-4 columns">
             {{#if hasUser}}
-                <button type="button" class="btn btn-join">Leave</button>
+                <button class="btn-join expand">Leave</button>
             {{else}}
-                <button type="button" class="btn-primary btn-join">Join</button>
+                <button class="btn-join expand">Join</button>
             {{/if}}
-            <h3 class="inline">{{ name }}</h3>
-            <h4 class="inline">({{ url }})</h4>
+            </div>
         </div>
     {{/each}}
 </template>

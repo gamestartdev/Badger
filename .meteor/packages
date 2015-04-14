@@ -13,6 +13,8 @@ check
 audit-argument-checks
 iron:router
 themeteorchef:jquery-validation
+jparker:crypto-sha256
+jparker:crypto-base64
 
 service-configuration
 http

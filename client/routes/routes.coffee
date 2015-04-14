@@ -89,20 +89,18 @@ userAuthenticated = ->
   else
     @next()
 
+#Router.onBeforeAction checkUserLoggedIn, except: [
+#  'index',
+#  'signup',
+#  'login',
+#  'recover-password',
+#  'reset-password'
+#]
 
-# Run Filters
-Router.onBeforeAction checkUserLoggedIn, except: [
-  'index',
-  'signup',
-  'login',
-  'recover-password',
-  'reset-password'
-]
-
-Router.onBeforeAction userAuthenticated, only: [
-  'index',
-  'signup',
-  'login',
-  'recover-password',
-  'reset-password'
-]
+#Router.onBeforeAction userAuthenticated, only: [
+#  'index',
+#  'signup',
+#  'login',
+#  'recover-password',
+#  'reset-password'
+#]
