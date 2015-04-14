@@ -1,0 +1,19 @@
+<template name="badgeDetails">
+    {{#with badge}}
+        {{> badge_cell }}
+    {{/with}}
+
+    {{#each users}}
+        <div>
+            {{#if hasBadge}}
+                <button type="submit" class="btn btn-grant-badge">Revoke</button>
+            {{else}}
+                <button type="submit" class="btn btn-primary btn-grant-badge">Grant</button>
+            {{/if}}
+            <h3 class="inline">
+            {{ address }}
+            </h3>
+        </div>
+    {{/each}}
+
+</template>
