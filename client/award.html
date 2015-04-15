@@ -1,0 +1,16 @@
+<template name="award">
+    {{> organization_selector }}
+    <h1>COUNT : {{count}}</h1>
+    <div id="badge_grid_container" class="row">
+        {{#each badges}}
+            <div class="medium-4 small-6 columns">
+                <a class="badge_icon"  href="/award_badge/{{_id}}"><img src="{{image}}"/></a>
+                <h4 class="badge_name">{{name}}</h4>
+            </div>
+        {{else}}
+            <div class="small-12 columns">
+                <h1>Go earn badges!!</h1>
+            </div>
+        {{/each}}
+    </div>
+</template>

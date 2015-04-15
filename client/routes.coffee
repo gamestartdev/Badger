@@ -1,3 +1,9 @@
+Meteor.subscribe 'userData'
+Meteor.subscribe 'allUsers'
+Meteor.subscribe 'organizations'
+Meteor.subscribe 'badgeClasses'
+Meteor.subscribe 'badgeAssertions'
+
 Router.configure
   notFoundTemplate: 'notFound'
   layoutTemplate: 'layout'
@@ -5,71 +11,42 @@ Router.configure
 Router.route 'index',
   path: '/'
   template: 'index'
-  waitOn: ->
-    Meteor.subscribe 'userData'
-    Meteor.subscribe 'organizations'
-    Meteor.subscribe 'organizationBadges'
-    Meteor.subscribe 'userBadgeAssertions'
-    Meteor.subscribe 'userBadges'
   onBeforeAction: ->
     # Code to run before route goes here.
     Session.set 'currentRoute', 'index'
     @next()
 
-Router.route('create',
+Router.route 'create',
   path: '/create'
   template: 'create'
-  waitOn: ->
-    Meteor.subscribe 'userData'
-    Meteor.subscribe 'organizations'
   onBeforeAction: ->
     Session.set 'currentRoute', 'create'
     @next()
-)
 
-Router.route('organization',
+Router.route 'organization',
   path: '/organization'
   template: 'organization'
-  waitOn: ->
-    Meteor.subscribe 'userData'
-    Meteor.subscribe 'organizations'
   onBeforeAction: ->
     Session.set 'currentRoute', 'organization'
     @next()
-)
 
-Router.route('badges',
-  path: '/badges'
-  template: 'badges'
-  waitOn: ->
-    Meteor.subscribe 'userData'
-    Meteor.subscribe 'organizations'
-    Meteor.subscribe 'organizationBadges'
-    Meteor.subscribe 'userBadgeAssertions'
-    Meteor.subscribe 'userBadges'
+Router.route 'award',
+  path: '/award'
+  template: 'award'
   onBeforeAction: ->
-    Session.set 'currentRoute', 'badges'
+    Session.set 'currentRoute', 'award'
     @next()
-)
 
-Router.route('award_badge',
+Router.route 'award_badge',
   path: '/award_badge/:badgeId'
   template: 'award_badge'
   data: ->
-    Meteor.subscribe 'organizationBadges'
     return {
       badge: badgeClasses.findOne({_id: @params.badgeId})
     }
-  waitOn: ->
-    Meteor.subscribe 'userData'
-    Meteor.subscribe 'allUsers'
-    Meteor.subscribe 'organizationBadges'
-    Meteor.subscribe 'assertionKeys'
-    Meteor.subscribe 'userBadges'
   onBeforeAction: ->
     Session.set 'currentRoute', 'award_badge'
     @next()
-)
 
 checkUserLoggedIn = ->
   if not Meteor.loggingIn() and not Meteor.user()
@@ -77,19 +54,15 @@ checkUserLoggedIn = ->
   else
     @next()
 
-userAuthenticated = ->
-  if not Meteor.loggingIn() and Meteor.user()
+bounceNonAdmin = ->
+  if not Meteor.loggingIn() and Meteor.user() and Roles.userIsInRole(Meteor.user(), ['admin'])
     Router.go '/view'
   else
     @next()
 
-#Router.onBeforeAction checkUserLoggedIn, except: [
-#  'index',
-#  'signup',
-#  'login',
-#  'recover-password',
-#  'reset-password'
-#]
+Router.onBeforeAction checkUserLoggedIn, except: [
+  'index',
+]
 
 #Router.onBeforeAction userAuthenticated, only: [
 #  'index',

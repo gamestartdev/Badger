@@ -1,10 +1,14 @@
+Template.badge_grid.helpers
+  badge_ref: ->
+    return '/award_badge/' + this._id
 
-Template.index.helpers
   badges: ->
     user = Meteor.user()
-    assertions = badgeAssertions.find(
-      {"recipient.identity": user.identity}).fetch()
-    ids = _.pluck(assertions, 'uid')
-    return badgeClasses.find({_id: { $in: ids}})
-    return badges
-  nav: -> Session.get('nav')
+    if user
+      orgUrls = _.pluck(organizations.find({users: user._id}).fetch(), 'url')
+
+      assertions = badgeAssertions.find({"recipient.identity": user.identity}).fetch()
+
+      earned_badge_ids = _.pluck(assertions, 'uid')
+
+      return badgeClasses.find { $or: [ {_id: { $in: earned_badge_ids}}, {issuer: { $in: orgUrls}} ]}

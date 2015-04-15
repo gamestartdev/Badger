@@ -1,22 +1,31 @@
 <template name="award_badge">
 
-    <label>Search:
-    <input type="text" class="username-search">
+    {{#with badge}}
+        <div class="row" style="text-align:center">
+            <h1 class="badge_name">{{name}}</h1>
+            <img align="middle" src="{{image}}"/>
+            <h6 >{{issuer}}</h6>
+        </div>
+    {{/with}}
+
+    {{#if isIssuer badge}}
+    <label>Search Users:
+        <input type="text" class="username-search">
     </label>
 
-    {{#with badge}}
-        <h2 class="badge_name">{{name}}</h2>
-        <img src="{{image}}"/>
-    {{/with}}
+    {{#each isIssuer}}
+        hi {{name}}
+    {{/each}}
 
     {{#each users}}
         <div class="row">
             <div class="small-6 columns">{{ username }}</div>
             <div class="small-3 columns">
-                <button type="submit" class="btn btn-grant-badge expand" style="background-color:{{#if hasBadge}}red{{else}}#008CBA{{/if}}">
+                <button type="submit" class="btn btn-grant-badge expand" style="background-color:{{#if hasBadge badge}}red{{else}}#008CBA{{/if}}">
                 </button>
             </div>
         </div>
     {{/each}}
+    {{/if}}
 
 </template>
