@@ -4,13 +4,17 @@
             <div class="medium-4 small-6 columns">
                 {{> badge_cell }}
             </div>
+        {{else}}
+        <div class="small-12 columns">
+            <h1>Go earn badges!!</h1>
+        </div>
         {{/each}}
     </div>
 </template>
 
 <template name="badge_cell">
     <div class="badge_cell">
-        <a class="badge_icon"  href="/badges/{{_id}}"><img src="{{image}}"/></a>
+        <a class="badge_icon"  href="/award_badge/{{_id}}"><img src="{{image}}"/></a>
         <h4 class="badge_name">{{name}}</h4>
     </div>
 </template>

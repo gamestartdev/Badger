@@ -52,9 +52,9 @@ Router.route('badges',
     @next()
 )
 
-Router.route('badgeDetails',
-  path: '/badges/:badgeId'
-  template: 'badgeDetails'
+Router.route('award_badge',
+  path: '/award_badge/:badgeId'
+  template: 'award_badge'
   data: ->
     Meteor.subscribe 'organizationBadges'
     return {
@@ -67,7 +67,7 @@ Router.route('badgeDetails',
     Meteor.subscribe 'assertionKeys'
     Meteor.subscribe 'userBadges'
   onBeforeAction: ->
-    Session.set 'currentRoute', 'badgeDetails'
+    Session.set 'currentRoute', 'award_badge'
     @next()
 )
 

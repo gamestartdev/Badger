@@ -44,7 +44,7 @@ Meteor.publish('organizationBadges', ->
 )
 
 Meteor.publish('allUsers', ->
-  return Meteor.users.find({}, {fields: {emails: 1, identity: 1, _id: 1}})
+  return Meteor.users.find({}, {fields: {username:1, emails: 1, identity: 1, _id: 1}})
 )
 
 Meteor.publish('assertionKeys', ->

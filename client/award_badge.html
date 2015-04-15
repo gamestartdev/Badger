@@ -1,0 +1,22 @@
+<template name="award_badge">
+
+    <label>Search:
+    <input type="text" class="username-search">
+    </label>
+
+    {{#with badge}}
+        <h2 class="badge_name">{{name}}</h2>
+        <img src="{{image}}"/>
+    {{/with}}
+
+    {{#each users}}
+        <div class="row">
+            <div class="small-6 columns">{{ username }}</div>
+            <div class="small-3 columns">
+                <button type="submit" class="btn btn-grant-badge expand" style="background-color:{{#if hasBadge}}red{{else}}#008CBA{{/if}}">
+                </button>
+            </div>
+        </div>
+    {{/each}}
+
+</template>

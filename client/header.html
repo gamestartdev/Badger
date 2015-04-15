@@ -11,11 +11,12 @@
         {{#if currentUser}}
         <section class="top-bar-section">
             <ul class="right">
-                {{#if isAdmin }}
+
+                {{#if isInRole 'admin'}}
                     <li><a href="{{pathFor 'organization'}}" class="{{currentRoute 'organization'}} nav-button">Organization</a></li>
                 {{/if}}
 
-                {{#if isIssuer }}
+                {{#if isInRole 'issuer' }}
                     <li><a href="{{pathFor 'create'}}" class="{{currentRoute 'create'}} nav-button">Create</a></li>
                     <li><a href="{{pathFor 'badges'}}" class="{{currentRoute 'badges'}} nav-button">Award</a></li>
                 {{/if}}

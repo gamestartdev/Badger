@@ -33,9 +33,9 @@ Template.create_organization.rendered = ->
         email: $('[name="organizationEmailAddress"]').val()
         description: $('[name="organizationDescription"]').val()
         image: ""
-      $('.modal-backdrop').hide()
-      Meteor.call 'createOrganization', organization, alert_problem
+      Meteor.call 'createOrganization', organization, share.alertProblem
   )
+
 Template.create_organization.events
   'submit form': (e) ->
     e.preventDefault()
@@ -52,15 +52,7 @@ Template.join_organization.events
     user = Meteor.user()
     if _.contains(organization.users, user._id)
       $(e.target).text('Join')
-      Meteor.call 'leaveOrganization', user._id, organization._id, alert_problem
+      Meteor.call 'leaveOrganization', user._id, organization._id, share.alertProblem
     else
       $(e.target).text('Leave')
-      Meteor.call 'joinOrganization', user._id, organization._id, alert_problem
-
-
-alert_problem = (error, response) ->
-  if error
-    alert(error.reason)
-  else
-    if response.error
-      alert(response.error)
+      Meteor.call 'joinOrganization', user._id, organization._id, share.alertProblem
