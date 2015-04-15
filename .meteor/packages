@@ -15,15 +15,9 @@ iron:router
 themeteorchef:jquery-validation
 jparker:crypto-sha256
 jparker:crypto-base64
-
 service-configuration
 http
-#aldeed:simple-schema
-#aldeed:autoform
-
-mbish:badge-builder
 fongandrew:find-and-modify
-
 ewall:foundation
 useraccounts:foundation
 alanning:roles

@@ -1,4 +1,4 @@
-usernameSearchKey = "usernameSearch"
+
 
 Template.view_badge.events
   'click .btn-grant-badge': (event, template) ->
@@ -10,7 +10,7 @@ Template.view_badge.events
       Meteor.call 'grantBadge', user._id, badge._id, share.alertProblem
 
   'keyup input.username-search': (evt) ->
-    Session.set(usernameSearchKey, evt.currentTarget.value);
+    Session.set("usernameSearch", evt.currentTarget.value);
 
 
 Template.view_badge.helpers
@@ -19,7 +19,7 @@ Template.view_badge.helpers
     return Router.current().data().badge
 
   users: ->
-    query = new RegExp( Session.get(usernameSearchKey), 'i' );
+    query = new RegExp( Session.get("usernameSearch"), 'i' );
     return Meteor.users.find { $or: [ {'username': query}, {'password': query} ] }
 
   hasBadge: (badge) ->

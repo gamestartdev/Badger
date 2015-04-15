@@ -1,0 +1,16 @@
+<template name="badge_builder">
+    <form id="badge_builder">
+        <div id="badgename">
+            <label>Badge Name:</label><input type="text"/>
+            <p class="warning">You must enter a badge name</p>
+        </div>
+        <div id="orgname">
+          {{> organization_selector }}
+            <p class="warning">You must enter an organization</p>
+        </div>
+        <iframe id="badgedesigner"
+                src="https://www.openbadges.me/designer.html?origin={{ origin }}&email=developer@example.com&hidePublish=false&format=json">
+            Design a new badge
+        </iframe>
+    </form>
+</template>

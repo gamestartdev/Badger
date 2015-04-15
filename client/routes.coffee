@@ -39,6 +39,7 @@ Router.route 'view_badge',
     }
   onBeforeAction: ->
     Session.set 'currentRoute', 'view_badge'
+    Session.set 'usernameSearch', ''
     @next()
 
 checkUserLoggedIn = ->
