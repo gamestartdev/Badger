@@ -2,6 +2,10 @@ body {
     background-color: floralwhite;
 }
 
+.container {
+    padding:10px;
+}
+
 .root-row {
     max-width:640px;
 }

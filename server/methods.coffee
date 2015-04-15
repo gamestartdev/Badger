@@ -32,6 +32,7 @@ Meteor.methods(
       description: org.description
       image: org.image
     })
+    return true
 
   joinOrganization: (userId, orgId) ->
     check(userId, String)

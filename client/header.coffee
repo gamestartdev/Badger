@@ -14,3 +14,6 @@ Template.header.helpers
 
   currentRoute: (route) ->
     return if Session.equals("currentRoute", route) then "active"
+
+  header_text: ->
+    if Meteor.user() then Meteor.user().username else "Welcome to GameStart Festival 2015!"

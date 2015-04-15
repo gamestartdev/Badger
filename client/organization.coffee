@@ -1,18 +1,26 @@
 Template.join_organization.helpers
-  organizations: ->
+  hasUser: ->
     user = Meteor.user()
-    return _.map(organizations.find({}, {name: 1, url: 1}).fetch(), (org) ->
-      org.hasUser = _.contains(org.users, user._id)
-      return org
-    )
+    if user
+      _.contains(this.users, user._id)
+
+  organizations: ->
+    organizations.find({}, {name: 1, url: 1})
+
+Template.join_organization.events
+  'click .join': ->
+    Meteor.call 'joinOrganization', Meteor.userId(), this._id, share.alertProblem
+
+  'click .leave': ->
+    Meteor.call 'leaveOrganization', Meteor.userId(), this._id, share.alertProblem
 
 Template.create_organization.rendered = ->
-  $("#create-organization").validate(
+  $("#create-organization").validate
     rules:
       organizationName:
         required: true
       organizationURL:
-        required: false
+        required: true
       organizationEmailAddress:
         required: true
         email: true
@@ -26,7 +34,11 @@ Template.create_organization.rendered = ->
         email: "The email address you have entered is invalid"
       organizationName:
         required: "Please enter a name for your orignization"
+      organizationURL:
+        required: "Full URL including 'http://'"
+
     submitHandler: ->
+      $('#create-organization-modal').foundation('reveal', 'close')
       organization =
         name: $('[name="organizationName"]').val()
         url: $('[name="organizationURL"]').val()
@@ -34,25 +46,9 @@ Template.create_organization.rendered = ->
         description: $('[name="organizationDescription"]').val()
         image: ""
       Meteor.call 'createOrganization', organization, share.alertProblem
-  )
+
 
 Template.create_organization.events
   'submit form': (e) ->
     e.preventDefault()
 
-  'click .btn-cancel': ->
-    $('.modal-backdrop').hide()
-
-Template.join_organization.events
-  'click .btn-cancel': ->
-    $('.modal-backdrop').hide()
-
-  'click .btn-join': (e,t) ->
-    organization = Blaze.getData(event.target)
-    user = Meteor.user()
-    if _.contains(organization.users, user._id)
-      $(e.target).text('Join')
-      Meteor.call 'leaveOrganization', user._id, organization._id, share.alertProblem
-    else
-      $(e.target).text('Leave')
-      Meteor.call 'joinOrganization', user._id, organization._id, share.alertProblem

@@ -2,9 +2,7 @@
 
     <nav class="top-bar" data-topbar role="navigation">
         <ul class="title-area">
-            <li class="name">
-                <h1><a href="/">GameStart Festival 2015</a></h1>
-            </li>
+            <li class="name"><h1><a href="/">{{header_text}}</a></h1></li>
             <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
         </ul>
 
@@ -20,13 +18,7 @@
                     <li><a href="{{pathFor 'create'}}" class="{{currentRoute 'create'}} nav-button">Create</a></li>
                 {{/if}}
 
-                <li class="has-dropdown">
-
-                    <a href="#">{{currentUser.username}}</a>
-                    <ul class="dropdown">
-                        <li class="logout"><a href="#">Logout</a></li>
-                    </ul>
-                </li>
+                <li class="logout"><a href="#">Logout</a></li>
             </ul>
         </section>
         {{/if}}

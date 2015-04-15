@@ -18,8 +18,8 @@ jparker:crypto-base64
 
 service-configuration
 http
-aldeed:simple-schema
-aldeed:autoform
+#aldeed:simple-schema
+#aldeed:autoform
 
 mbish:badge-builder
 fongandrew:find-and-modify

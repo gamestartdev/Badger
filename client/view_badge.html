@@ -22,6 +22,7 @@
             <div class="small-6 columns">{{ username }}</div>
             <div class="small-3 columns">
                 <button type="submit" class="btn btn-grant-badge expand" style="background-color:{{#if hasBadge badge}}red{{else}}#008CBA{{/if}}">
+                    {{#if hasBadge badge}}Revoke{{else}}Award{{/if}}
                 </button>
             </div>
         </div>
