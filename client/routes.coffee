@@ -30,22 +30,15 @@ Router.route 'organization',
     Session.set 'currentRoute', 'organization'
     @next()
 
-Router.route 'award',
-  path: '/award'
-  template: 'award'
-  onBeforeAction: ->
-    Session.set 'currentRoute', 'award'
-    @next()
-
-Router.route 'award_badge',
-  path: '/award_badge/:badgeId'
-  template: 'award_badge'
+Router.route 'view_badge',
+  path: '/view_badge/:badgeId'
+  template: 'view_badge'
   data: ->
     return {
       badge: badgeClasses.findOne({_id: @params.badgeId})
     }
   onBeforeAction: ->
-    Session.set 'currentRoute', 'award_badge'
+    Session.set 'currentRoute', 'view_badge'
     @next()
 
 checkUserLoggedIn = ->

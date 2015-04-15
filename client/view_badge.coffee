@@ -1,6 +1,6 @@
 usernameSearchKey = "usernameSearch"
 
-Template.award_badge.events
+Template.view_badge.events
   'click .btn-grant-badge': (event, template) ->
     user = Blaze.getData(event.target)
     badge = template.data.badge
@@ -13,7 +13,7 @@ Template.award_badge.events
     Session.set(usernameSearchKey, evt.currentTarget.value);
 
 
-Template.award_badge.helpers
+Template.view_badge.helpers
 
   badge: ->
     return Router.current().data().badge

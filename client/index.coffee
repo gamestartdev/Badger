@@ -1,6 +1,6 @@
 Template.badge_grid.helpers
   badge_ref: ->
-    return '/award_badge/' + this._id
+    return '/view_badge/' + this._id
 
   badges: ->
     user = Meteor.user()
