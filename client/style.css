@@ -20,13 +20,14 @@ body {
     color:white;
 }
 
-.nav-button  {
-    background-color: #f5f0e6;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.09);
-    color:rgb(247,148,30);
-}
-
 .nav-button .active{
     background-color: red;
+}
+
+.warning {
+    visibility: hidden;
+}
+
+#badgename .warning {
+    color: red;
 }

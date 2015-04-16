@@ -1,16 +1,49 @@
 <template name="badge_builder">
+
     <form id="badge_builder">
-        <div id="badgename">
-            <label>Badge Name:</label><input type="text"/>
-            <p class="warning">You must enter a badge name</p>
+        <div class="small-12 columns">
+
+          <div class="row">
+            {{> organization_selector }}
+              <p class="warning">You must enter an organization</p>
+          </div>
+
+          <div class="row">
+              <input type="text" id="badgename" placeholder="Badge Name">
+              <p class="warning">You must enter a badge name</p>
+          </div>
+
+          <div class="row">
+            <textarea id="badge-description">Badge Description...</textarea>
+            <p class="warning">You must enter a badge description</p>
+          </div>
+            <div class="row">
+                <img src="" id="output" width="300"><br>
+                <input id="returnData" value="...">
+            </div>
+          <div class="row">
+            <button class="useBadgeBuilder">Use Badge Designer</button>
+          </div>
+            <div class="row">
+                {{#if useBadgeBuilder }}
+                  {{> badgeDesigner }}
+              {{else}}
+                  {{> uploadImage }}
+              {{/if}}
+          </div>
+
         </div>
-        <div id="orgname">
-          {{> organization_selector }}
-            <p class="warning">You must enter an organization</p>
-        </div>
-        <iframe id="badgedesigner"
-                src="https://www.openbadges.me/designer.html?origin={{ origin }}&email=developer@example.com&hidePublish=false&format=json">
-            Design a new badge
-        </iframe>
     </form>
+</template>
+
+<template name="uploadImage">
+    <input type="file" id="cam" accept="image/*;capture=camera"><br>
+    <button class="cameraSubmit">Create Badge</button>
+</template>
+
+<template name="badgeDesigner">
+    <!--<iframe id="badgedesigner"-->
+            <!--src="https://www.openbadges.me/designer.html?origin={{ origin }}&email=developer@example.com&hidePublish=false&format=json&width=200&height=200">-->
+        <!--Design a new badge-->
+    <!--</iframe>-->
 </template>

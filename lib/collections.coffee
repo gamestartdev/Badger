@@ -4,7 +4,6 @@
 @badgeAssertions = new Mongo.Collection("badgeAssertions")
 @identityObjects = new Mongo.Collection("identityObjects")
 
-
 AccountsTemplates.removeField('email');
 AccountsTemplates.removeField('password');
 

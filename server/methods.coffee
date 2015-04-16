@@ -1,23 +1,23 @@
 Meteor.methods(
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
-                      origin: String, layerData: Match.Any, \
-                      issuer: String})
-    imageID = images.findAndModify({
-      query: { data: badgeData.image },
-      update: { $setOnInsert: { data: badgeData.image } },
-      new: true,
-      upsert: true,
-    })
+                      origin: Match.Any, layerData: Match.Any, \
+                      issuer: String, description: String})
+
+    imageID = images.insert({data: badgeData.image})
+
     bid = badgeClasses.insert({
       name: badgeData.name,
-      image: "/v1/data/badges/images/" + imageID._id,
-      criteria: "/", #TODO
+      image: "/v1/data/badges/images/" + imageID,
+      criteria: "/",
       issuer: badgeData.issuer,
+      description: badgeData.description,
       alignment: [],
       tags: [],
     })
     return true
+
+
   createOrganization: (org) ->
     check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
 

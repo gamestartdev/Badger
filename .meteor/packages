@@ -17,7 +17,6 @@ jparker:crypto-sha256
 jparker:crypto-base64
 service-configuration
 http
-fongandrew:find-and-modify
 ewall:foundation
 useraccounts:foundation
 alanning:roles
