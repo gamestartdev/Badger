@@ -1,4 +1,17 @@
-add_default_users = ->
+
+
+add_default = ->
+  orgs = [
+    name: 'GameStart'
+    url: 'http://www.gamestartschool.org'
+    email: 'info@gamestartschool.org'
+    description: 'We teach programming through video games'
+    image: ''
+  ]
+  orgIds = []
+  for org in orgs
+    orgIds.push(organizations.insert(org))
+
   users = [
     { username:"admin", email: "admin@a.com", password: "a", roles:['admin', 'issuer']},
     { username:"nate", email: "nate@a.com", password: "a", roles:['issuer'] },
@@ -14,28 +27,19 @@ add_default_users = ->
   for user in users
     checkUser = Meteor.users.findOne({"emails.address": user.email});
     if not checkUser
-      id = Accounts.createUser
+      userId = Accounts.createUser
         email: user.email
         password: user.password
         username: user.username
-      Roles.addUsersToRoles(id, user.roles);
-
-add_default_orgs = ->
-  orgs = [
-    name: 'GameStart'
-    url: 'http://www.gamestartschool.org'
-    email: 'info@gamestartschool.org'
-    description: 'We teach programming through video games'
-    image: ''
-  ]
-  for org in orgs
-    organizations.insert org
+      Roles.addUsersToRoles(userId, user.roles);
+      if user.roles.length > 1
+        for org in organizations.find().fetch()
+          Meteor.call "joinOrganization", userId, org._id
 
 Meteor.startup ->
   Meteor.users.remove({})
   organizations.remove({})
-  add_default_users()
-  add_default_orgs()
+  add_default()
 
 
 

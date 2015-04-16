@@ -1,49 +1,42 @@
 <template name="badge_builder">
 
-    <form id="badge_builder">
-        <div class="small-12 columns">
-
-          <div class="row">
+    <div class="small-12 columns">
+        <div class="row">
             {{> organization_selector }}
-              <p class="warning">You must enter an organization</p>
-          </div>
-
-          <div class="row">
-              <input type="text" id="badgename" placeholder="Badge Name">
-              <p class="warning">You must enter a badge name</p>
-          </div>
-
-          <div class="row">
-            <textarea id="badge-description">Badge Description...</textarea>
-            <p class="warning">You must enter a badge description</p>
-          </div>
-            <div class="row">
-                <img src="" id="output" width="300"><br>
-                <input id="returnData" value="...">
-            </div>
-          <div class="row">
-            <button class="useBadgeBuilder">Use Badge Designer</button>
-          </div>
-            <div class="row">
-                {{#if useBadgeBuilder }}
-                  {{> badgeDesigner }}
-              {{else}}
-                  {{> uploadImage }}
-              {{/if}}
-          </div>
-
         </div>
-    </form>
-</template>
 
-<template name="uploadImage">
-    <input type="file" id="cam" accept="image/*;capture=camera"><br>
-    <button class="cameraSubmit">Create Badge</button>
-</template>
+        <div class="row">
+            <input type="text" id="badgename" placeholder="Badge Name">
+        </div>
 
-<template name="badgeDesigner">
-    <!--<iframe id="badgedesigner"-->
-            <!--src="https://www.openbadges.me/designer.html?origin={{ origin }}&email=developer@example.com&hidePublish=false&format=json&width=200&height=200">-->
-        <!--Design a new badge-->
-    <!--</iframe>-->
+        <div class="row">
+            <textarea id="badge-description">Badge Description...</textarea>
+        </div>
+
+        <div class="row">
+            <hr>
+            <hr>
+            <canvas id="badgeCanvas" width="200" height="200"></canvas><br>
+            <hr>
+            <hr>
+        </div>
+
+        <div class="row">
+            <img src="" id="badge-image" width="300"><br>
+        </div>
+
+        <div class="row">
+            <div class="small-6 columns">
+                <input type="file" id="cam" accept="image/*;capture=camera"><br>
+            </div>
+            <div class="small-6 columns">
+                <button class="useBadgeBuilder">Use Badge Designer</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <button class="cameraSubmit">Create Badge</button>
+        </div>
+
+    </div>
 </template>

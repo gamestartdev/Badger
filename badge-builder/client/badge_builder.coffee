@@ -1,16 +1,5 @@
-Template.badgeDesigner.helpers
-  origin: ->
-    return Meteor.absoluteUrl()
-
-Template.badge_builder.helpers
-  useBadgeBuilder: ->
-    return Session.get('useBadgeBuilder')
-
 Template.badge_builder.events
   'click .useBadgeBuilder': (e,t) ->
-    e.preventDefault();
-    Session.set('useBadgeBuilder', !Session.get('useBadgeBuilder'))
-
     openDesigner = ->
       URL = 'https://www.openbadges.me/designer.html?origin=' + Meteor.absoluteUrl()
       URL = URL+'&email=badges@gamestartschool.org'
@@ -19,37 +8,36 @@ Template.badge_builder.events
       designerWindow = window.open(URL,'',options)
     openDesigner()
 
+#  'click #cam': ->
+#    return false
+
   'change #cam': (e) ->
-    e.preventDefault();
     f = e.target.files[0]
     reader = new FileReader();
     reader.onload = (e) ->
       imageData = e.target.result
-
-      #      image = new Image()
-      #      image.src = imageData
-      #      canvas = convertImageToCanvas(image)
-      #      image = convertCanvasToImage(canvas)
-      #      imageData = image.src
-
-      $( "#output" ).attr "src", imageData
+      $( "#badge-image" ).attr "src", imageData
     reader.readAsDataURL(f)
 
   'click .cameraSubmit': (e) ->
-    e.preventDefault();
-    commitBadge({image: $( "#output" ).attr("src"), origin:Meteor.absoluteUrl()})
+    convertToSmallPng()
+    #commitBadge()
 
 Template.badge_builder.rendered = ->
   window.onmessage = (e) ->
-    console.log "OnMessage"
-    console.log e.data
-    if(e.origin=='https://www.openbadges.me')
-      if(e.data!='cancelled')
-        imageData = e.data
-        badgeData = JSON.parse(imageData)
-        commitBadge(badgeData)
+    if e.origin == 'https://www.openbadges.me' and e.data != 'cancelled'
+      badgeData = JSON.parse(e.data)
+      $( "#badge-image" ).attr "src", badgeData.image
 
-commitBadge = (badgeDataWithImage) ->
+commitBadge = ->
+
+  #      image = new Image()
+  #      image.src = imageData
+  #      canvas = convertImageToCanvas(image)
+  #      image = convertCanvasToImage(canvas)
+  #      imageData = image.src
+
+  badgeDataWithImage = {image: $( "#badge-image" ).attr("src"), origin:Meteor.absoluteUrl()}
   name = $("#badgename").val()
   description = $("#badge-description").val()
   if name and description
@@ -75,11 +63,19 @@ commitBadge = (badgeDataWithImage) ->
   else
     $("#badgename .warning").css('visibility', 'visible')
 
+convertToSmallPng = ->
+  image = new Image()
+  image.src = $( "#badge-image" ).attr("src")
+
+  canvas = convertImageToCanvas(image)
+  image = convertCanvasToImage(canvas)
+  $( "#badge-image" ).attr("src", image.src)
+
 convertImageToCanvas = (image) ->
-  canvas = document.createElement("canvas")
+  canvas = document.getElementById("badgeCanvas")
   canvas.width = image.width
   canvas.height = image.height
-  canvas.getContext("2d").drawImage(image, 0, 0)
+  canvas.getContext("2d").drawImage(image, 0, 0, 200, 200)
   return canvas;
 
 convertCanvasToImage = (canvas) ->

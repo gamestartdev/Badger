@@ -38,6 +38,7 @@ Meteor.methods(
     check(userId, String)
     check(orgId, String)
     organizations.update {_id: orgId}, { $addToSet: { users: userId } }
+
   leaveOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
