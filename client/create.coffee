@@ -58,10 +58,9 @@ convertImageToCanvas = (image) ->
   canvas = document.getElementById("badgeCanvas")
   canvas.width = 300
   canvas.height = 300
-  canvas.getContext("2d").drawImage(image, 0, 0, 300, 300)
-  return canvas;
+  ctx = canvas.getContext("2d")
 
-#  exif = EXIF.readAsDataURL(image)
+#  exif = EXIF.readAsDataURL(image) ## like this?
 #  console.log "IMAGE!!:"
 #  console.log exif
 #  if exif
@@ -69,6 +68,8 @@ convertImageToCanvas = (image) ->
 #      when 8 then  ctx.rotate(90*Math.PI/180)
 #      when 3 then ctx.rotate(180*Math.PI/180)
 #      when 6 then ctx.rotate(-90*Math.PI/180)
+
+  return ctx.drawImage(image, 0, 0, 300, 300);
 
 
 convertCanvasToImage = (canvas) ->

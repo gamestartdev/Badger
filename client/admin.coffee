@@ -5,9 +5,9 @@ Template.user_admin.helpers
       return Session.get('adminSelection').username == this.username
   isInOrganization: ->
     if Session.get('adminSelection')
-      console.log this.users
       return Session.get('adminSelection')._id in this.users
-  organizations: -> organizations.find()
+
+  allOrganizations: -> organizations.find()
 
 Template.user_admin.events
   'click .userRow': (e,t) ->

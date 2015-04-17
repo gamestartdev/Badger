@@ -11,14 +11,14 @@
             {{username}}
           </div>
           <div class="small-6 columns">
-              nopew
-          </div>
+        </div>
       </div>
 
     {{#if userIsSelected}}
         <div class="panel">
+
           {{username}}
-          {{#each organizations}}
+          {{#each allOrganizations}}
             {{#if isInOrganization}}
                 <button class="leave" style="background-color: red">{{name}}</button>
             {{else}}
@@ -29,7 +29,6 @@
     {{/if}}
 
   {{/each}}
-
 </template>
 
 <template name="org_admin">

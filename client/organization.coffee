@@ -5,7 +5,9 @@ Template.join_organization.helpers
       _.contains(this.users, user._id)
 
   organizations: ->
-    organizations.find({}, {name: 1, url: 1})
+    user = Meteor.user()
+    if user
+      organizations.find({users: user._id})
 
 Template.join_organization.events
   'click .join': ->

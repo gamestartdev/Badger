@@ -31,8 +31,14 @@ Meteor.methods(
       email: org.email
       description: org.description
       image: org.image
+      users: [ Meteor.userId() ]
     })
     return true
+
+  promoteToIssuer: (userId) ->
+    check(userId)
+    if Roles.userIsInRole(Meteor.user(), ['admin'])
+      Roles.addUsersToRoles(userId, user.roles);
 
   joinOrganization: (userId, orgId) ->
     check(userId, String)
