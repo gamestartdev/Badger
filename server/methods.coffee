@@ -3,6 +3,8 @@ Meteor.methods(
     check(badgeData, {name: String, email: String, image: String, \
                       origin: Match.Any, layerData: Match.Any, \
                       issuer: String, description: String})
+    console.log "Creating Badge"
+    console.log badgeData
 
     imageID = images.insert({data: badgeData.image})
 
@@ -35,10 +37,12 @@ Meteor.methods(
     })
     return true
 
-  promoteToIssuer: (userId) ->
-    check(userId)
+  toggleIssuerRole: (userId) ->
+    check(userId, String)
     if Roles.userIsInRole(Meteor.user(), ['admin'])
-      Roles.addUsersToRoles(userId, user.roles);
+      user = Meteor.users.findOne({_id: userId})
+      user.isIssuer = !user.isIssuer
+      Meteor.users.update(user._id, user)
 
   joinOrganization: (userId, orgId) ->
     check(userId, String)

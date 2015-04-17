@@ -16,8 +16,7 @@
 
     {{#if userIsSelected}}
         <div class="panel">
-
-          {{username}}
+          <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to Issuer{{/if}}</button>
           {{#each allOrganizations}}
             {{#if isInOrganization}}
                 <button class="leave" style="background-color: red">{{name}}</button>

@@ -36,9 +36,9 @@ commitBadge = ->
     issuer: $("#badge_builder select").val()
     layerData: "nope"
     email: "what@sdf.com"
-    issuer: "http://www.gamestartschool.org"
 
   if badgeData.name and badgeData.description and badgeData.issuer
+    console.log badgeData
     Meteor.call "createBadge", badgeData, (error, reason) ->
       if error
         alert error
@@ -59,7 +59,7 @@ convertImageToCanvas = (image) ->
   canvas.width = 300
   canvas.height = 300
   ctx = canvas.getContext("2d")
-
+  ctx.drawImage(image, 0, 0, 300, 300)
 #  exif = EXIF.readAsDataURL(image) ## like this?
 #  console.log "IMAGE!!:"
 #  console.log exif
@@ -68,8 +68,7 @@ convertImageToCanvas = (image) ->
 #      when 8 then  ctx.rotate(90*Math.PI/180)
 #      when 3 then ctx.rotate(180*Math.PI/180)
 #      when 6 then ctx.rotate(-90*Math.PI/180)
-
-  return ctx.drawImage(image, 0, 0, 300, 300);
+  return canvas;
 
 
 convertCanvasToImage = (canvas) ->

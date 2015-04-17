@@ -1,21 +1,25 @@
+selectedUser = ->
+  return Session.get('adminSelection')
+
 Template.user_admin.helpers
   users: -> Meteor.users.find()
   userIsSelected: ->
-    if Session.get('adminSelection')
-      return Session.get('adminSelection').username == this.username
+    if selectedUser()
+      return selectedUser().username == this.username
   isInOrganization: ->
-    if Session.get('adminSelection')
-      return Session.get('adminSelection')._id in this.users
-
+    if selectedUser()
+      return selectedUser()._id in this.users
   allOrganizations: -> organizations.find()
 
 Template.user_admin.events
   'click .userRow': (e,t) ->
     Session.set('adminSelection', this)
   'click .join': (e,t) ->
-    Meteor.call "joinOrganization", Session.get('adminSelection')._id, this._id
+    Meteor.call "joinOrganization", selectedUser()._id, this._id
   'click .leave': (e,t) ->
-    Meteor.call "leaveOrganization", Session.get('adminSelection')._id, this._id
+    Meteor.call "leaveOrganization", selectedUser()._id, this._id
+  'click .toggleIssuerRole': ->
+    Meteor.call "toggleIssuerRole", selectedUser()._id
 
 Template.org_admin.helpers
   organizations: -> organizations.find()
