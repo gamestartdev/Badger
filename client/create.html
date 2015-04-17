@@ -1,3 +1,42 @@
 <template name="create">
     {{> badge_builder }}
 </template>
+
+<template name="badge_builder">
+
+    <div class="small-12 columns">
+        <div class="row">
+            {{> organization_selector }}
+        </div>
+
+        <div class="row">
+            <input type="text" id="badgename" placeholder="Badge Name">
+        </div>
+
+        <div class="row">
+            <textarea id="badge-description">Badge Description...</textarea>
+        </div>
+
+        <div class="row">
+            <img src="" id="badge-image"><br>
+        </div>
+
+        <div class="row">
+            <div class="small-6 columns">
+                <input type="file" id="cam" accept="image/*;capture=camera"><br>
+            </div>
+            <div class="small-6 columns">
+                <button class="useBadgeBuilder">Use Badge Designer</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <button class="cameraSubmit">Create Badge</button>
+        </div>
+
+        <div class="row">
+            <canvas id="badgeCanvas"></canvas><br>
+        </div>
+
+    </div>
+</template>

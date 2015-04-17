@@ -1,0 +1,42 @@
+<template name="admin">
+  {{> user_admin}}
+  {{> org_admin }}
+</template>
+
+
+<template name="user_admin">
+  {{#each users}}
+      <div class="row userRow">
+          <div class="small-6 columns">
+            {{username}}
+          </div>
+          <div class="small-6 columns">
+              nopew
+          </div>
+      </div>
+
+    {{#if userIsSelected}}
+        <div class="panel">
+          {{username}}
+          {{#each organizations}}
+            {{#if isInOrganization}}
+                <button class="leave" style="background-color: red">{{name}}</button>
+            {{else}}
+                <button class="join" style="background-color: green">{{name}}</button>
+            {{/if}}
+          {{/each}}
+        </div>
+    {{/if}}
+
+  {{/each}}
+
+</template>
+
+<template name="org_admin">
+  <h1>Organization Admin</h1>
+  {{#each organizations}}
+    <div class="row">
+        {{name}}<button class="delete">Delete</button>
+    </div>
+  {{/each}}
+</template>

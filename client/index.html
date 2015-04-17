@@ -10,6 +10,11 @@
 
 <template name="badge_grid">
     <div id="badge_grid_container" class="row">
+        {{#with badge_data}}
+        <h5>Badges Earned: {{count}} / {{total_badge_count}}</h5>
+
+
+
         {{#each badges}}
             <div class="medium-4 small-6 columns">
                 <div class="badge_cell">
@@ -24,5 +29,6 @@
                 <h1>Go earn badges!!</h1>
             </div>
         {{/each}}
+        {{/with}}
     </div>
 </template>

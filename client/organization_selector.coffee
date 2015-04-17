@@ -1,7 +1,8 @@
 Template.organization_selector.helpers(
   userOrganizations: ->
     user = Meteor.user()
-    organizations.find({users: user._id})
+    if user
+      organizations.find({users: user._id})
   selectedOrganization: ->
     return Serssion.get('selectedOrganization')
 )
@@ -18,8 +19,6 @@ Template.organization_selector.events(
     Session.set('selectedOrganization', \
                 $("#selectedOrganization").val())
   'ready select': (e,t) ->
-    console.log("YEAH")
-    console.log($("#selectedOrganization"))
     Session.set('selectedOrganization', \
                 $("#selectedOrganization").val())
 )

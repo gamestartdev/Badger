@@ -44,6 +44,12 @@ Meteor.methods(
     check(orgId, String)
     organizations.update {_id: orgId}, { $pull: { users: userId } }
 
+  removeOrganization: (orgId) ->
+    check(orgId, String)
+    if Roles.userIsInRole(Meteor.user(), ['admin'])
+      console.log "Removing organization "+ orgId
+      organizations.remove(orgId)
+
   grantBadge: (uid, bid) ->
     check(uid, String)
     check(bid, String)

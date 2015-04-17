@@ -8,6 +8,7 @@ Router.configure
   notFoundTemplate: 'notFound'
   layoutTemplate: 'layout'
 
+
 Router.route 'index',
   path: '/'
   template: 'index'
@@ -30,6 +31,14 @@ Router.route 'organization',
     Session.set 'currentRoute', 'organization'
     @next()
 
+Router.route 'leaderboard',
+  path: '/leaderboard'
+  template: 'leaderboard'
+  layoutTemplate: 'layoutLeaderboard',
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'leaderboard'
+    @next()
+
 Router.route 'view_badge',
   path: '/view_badge/:badgeId'
   template: 'view_badge'
@@ -42,6 +51,13 @@ Router.route 'view_badge',
     Session.set 'usernameSearch', ''
     @next()
 
+Router.route 'admin',
+  path: '/admin'
+  template: 'admin'
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'admin'
+    @next()
+
 checkUserLoggedIn = ->
   if not Meteor.loggingIn() and not Meteor.user()
     Router.go '/'
@@ -49,19 +65,14 @@ checkUserLoggedIn = ->
     @next()
 
 bounceNonAdmin = ->
-  if not Meteor.loggingIn() and Meteor.user() and Roles.userIsInRole(Meteor.user(), ['admin'])
-    Router.go '/view'
-  else
+  if Meteor.user() and Roles.userIsInRole(Meteor.user(), ['admin'])
     @next()
+  else
+    Router.go '/'
+
 
 Router.onBeforeAction checkUserLoggedIn, except: [
   'index',
+  'leaderboard'
 ]
 
-#Router.onBeforeAction userAuthenticated, only: [
-#  'index',
-#  'signup',
-#  'login',
-#  'recover-password',
-#  'reset-password'
-#]

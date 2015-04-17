@@ -17,6 +17,8 @@ Template.view_badge.helpers
 
   badge: ->
     return Router.current().data().badge
+  badge_organization: ->
+    return organizations.findOne({url: this.issuer})
 
   users: ->
     query = new RegExp( Session.get("usernameSearch"), 'i' );
