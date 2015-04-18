@@ -1,4 +1,4 @@
-INTERVAL = 4
+INTERVAL = 10
 
 Session.set("leaderboardIndex", 0)
 increment = ->
@@ -7,7 +7,7 @@ increment = ->
     nextIndex = 0
   Session.set "leaderboardIndex", nextIndex
 
-Meteor.setInterval(increment, 1000)
+Meteor.setInterval(increment, 5000)
 
 find_players = ->
   skip = parseInt(Session.get("leaderboardIndex"))
