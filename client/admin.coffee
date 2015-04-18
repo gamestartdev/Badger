@@ -23,7 +23,8 @@ Template.user_admin.events
     Meteor.call "toggleIssuerRole", selectedUser()._id
 
 Template.org_admin.helpers
-  organizations: -> organizations.find()
+  allOrganizations: -> organizations.find()
+  myOrganizations: -> organizations.find({users: Meteor.userId()})
   badgesForOrg: ->
     return badgeClasses.find { issuer:  this.url}
 
@@ -32,6 +33,6 @@ Template.org_admin.events
     console.log "Removing "+this
     Meteor.call "removeOrganization", this._id
 
-  'click .deleteBadge': ->
+  'click .removeBadge': ->
     console.log "Removing "+this
     Meteor.call "removeBadge", this._id

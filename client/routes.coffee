@@ -69,7 +69,6 @@ bounceNonAdmin = ->
   else
     Router.go '/'
 
-
 Router.onBeforeAction checkUserLoggedIn, except: [
   'index',
   'leaderboard'
