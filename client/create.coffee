@@ -33,12 +33,12 @@ commitBadge = ->
     origin:Meteor.absoluteUrl()
     name: $("#badgename").val()
     description: $("#badge-description").val()
-    issuer: $("#badge_builder select").val()
+    issuer: $("#selectedOrganization").val()
     layerData: "nope"
     email: "what@sdf.com"
-    issuer: "http://www.gamestartschool.org"
 
-  if badgeData.name and badgeData.description and badgeData.issuer
+  console.log badgeData
+  if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
     Meteor.call "createBadge", badgeData, (error, reason) ->
       if error
         alert error
@@ -50,6 +50,8 @@ commitBadge = ->
 convertToSmallPngSrc = ->
   image = new Image()
   image.src = $( "#badge-image" ).attr("src")
+  if not image.src
+    return false
   canvas = convertImageToCanvas(image)
   image = convertCanvasToImage(canvas)
   return image.src

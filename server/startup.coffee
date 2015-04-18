@@ -1,7 +1,7 @@
 add_default = ->
   users = [
-    { username:"admin", email: "admin@a.com", password: "a", roles:['admin', 'issuer']},
-    { username:"nate", email: "nate@a.com", password: "a", roles:['issuer'] },
+    { username:"admin", email: "admin@a.com", password: "a", roles:['admin']},
+    { username:"nate", email: "nate@a.com", password: "a", roles:[] },
     { username:"leo", email: "leo@a.com", password: "a", roles:[] },
     { username:"a", email: "a@a.com", password: "a", roles:[] },
     { username:"b", email: "b@a.com", password: "a", roles:[] },
@@ -22,8 +22,6 @@ add_default = ->
       if user.roles.length > 1
         for org in organizations.find().fetch()
           Meteor.call "joinOrganization", userId, org._id
-
-
 
 Meteor.startup ->
   add_default()

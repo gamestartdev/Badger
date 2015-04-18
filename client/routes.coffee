@@ -1,4 +1,3 @@
-Meteor.subscribe 'userData'
 Meteor.subscribe 'allUsers'
 Meteor.subscribe 'organizations'
 Meteor.subscribe 'badgeClasses'
@@ -69,7 +68,6 @@ bounceNonAdmin = ->
     @next()
   else
     Router.go '/'
-
 
 Router.onBeforeAction checkUserLoggedIn, except: [
   'index',

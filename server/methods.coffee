@@ -1,8 +1,13 @@
-Meteor.methods(
+isAdmin = ->
+  return Roles.userIsInRole(Meteor.user(), ['admin'])
+
+Meteor.methods
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
                       origin: Match.Any, layerData: Match.Any, \
                       issuer: String, description: String})
+    console.log "Creating Badge"
+    console.log badgeData
 
     imageID = images.insert({data: badgeData.image})
 
@@ -15,8 +20,11 @@ Meteor.methods(
       alignment: [],
       tags: [],
     })
-    return true
 
+  removeBadge: (badgeId) ->
+    check(badgeId, String)
+    badgeAssertions.remove({uid: badgeId})
+    badgeClasses.remove({_id: badgeId})
 
   createOrganization: (org) ->
     check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
@@ -33,28 +41,31 @@ Meteor.methods(
       image: org.image
       users: [ Meteor.userId() ]
     })
-    return true
 
-  promoteToIssuer: (userId) ->
-    check(userId)
-    if Roles.userIsInRole(Meteor.user(), ['admin'])
-      Roles.addUsersToRoles(userId, user.roles);
+  removeOrganization: (orgId) ->
+    check(orgId, String)
+    if isAdmin
+      console.log Meteor.user().username + " is Removing organization "+ orgId
+      organizations.remove(orgId)
+
+  toggleIssuerRole: (userId) ->
+    check(userId, String)
+    if isAdmin
+      user = Meteor.users.findOne({_id: userId})
+      user.isIssuer = !user.isIssuer
+      Meteor.users.update(user._id, user)
 
   joinOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    organizations.update {_id: orgId}, { $addToSet: { users: userId } }
+    if Meteor.userId() in organizations.findOne(orgId).users
+      organizations.update orgId, { $addToSet: { users: userId } }
 
   leaveOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    organizations.update {_id: orgId}, { $pull: { users: userId } }
-
-  removeOrganization: (orgId) ->
-    check(orgId, String)
-    if Roles.userIsInRole(Meteor.user(), ['admin'])
-      console.log "Removing organization "+ orgId
-      organizations.remove(orgId)
+    if Meteor.userId() in organizations.findOne(orgId).users
+      organizations.update {_id: orgId}, { $pull: { users: userId } }
 
   grantBadge: (uid, bid) ->
     check(uid, String)
@@ -85,6 +96,7 @@ Meteor.methods(
         }
       }
     })
+    
   revokeBadge: (uid, bid) ->
     check(uid, String)
     check(bid, String)
@@ -94,6 +106,3 @@ Meteor.methods(
                                 "recipient.identity": toUser.identity }))
       throw new Meteor.Error("assertion-does-not-exist",
                              "This user doesn't have this badge")
-    return true
-
-)

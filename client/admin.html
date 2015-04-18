@@ -16,8 +16,7 @@
 
     {{#if userIsSelected}}
         <div class="panel">
-
-          {{username}}
+          <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to Issuer{{/if}}</button>
           {{#each allOrganizations}}
             {{#if isInOrganization}}
                 <button class="leave" style="background-color: red">{{name}}</button>
@@ -32,10 +31,27 @@
 </template>
 
 <template name="org_admin">
-  <h1>Organization Admin</h1>
-  {{#each organizations}}
-    <div class="row">
-        {{name}}<button class="delete">Delete</button>
+  {{#each myOrganizations}}
+      <h1>Admin: {{name}}</h1>
+      <div class="panel">
+        {{#each badgesForOrg}}
+        <div class="row">
+            <div class="small-6 columns">
+            {{name}}
+            </div>
+            <div class="small-6 columns">
+              <button class="removeBadge">Delete</button>
+            </div>
+        </div>
+        {{/each}}
+
     </div>
   {{/each}}
+  {{#if isInRole 'admin' }}
+    {{#each allOrganizations}}
+        <div class="row">
+          {{name}}<button class="deleteOrg">Delete the ENTIRE Organization</button>
+        </div>
+    {{/each}}
+    {{/if}}
 </template>
