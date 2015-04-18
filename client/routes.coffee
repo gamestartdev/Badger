@@ -23,6 +23,14 @@ Router.route 'create',
     Session.set 'currentRoute', 'create'
     @next()
 
+
+Router.route 'award',
+  path: '/award'
+  template: 'award'
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'award'
+    @next()
+
 Router.route 'organization',
   path: '/organization'
   template: 'organization'
@@ -62,12 +70,6 @@ checkUserLoggedIn = ->
     Router.go '/'
   else
     @next()
-
-bounceNonAdmin = ->
-  if Meteor.user() and Roles.userIsInRole(Meteor.user(), ['admin'])
-    @next()
-  else
-    Router.go '/'
 
 Router.onBeforeAction checkUserLoggedIn, except: [
   'index',

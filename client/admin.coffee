@@ -9,7 +9,12 @@ Template.user_admin.helpers
   isInOrganization: ->
     if selectedUser()
       return selectedUser()._id in this.users
-  allOrganizations: -> organizations.find()
+  myOrganizations: ->
+    user = Meteor.user()
+    if share.isAdmin(user)
+      return organizations.find()
+    return organizations.find({users: Meteor.userId()})
+  isAdmin: -> share.isAdmin(Meteor.user())
 
 
 Template.user_admin.events

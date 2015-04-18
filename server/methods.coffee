@@ -1,6 +1,3 @@
-isAdmin = ->
-  return Roles.userIsInRole(Meteor.user(), ['admin'])
-
 Meteor.methods
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
@@ -44,13 +41,15 @@ Meteor.methods
 
   removeOrganization: (orgId) ->
     check(orgId, String)
-    if isAdmin
+    if share.isAdmin(Meteor.user())
       console.log Meteor.user().username + " is Removing organization "+ orgId
       organizations.remove(orgId)
 
   toggleIssuerRole: (userId) ->
     check(userId, String)
-    if isAdmin
+    console.log Meteor.user().username
+    console.log Roles.userIsInRole(Meteor.user(), ['admin'])
+    if share.isAdmin(Meteor.user())
       user = Meteor.users.findOne({_id: userId})
       user.isIssuer = !user.isIssuer
       Meteor.users.update(user._id, user)
@@ -96,7 +95,7 @@ Meteor.methods
         }
       }
     })
-    
+
   revokeBadge: (uid, bid) ->
     check(uid, String)
     check(bid, String)

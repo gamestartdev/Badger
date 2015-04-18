@@ -16,12 +16,14 @@
 
     {{#if userIsSelected}}
         <div class="panel">
-          <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to Issuer{{/if}}</button>
-          {{#each allOrganizations}}
+          {{#if isAdmin }}
+            <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to Issuer{{/if}}</button>
+          {{/if}}
+          {{#each myOrganizations}}
             {{#if isInOrganization}}
-                <button class="leave" style="background-color: red">{{name}}</button>
+                <button class="leave" style="background-color: red">Remove from {{name}}</button>
             {{else}}
-                <button class="join" style="background-color: green">{{name}}</button>
+                <button class="join" style="background-color: green">Add to {{name}}</button>
             {{/if}}
           {{/each}}
         </div>
