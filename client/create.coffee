@@ -17,9 +17,7 @@ Template.badge_builder.events
     reader = new FileReader()
     reader.onload = (e) ->
       imageData = e.target.result
-      $( "#badge-image" ).hide()
-      $( "#badge-image" ).attr "src", imageData
-      convertToSmallPngSrc()
+      convertToSmallPngSrc(imageData)
     reader.readAsDataURL(f)
     Session.set('creationDisabled', false)
 
@@ -38,9 +36,11 @@ Template.badge_builder.rendered = ->
       $( "#badge-image" ).attr "src", badgeData.image
       Session.set('creationDisabled', false)
 
-commitBadge = ->
+commitBadge = () ->
+  canvas = $("#badgeCanvas")[0]
+  console.log canvas
   badgeData =
-    image: convertToSmallPngSrc()
+    image: canvas.toDataURL("image/png")
     origin:Meteor.absoluteUrl()
     name: $("#badgename").val()
     description: $("#badge-description").val()
@@ -57,14 +57,12 @@ commitBadge = ->
   else
     alert('Please choose an organization, enter a name, and provide a description.')
 
-convertToSmallPngSrc = ->
+convertToSmallPngSrc = (newData) ->
   image = new Image()
-  image.src = $( "#badge-image" ).attr("src")
+  image.src = newData
   if not image.src
     return false
-  canvas = convertImageToCanvas(image)
-  image = convertCanvasToImage(canvas)
-  return image.src
+  convertImageToCanvas(image)
 
 convertImageToCanvas = (image) ->
   canvas = document.getElementById("badgeCanvas")
@@ -88,11 +86,3 @@ convertImageToCanvas = (image) ->
 
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
   ) ## like this?
-
-  return canvas
-
-
-convertCanvasToImage = (canvas) ->
-  image = new Image()
-  image.src = canvas.toDataURL("image/png")
-  return image
