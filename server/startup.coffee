@@ -23,8 +23,8 @@ add_default = ->
         for org in organizations.find().fetch()
           Meteor.call "joinOrganization", userId, org._id
 
-Meteor.startup ->
-  add_default()
+#Meteor.startup ->
+  #add_default()
 
 
 

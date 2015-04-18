@@ -42,12 +42,15 @@ Meteor.methods
     check(orgId, String)
     if share.isAdmin(Meteor.user())
       console.log Meteor.user().username + " is Removing organization "+ orgId
-      organizations.remove(orgId)
+      org = organizations.findOne({_id: orgId})
+      for badge in badgeClasses.find({issuer: org.url})
+        badgeAssertions.remove({uid: badge._id})
+      badgeClasses.remove({issuer: org.url})
+      organizations.remove(org)
+
 
   toggleIssuerRole: (userId) ->
     check(userId, String)
-    console.log Meteor.user().username
-    console.log Roles.userIsInRole(Meteor.user(), ['admin'])
     if share.isAdmin(Meteor.user())
       user = Meteor.users.findOne({_id: userId})
       user.isIssuer = !user.isIssuer
