@@ -24,4 +24,4 @@ Template.edit_user.events
   'click .leave': (e,t) ->
     Meteor.call "leaveOrganization", t.data._id, this._id
   'click .toggleIssuerRole': ->
-    Meteor.call "toggleIssuerRole", t.data._id
+    Meteor.call "toggleIssuerRole", this._id

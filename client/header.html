@@ -9,7 +9,7 @@
         {{#with currentUser}}
         <section class="top-bar-section">
             <ul class="right">
-                {{#if hasOrganization}}
+                {{#if isIssuer}}
                     <li><a href="{{pathFor 'admin'}}" class="{{currentRoute 'admin'}} nav-button">Admin</a></li>
                 {{/if}}
 
