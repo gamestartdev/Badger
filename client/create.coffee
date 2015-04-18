@@ -9,14 +9,13 @@ Template.badge_builder.events
       designerWindow = window.open(URL,'',options)
     openDesigner()
 
-  'click .useUpload': (e,t) ->
-    document.getElementById("cam").click()
-
   'change #cam': (e) ->
     f = e.target.files[0]
     reader = new FileReader()
     reader.onload = (e) ->
       imageData = e.target.result
+      console.log "e.target.result"
+      console.log imageData
       convertToSmallPngSrc(imageData)
     reader.readAsDataURL(f)
     Session.set('creationDisabled', false)
@@ -32,15 +31,24 @@ Template.badge_builder.rendered = ->
   Session.set('creationDisabled', true)
   window.onmessage = (e) ->
     if e.origin == 'https://www.openbadges.me'
-      badgeData = JSON.parse(e.data)
-      $( "#badge-image" ).attr "src", badgeData.image
+      image = JSON.parse(e.data).image
+      console.log "onmessage"
+      console.log image
+      convertToSmallPngSrc(image)
       Session.set('creationDisabled', false)
 
-commitBadge = () ->
+commitBadge = ->
   canvas = $("#badgeCanvas")[0]
+  console.log "canvas toDataURL start"
+  imageFromCanvas = canvas.toDataURL("image/png")
+  console.log "canvas toDataURL end"
+
+  console.log "commitBadge"
   console.log canvas
+  console.log imageFromCanvas
+
   badgeData =
-    image: canvas.toDataURL("image/png")
+    image: imageFromCanvas
     origin:Meteor.absoluteUrl()
     name: $("#badgename").val()
     description: $("#badge-description").val()
@@ -60,17 +68,14 @@ commitBadge = () ->
 convertToSmallPngSrc = (newData) ->
   image = new Image()
   image.src = newData
-  if not image.src
-    return false
-  convertImageToCanvas(image)
-
-convertImageToCanvas = (image) ->
   canvas = document.getElementById("badgeCanvas")
+  console.log "Found Canvas"
+  console.log canvas
   canvas.width = 300
   canvas.height = 300
   ctx = canvas.getContext("2d")
 
-  exif = EXIF.getData(image, (img) ->
+  exif = EXIF.getData(image, ->
     imageData = this
     orientation = EXIF.getTag(imageData, "Orientation")
     switch orientation
@@ -83,6 +88,5 @@ convertImageToCanvas = (image) ->
       when 8
         ctx.rotate(-90*Math.PI/180)
         ctx.translate(-canvas.width,0)
-
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
-  ) ## like this?
+  )
+  ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
