@@ -56,13 +56,13 @@ Meteor.methods
   joinOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    if share.isAdmin or (Meteor.userId() in organizations.findOne(orgId).users)
+    if share.isAdmin(Meteor.user()) or (Meteor.userId() in organizations.findOne(orgId).users)
       organizations.update orgId, { $addToSet: { users: userId } }
 
   leaveOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    if share.isAdmin or (Meteor.userId() in organizations.findOne(orgId).users)
+    if share.isAdmin(Meteor.user()) or (Meteor.userId() in organizations.findOne(orgId).users)
       organizations.update {_id: orgId}, { $pull: { users: userId } }
 
   grantBadge: (uid, bid) ->
@@ -98,9 +98,15 @@ Meteor.methods
   revokeBadge: (uid, bid) ->
     check(uid, String)
     check(bid, String)
-    toUser = Meteor.users.findOne({_id: uid},
-                               {_id: 1, identity: 1})
+    toUser = Meteor.users.findOne({_id: uid}, {_id: 1, identity: 1})
     if(!badgeAssertions.remove({uid: bid,\
                                 "recipient.identity": toUser.identity }))
       throw new Meteor.Error("assertion-does-not-exist",
                              "This user doesn't have this badge")
+
+  removeUser: (userId) ->
+    check(userId, String)
+    userToRemove = Meteor.users.findOne {_id: userId}
+    if share.isAdmin(Meteor.user()) and userToRemove
+      badgeAssertions.remove {"recipient.identity": userToRemove.identity}
+      Meteor.users.remove userToRemove

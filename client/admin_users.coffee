@@ -19,6 +19,8 @@ Template.edit_user.helpers
     return organizations.findOne {_id:this._id, users: user._id}
 
 Template.edit_user.events
+  'click .removeUser': (e,t) ->
+    Meteor.call "removeUser", this._id
   'click .join': (e,t) ->
     Meteor.call "joinOrganization", t.data._id, this._id
   'click .leave': (e,t) ->
