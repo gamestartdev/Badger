@@ -23,14 +23,6 @@ Router.route 'create',
     Session.set 'currentRoute', 'create'
     @next()
 
-
-Router.route 'award',
-  path: '/award'
-  template: 'award'
-  onBeforeAction: ->
-    Session.set 'currentRoute', 'award'
-    @next()
-
 Router.route 'leaderboard',
   path: '/leaderboard'
   template: 'leaderboard'

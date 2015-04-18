@@ -9,12 +9,8 @@
         {{#with currentUser}}
         <section class="top-bar-section">
             <ul class="right">
-                {{#if isIssuer}}
+                {{#if hasOrganization}}
                     <li><a href="{{pathFor 'admin'}}" class="{{currentRoute 'admin'}} nav-button">Admin</a></li>
-                {{/if}}
-
-                {{#if hasOrganization }}
-                    <li><a href="{{pathFor 'award'}}" class="{{currentRoute 'award'}} nav-button">Award</a></li>
                 {{/if}}
 
                 <li class="logout"><a href="#">Logout</a></li>

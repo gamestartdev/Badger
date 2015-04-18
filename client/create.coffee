@@ -53,7 +53,7 @@ commitBadge = ->
       if error
         alert error
       else
-        Router.go('/')
+        Router.go('/admin')
   else
     alert('Please choose an organization, enter a name, and provide a description.')
 

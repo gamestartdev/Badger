@@ -1,33 +1,3 @@
-selectedUser = ->
-  return Session.get('adminSelection')
-
-Template.user_admin.helpers
-  users: -> Meteor.users.find()
-  userIsSelected: ->
-    if selectedUser()
-      return selectedUser().username == this.username
-  isInOrganization: ->
-    if selectedUser()
-      return selectedUser()._id in this.users
-  myOrganizations: ->
-    user = Meteor.user()
-    if share.isAdmin(user)
-      return organizations.find()
-    return organizations.find({users: Meteor.userId()})
-  isAdmin: -> share.isAdmin(Meteor.user())
-
-
-Template.user_admin.events
-  'click .userRow': (e,t) ->
-    Session.set('adminSelection', this)
-  'click .join': (e,t) ->
-    Meteor.call "joinOrganization", selectedUser()._id, this._id
-  'click .leave': (e,t) ->
-    Meteor.call "leaveOrganization", selectedUser()._id, this._id
-  'click .toggleIssuerRole': ->
-    Meteor.call "toggleIssuerRole", selectedUser()._id
-
-
 Template.org_admin.helpers
   allOrganizations: -> organizations.find()
   myOrganizations: -> organizations.find({users: Meteor.userId()})
@@ -46,7 +16,14 @@ Template.org_admin.events
       Meteor.call "removeBadge", this._id
 
   'click .createBadge': ->
+    Session.set('selectedOrganization', this.url)
     Router.go('/create')
 
   'click .awardBadge': ->
     Router.go('/view_badge/' + this._id)
+
+Template.admin.helpers
+  isIssuer: ->
+    user = Meteor.user()
+    if user
+      return Meteor.user().isIssuer

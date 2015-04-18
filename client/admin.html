@@ -1,7 +1,9 @@
 <template name="admin">
-  {{> create_organization}}
+  {{#if isIssuer}}
+    {{> create_organization}}
+  {{/if}}
   {{> org_admin }}
-  {{> user_admin}}
+  {{> admin_users}}
 </template>
 
 <template name="org_admin">
@@ -16,8 +18,11 @@
 
         {{#each badgesForOrg}}
             <div class="row">
-                <div class="small-4 columns">
+                <div class="small-3 columns">
                   <button class="awardBadge expand">Award!</button>
+                </div>
+                <div class="small-2 columns">
+                    <img src="{{image}}" width="50">
                 </div>
                 <div class="small-4 columns">
                   <h4>{{name}}</h4><h6>x awarded</h6>
@@ -38,32 +43,4 @@
       </div>
   {{/each}}
 
-</template>
-
-<template name="user_admin">
-  {{#each users}}
-      <div class="row userRow">
-          <div class="small-6 columns">
-            {{username}}
-          </div>
-          <div class="small-6 columns">
-        </div>
-      </div>
-
-    {{#if userIsSelected}}
-        <div class="panel">
-          {{#if isAdmin }}
-            <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to Issuer{{/if}}</button>
-          {{/if}}
-          {{#each myOrganizations}}
-            {{#if isInOrganization}}
-                <button class="leave" style="background-color: red">Remove from {{name}}</button>
-            {{else}}
-                <button class="join" style="background-color: green">Add to {{name}}</button>
-            {{/if}}
-          {{/each}}
-        </div>
-    {{/if}}
-
-  {{/each}}
 </template>
