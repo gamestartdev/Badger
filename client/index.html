@@ -9,3 +9,15 @@
         {{> atForm }}
     {{/if}}
 </template>
+
+<template name="profile">
+    {{#if profileUser }}
+        {{#with badge_data}}
+            <h5>Badges Earned: {{count}} / {{total_badge_count}}</h5>
+
+            {{> badge_grid }}
+        {{/with}}
+    {{else}}
+        {{> atForm }}
+    {{/if}}
+</template>

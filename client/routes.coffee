@@ -16,6 +16,18 @@ Router.route 'index',
     Session.set 'currentRoute', 'index'
     @next()
 
+Router.route 'profile',
+  path: '/profile/:username'
+  template: 'profile'
+  data: ->
+    return {
+      username: @params.username
+    }
+  onBeforeAction: ->
+    # Code to run before route goes here.
+    Session.set 'currentRoute', 'profile'
+    @next()
+
 Router.route 'create',
   path: '/create'
   template: 'create'
