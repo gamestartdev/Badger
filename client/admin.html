@@ -33,8 +33,16 @@
 <template name="org_admin">
   <h1>Organization Admin</h1>
   {{#each organizations}}
-    <div class="row">
-        {{name}}<button class="delete">Delete</button>
+    <div class="panel">
+      <div class="row">
+        {{name}}<button class="deleteOrg">Delete</button>
+      </div>
+        {{#each badgesForOrg}}
+        <div class="row">
+            {{name}}<button >Delete</button>
+        </div>
+        {{/each}}
     </div>
+
   {{/each}}
 </template>

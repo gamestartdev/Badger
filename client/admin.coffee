@@ -11,6 +11,7 @@ Template.user_admin.helpers
       return selectedUser()._id in this.users
   allOrganizations: -> organizations.find()
 
+
 Template.user_admin.events
   'click .userRow': (e,t) ->
     Session.set('adminSelection', this)
@@ -23,8 +24,14 @@ Template.user_admin.events
 
 Template.org_admin.helpers
   organizations: -> organizations.find()
+  badgesForOrg: ->
+    return badgeClasses.find { issuer:  this.url}
 
 Template.org_admin.events
-  'click .delete': ->
+  'click .deleteOrg': ->
     console.log "Removing "+this
     Meteor.call "removeOrganization", this._id
+
+  'click .deleteBadge': ->
+    console.log "Removing "+this
+    Meteor.call "removeBadge", this._id
