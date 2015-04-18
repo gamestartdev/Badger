@@ -9,23 +9,34 @@ Template.badge_builder.events
       designerWindow = window.open(URL,'',options)
     openDesigner()
 
+  'click .useUpload': (e,t) ->
+    document.getElementById("cam").click()
 
   'change #cam': (e) ->
     f = e.target.files[0]
-    reader = new FileReader();
+    reader = new FileReader()
     reader.onload = (e) ->
       imageData = e.target.result
+      $( "#badge-image" ).hide()
       $( "#badge-image" ).attr "src", imageData
+      convertToSmallPngSrc()
     reader.readAsDataURL(f)
+    Session.set('creationDisabled', false)
 
   'click .cameraSubmit': (e) ->
     commitBadge()
 
+Template.badge_builder.helpers
+  creationDisabled: ->
+    return Session.equals('creationDisabled', true)
+
 Template.badge_builder.rendered = ->
+  Session.set('creationDisabled', true)
   window.onmessage = (e) ->
     if e.origin == 'https://www.openbadges.me'
       badgeData = JSON.parse(e.data)
       $( "#badge-image" ).attr "src", badgeData.image
+      Session.set('creationDisabled', false)
 
 commitBadge = ->
   badgeData =
@@ -37,7 +48,6 @@ commitBadge = ->
     layerData: "nope"
     email: "what@sdf.com"
 
-  console.log badgeData
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
     Meteor.call "createBadge", badgeData, (error, reason) ->
       if error
@@ -65,7 +75,6 @@ convertImageToCanvas = (image) ->
   exif = EXIF.getData(image, (img) ->
     imageData = this
     orientation = EXIF.getTag(imageData, "Orientation")
-    console.log(orientation)
     switch orientation
       when 6
         ctx.rotate(90*Math.PI/180)

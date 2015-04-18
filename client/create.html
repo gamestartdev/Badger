@@ -9,34 +9,46 @@
             {{> organization_selector }}
         </div>
 
-        <div class="row">
-            <input type="text" id="badgename" placeholder="Badge Name">
-        </div>
-
-        <div class="row">
-            <textarea id="badge-description">Badge Description...</textarea>
-        </div>
-
-        <div class="row">
-            <img src="" id="badge-image"><br>
-        </div>
-
-        <div class="row">
-            <div class="small-6 columns">
-                <input type="file" id="cam" accept="image/*;capture=camera"><br>
+            <div class="row">
+                <input type="text" id="badgename" placeholder="Badge Name">
             </div>
-            <div class="small-6 columns">
-                <button class="useBadgeBuilder">Use Badge Designer</button>
+
+            <div class="row">
+                <textarea id="badge-description" placeholder="Badge Description..."></textarea>
+            </div>
+
+        <div class="panel">
+            <div class="row">
+                <img src="" id="badge-image"><br>
+            </div>
+
+            <div class="row">
+                <div class="small-5 columns">
+                    <button class="expand useUpload">Upload Image</button>
+                    <input type="file" id="cam" accept="image/*;capture=camera"><br>
+                </div>
+                <div class="small-2 columns"> OR </div>
+                <div class="small-5 columns">
+                    <button class="expand useBadgeBuilder">Use Badge Designer</button>
+                </div>
+            </div>
+            <div class="row">
+                {{#if creationDisabled}}
+                    <canvas id="badgeCanvas"></canvas><br>
+                {{else}}
+                    <canvas id="badgeCanvas" class="ready"></canvas><br>
+                {{/if}}
             </div>
         </div>
 
         <div class="row">
-            <button class="cameraSubmit">Create Badge</button>
+            {{#if creationDisabled}}
+            <button class="cameraSubmit small-12 expand" disabled>Create Badge</button>
+            {{else}}
+            <button class="cameraSubmit small-12 expand">Create Badge</button>
+            {{/if}}
         </div>
 
-        <div class="row">
-            <canvas id="badgeCanvas"></canvas><br>
-        </div>
 
     </div>
 </template>
