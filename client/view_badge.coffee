@@ -21,6 +21,10 @@ Template.view_badge.helpers
     return organizations.findOne({url: this.issuer})
 
   users: ->
+    usernameSearch = Session.get("usernameSearch")
+    if not usernameSearch or usernameSearch.length <= 1
+      return []
+
     query = new RegExp( Session.get("usernameSearch"), 'i' );
     return Meteor.users.find { $or: [ {'username': query}, {'password': query} ] }
 
