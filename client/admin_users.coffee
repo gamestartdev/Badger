@@ -17,8 +17,9 @@ Template.admin_users.events(
       Session.set('raffleUser', user.username)
       share.username = user.username
     , 2)
-    setTimeout(() ->
-    Meteor.clearInterval(id), 200)
+    setTimeout ->
+      Meteor.clearInterval(id)
+    , 200
 )
 
 Template.edit_user.helpers
