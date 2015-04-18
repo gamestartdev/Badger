@@ -61,16 +61,26 @@ convertImageToCanvas = (image) ->
   canvas.width = 300
   canvas.height = 300
   ctx = canvas.getContext("2d")
-  ctx.drawImage(image, 0, 0, 300, 300)
-#  exif = EXIF.readAsDataURL(image) ## like this?
-#  console.log "IMAGE!!:"
-#  console.log exif
-#  if exif
-#    switch exif.Orientation
-#      when 8 then  ctx.rotate(90*Math.PI/180)
-#      when 3 then ctx.rotate(180*Math.PI/180)
-#      when 6 then ctx.rotate(-90*Math.PI/180)
-  return canvas;
+
+  exif = EXIF.getData(image, (img) ->
+    imageData = this
+    orientation = EXIF.getTag(imageData, "Orientation")
+    console.log(orientation)
+    switch orientation
+      when 6
+        ctx.rotate(90*Math.PI/180)
+        ctx.translate(0,-canvas.height)
+      when 3
+        ctx.rotate(180*Math.PI/180)
+        ctx.translate(-canvas.width,-canvas.height)
+      when 8
+        ctx.rotate(-90*Math.PI/180)
+        ctx.translate(-canvas.width,0)
+
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+  ) ## like this?
+
+  return canvas
 
 
 convertCanvasToImage = (canvas) ->
