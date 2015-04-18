@@ -10,12 +10,10 @@
         <section class="top-bar-section">
             <ul class="right">
                 {{#if isIssuer}}
-                    <li><a href="{{pathFor 'organization'}}" class="{{currentRoute 'organization'}} nav-button">Organization</a></li>
                     <li><a href="{{pathFor 'admin'}}" class="{{currentRoute 'admin'}} nav-button">Admin</a></li>
                 {{/if}}
 
                 {{#if hasOrganization }}
-                    <li><a href="{{pathFor 'create'}}" class="{{currentRoute 'create'}} nav-button">Create</a></li>
                     <li><a href="{{pathFor 'award'}}" class="{{currentRoute 'award'}} nav-button">Award</a></li>
                 {{/if}}
 

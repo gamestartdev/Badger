@@ -1,21 +1,3 @@
-Template.join_organization.helpers
-  hasUser: ->
-    user = Meteor.user()
-    if user
-      _.contains(this.users, user._id)
-
-  organizations: ->
-    user = Meteor.user()
-    if user
-      organizations.find({users: user._id})
-
-Template.join_organization.events
-  'click .join': ->
-    Meteor.call 'joinOrganization', Meteor.userId(), this._id, share.alertProblem
-
-  'click .leave': ->
-    Meteor.call 'leaveOrganization', Meteor.userId(), this._id, share.alertProblem
-
 Template.create_organization.rendered = ->
   $("#create-organization").validate
     rules:
@@ -48,7 +30,6 @@ Template.create_organization.rendered = ->
         description: $('[name="organizationDescription"]').val()
         image: ""
       Meteor.call 'createOrganization', organization, share.alertProblem
-
 
 Template.create_organization.events
   'submit form': (e) ->

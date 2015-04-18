@@ -1,8 +1,3 @@
-<template name="organization">
-    {{> create_organization }}
-    {{> join_organization }}
-</template>
-
 <template name="create_organization">
     <button data-reveal-id="create-organization-modal" class="expand">Create Organization</button>
 
@@ -57,15 +52,4 @@
         </div>
     </div>
 
-</template>
-
-<template name="join_organization">
-    {{#each organizations }}
-        <div class="row">
-            <div class="small-6 columns"><h4>{{ name }}</h4><h6>{{ url }}</h6></div>
-            <div class="small-6 columns">
-                <button class="leave expand">Leave</button>
-            </div>
-        </div>
-    {{/each}}
 </template>

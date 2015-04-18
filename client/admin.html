@@ -1,8 +1,44 @@
 <template name="admin">
-  {{> user_admin}}
+  {{> create_organization}}
   {{> org_admin }}
+  {{> user_admin}}
 </template>
 
+<template name="org_admin">
+  {{#each myOrganizations}}
+      <div class="panel"  style="text-align: center">
+          <h1>{{name}}</h1>
+          <div class="row">
+              <div class="small-12 columns">
+                  <button class="createBadge expand">Create New Badge</button>
+              </div>
+          </div>
+
+        {{#each badgesForOrg}}
+            <div class="row">
+                <div class="small-4 columns">
+                  <button class="awardBadge expand">Award!</button>
+                </div>
+                <div class="small-4 columns">
+                  <h4>{{name}}</h4><h6>x awarded</h6>
+                </div>
+                <div class="small-3 columns">
+                    <button class="removeBadge expand" style="background-color: red">Delete Badge</button>
+                </div>
+            </div>
+        {{/each}}
+
+        {{#if isInRole 'admin' }}
+            <div class="row">
+                <div class="small-12 columns">
+                  <button class="deleteOrg expand" style="background-color: red">Delete the ENTIRE Organization</button>
+                </div>
+            </div>
+        {{/if}}
+      </div>
+  {{/each}}
+
+</template>
 
 <template name="user_admin">
   {{#each users}}
@@ -30,30 +66,4 @@
     {{/if}}
 
   {{/each}}
-</template>
-
-<template name="org_admin">
-  {{#each myOrganizations}}
-      <h1>Admin: {{name}}</h1>
-      <div class="panel">
-        {{#each badgesForOrg}}
-        <div class="row">
-            <div class="small-6 columns">
-            {{name}}
-            </div>
-            <div class="small-6 columns">
-              <button class="removeBadge">Delete</button>
-            </div>
-        </div>
-        {{/each}}
-
-    </div>
-  {{/each}}
-  {{#if isInRole 'admin' }}
-    {{#each allOrganizations}}
-        <div class="row">
-          {{name}}<button class="deleteOrg">Delete the ENTIRE Organization</button>
-        </div>
-    {{/each}}
-    {{/if}}
 </template>
