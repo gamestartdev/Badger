@@ -31,3 +31,6 @@ Template.leaderboard.helpers
     badges = share.badgesForUser(this)
     badge_data = { badges: badges, count: badges.count() }
     return badge_data
+
+  raffleWinner: ->
+    return Session.get('raffleUser')

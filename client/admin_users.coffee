@@ -1,6 +1,25 @@
 Template.admin_users.helpers
+  isSuperAdmin: -> return Meteor.user() and Meteor.user().username == "admin"
   users: ->
     return  Meteor.users.find().fetch()
+  raffleWinner: ->
+    return Session.get('raffleUser')
+
+Template.admin_users.events(
+  'click .runRaffle': (e,t) ->
+    allUsers = Meteor.users.find({}).fetch()
+    counter = 0
+    id = Meteor.setInterval(->
+      counter = counter + 1
+      if(counter > 100)
+        return
+      user = allUsers[_.random(0, allUsers.length - 1)]
+      Session.set('raffleUser', user.username)
+      share.username = user.username
+    , 2)
+    setTimeout(() ->
+    Meteor.clearInterval(id), 200)
+)
 
 Template.edit_user.helpers
   isSelected: -> this._id == Session.get('selectedUserId')

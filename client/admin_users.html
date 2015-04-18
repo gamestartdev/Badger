@@ -3,6 +3,14 @@
     {{#each users}}
         {{>edit_user}}
     {{/each}}
+    {{#if isSuperAdmin }}
+        <div class="small-4 columns">
+            <button class="runRaffle">Run Raffle</button>
+            <h4>
+            {{raffleWinner}}
+            </h4>
+        </div>
+    {{/if}}
 </template>
 
 <template name="edit_user">
