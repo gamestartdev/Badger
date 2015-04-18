@@ -1,6 +1,3 @@
-isAdmin = ->
-  return Roles.userIsInRole(Meteor.user(), ['admin'])
-
 Meteor.methods
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
@@ -28,29 +25,30 @@ Meteor.methods
 
   createOrganization: (org) ->
     check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
+    if share.isAdmin(Meteor.user()) or Meteor.user().isIssuer
+      if(organizations.findOne({url: org.url}))
+        throw new Meteor.Error("organization-exists", "An organization already exists with that URL")
 
-    if(organizations.findOne({url: org.url}))
-      throw new Meteor.Error(
-        "organization-exists", "An organization already exists with that URL")
-
-    oid = organizations.insert({
-      name: org.name
-      url: org.url
-      email: org.email
-      description: org.description
-      image: org.image
-      users: [ Meteor.userId() ]
-    })
+      oid = organizations.insert({
+        name: org.name
+        url: org.url
+        email: org.email
+        description: org.description
+        image: org.image
+        users: [ Meteor.userId() ]
+      })
 
   removeOrganization: (orgId) ->
     check(orgId, String)
-    if isAdmin
+    if share.isAdmin(Meteor.user())
       console.log Meteor.user().username + " is Removing organization "+ orgId
       organizations.remove(orgId)
 
   toggleIssuerRole: (userId) ->
     check(userId, String)
-    if isAdmin
+    console.log Meteor.user().username
+    console.log Roles.userIsInRole(Meteor.user(), ['admin'])
+    if share.isAdmin(Meteor.user())
       user = Meteor.users.findOne({_id: userId})
       user.isIssuer = !user.isIssuer
       Meteor.users.update(user._id, user)
@@ -58,13 +56,13 @@ Meteor.methods
   joinOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    if Meteor.userId() in organizations.findOne(orgId).users
+    if share.isAdmin or (Meteor.userId() in organizations.findOne(orgId).users)
       organizations.update orgId, { $addToSet: { users: userId } }
 
   leaveOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    if Meteor.userId() in organizations.findOne(orgId).users
+    if share.isAdmin or (Meteor.userId() in organizations.findOne(orgId).users)
       organizations.update {_id: orgId}, { $pull: { users: userId } }
 
   grantBadge: (uid, bid) ->
@@ -96,7 +94,7 @@ Meteor.methods
         }
       }
     })
-    
+
   revokeBadge: (uid, bid) ->
     check(uid, String)
     check(bid, String)

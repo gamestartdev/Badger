@@ -1,8 +1,8 @@
-Template.index.helpers
+Template.award.helpers
   badge_data: ->
     user = Meteor.user()
     if user
-      badges = share.badgesForUser(user)
+      badges = share.badgesForOrgs(user)
       data =
         badges: badges
         count: badges.count()
