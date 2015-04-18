@@ -9,6 +9,9 @@
         {{#with currentUser}}
         <section class="top-bar-section">
             <ul class="right">
+                {{#if isAdmin }}
+                    <li style="color:white">SUPER ADMIN!</li>
+                {{/if}}
                 {{#if isIssuer}}
                     <li><a href="{{pathFor 'admin'}}" class="{{currentRoute 'admin'}} nav-button">Admin</a></li>
                 {{/if}}

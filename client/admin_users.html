@@ -9,10 +9,16 @@
     <div class="panel">
         <div class="row">
             <h3>{{username}}</h3>
+            {{#if isSuperAdmin }}
+                <div class="small-4 columns">
+                    <button class="toggleAdminRole">Admin?</button>
+                </div>
+            {{/if}}
             {{#if isAdmin }}
                 <div class="small-4 columns">
                     <button class="removeUser" style="background-color: red">Remove User</button>
                 </div>
+
                 <div class="small-4 columns">
                     <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to
                         Issuer{{/if}}</button>

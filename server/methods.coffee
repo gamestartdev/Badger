@@ -56,6 +56,15 @@ Meteor.methods
       user.isIssuer = !user.isIssuer
       Meteor.users.update(user._id, user)
 
+  toggleAdminRole: (userId) ->
+    check(userId, String)
+    if share.isAdmin(Meteor.user())
+      console.log "ADMIN"
+      if Roles.userIsInRole(userId, ['admin'])
+        Roles.setUserRoles(userId, [])
+      else
+        Roles.addUsersToRoles(userId, ['admin'])
+
   joinOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)

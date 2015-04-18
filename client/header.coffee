@@ -3,6 +3,7 @@ Template.header.helpers
     return if Session.equals("currentRoute", route) then "active"
   header_text: ->
     if Meteor.user() then (Meteor.user().username + "'s Badges") else "Welcome to GameStart Festival 2015!"
+  isAdmin: -> share.isAdmin(Meteor.user())
 
 Template.header.events
   'click .logout': (e,t) ->

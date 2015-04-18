@@ -15,6 +15,7 @@ Template.admin_users.helpers
 
 Template.edit_user.helpers
   isAdmin: -> share.isAdmin(Meteor.user())
+  isSuperAdmin: -> return Meteor.user() and Meteor.user().username == "admin"
   isInOrg: (user) ->
     return organizations.findOne {_id:this._id, users: user._id}
 
@@ -27,3 +28,5 @@ Template.edit_user.events
     Meteor.call "leaveOrganization", t.data._id, this._id
   'click .toggleIssuerRole': ->
     Meteor.call "toggleIssuerRole", this._id
+  'click .toggleAdminRole': ->
+    Meteor.call "toggleAdminRole", this._id
