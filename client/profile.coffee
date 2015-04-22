@@ -1,11 +1,16 @@
-Template.index.helpers
+Template.profile.helpers
+  profileUser: ->
+    return Router.current().data().profileUser
+
+Template.profileContent.helpers
   badge_data: ->
-    user = Meteor.user()
+    user = this
+    console.log "BADGE DATA"
+    console.log user
     if user
       badges = share.badgesForUser(user)
       data =
         badges: badges
         count: badges.count()
-        badge_ref: '/view_badge/' + this._id
         total_badge_count: badgeClasses.find().count()
       return data

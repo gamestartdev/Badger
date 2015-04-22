@@ -50,3 +50,25 @@ Template.edit_user.events
     Meteor.call "toggleIssuerRole", this._id
   'click .toggleAdminRole': ->
     Meteor.call "toggleAdminRole", this._id
+  'click .sendEmail': ->
+
+    dataContext =
+      profileUser: Meteor.users.findOne {username: this.username}
+
+    console.log "Context:"
+    console.log dataContext
+
+    html = Blaze.toHTMLWithData Template.emailProfile, dataContext
+    options =
+      from: "sender@domain.com"
+      to: "receiver@domain.com"
+      subject: "I want to share this with you !"
+      html: html
+
+    if not Meteor.users.findOne({username: this.username}).emailed
+      console.log "Emailing: " + this.username
+      console.log options
+      #Meteor.users.update {username: this.username}, {emailed: true}
+      Meteor.call 'sendEmail', options
+    else
+      console.log "Already emailed " + this.username

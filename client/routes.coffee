@@ -21,7 +21,7 @@ Router.route 'profile',
   template: 'profile'
   data: ->
     return {
-      username: @params.username
+      profileUser: Meteor.users.findOne {username: @params.username}
     }
   onBeforeAction: ->
     # Code to run before route goes here.
@@ -70,6 +70,7 @@ checkUserLoggedIn = ->
 
 Router.onBeforeAction checkUserLoggedIn, except: [
   'index',
-  'leaderboard'
+  'leaderboard',
+  'profile'
 ]
 

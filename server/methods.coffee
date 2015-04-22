@@ -1,4 +1,20 @@
 Meteor.methods
+
+  testMeth: (a,e,c)->
+    check(a, Number)
+    check(e, Number)
+    check(c, Number)
+    if Meteor.user().username == 'denrei'
+
+      console.log "TESTT"
+      console.log a
+      console.log e
+      console.log c
+
+      return 1
+    else
+      return 'No way burrito!'
+
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
                       origin: Match.Any, layerData: Match.Any, \
@@ -122,3 +138,8 @@ Meteor.methods
     if share.isAdmin(Meteor.user()) and userToRemove
       badgeAssertions.remove {"recipient.identity": userToRemove.identity}
       Meteor.users.remove userToRemove
+
+  sendEmail: (options) ->
+    check options, Object
+    this.unblock()
+    Email.send options
