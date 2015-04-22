@@ -1,17 +1,3 @@
-determineEmail = (user)->
-  if user.emails
-    emailAddress = user.emails[0].address
-  else if user.services
-    services = user.services
-    emailAddress = switch
-      when services.facebook then services.facebook.email
-      when services.github then services.github.email
-      when services.google then services.google.email
-      when services.twitter then null
-      else null
-  else
-    null
-
 # Function: Accounts.onCreateUser()
 # Hook into Meteor's account creation event to fire off a "welcome email"
 # to new user's.
@@ -20,7 +6,7 @@ Accounts.onCreateUser((options,user)->
   # find an address to send our "welcome email" to. We also call up the profile
   # object to see if it exists and pull in a name if it's available.
   userData =
-    email: determineEmail(user)
+    email: share.determineEmail(user)
     name: if options.profile then options.profile.name else ""
 
 
