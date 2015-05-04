@@ -18,9 +18,15 @@
     {{/with}}
 
     {{#if isIssuer badge}}
-    <h5 style="color:red">SYSTEM UPDATE: Users will not appear until you type 2 letters of the username.
-        This should improve performance.
-    </h5>
+    <h5>Assign to many users by email</h5>
+    <div class="row">
+        <div class="small-9 columns">
+            <textarea class="manyUsers"></textarea>
+        </div>
+        <div class="small-3 columns">
+            <button class="submitManyUsers expand">Assign</button>
+        </div>
+    </div>
     <label>Search Users:
         <input type="text" class="username-search">
     </label>

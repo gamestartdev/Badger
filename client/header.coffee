@@ -3,7 +3,7 @@ Template.header.helpers
     if Meteor.user() and Meteor.user().username
       Meteor.user().username + "'s Badges"
     else
-      "Welcome to GameStart Festival 2015!"
+      "GameStart Badging Alpha Demo v0.0.2"
 
   isAdmin: -> share.isAdmin(Meteor.user())
 

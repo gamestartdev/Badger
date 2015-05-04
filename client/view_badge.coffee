@@ -12,22 +12,25 @@ Template.view_badge.events
   'keyup input.username-search': (evt) ->
     Session.set("usernameSearch", evt.currentTarget.value);
 
+  'click .submitManyUsers': (e) ->
+    badge = template.data.badge
+    emails = $('.manyUsers').val().replace(',', ' ').split(' ')
+    for email in emails
+      if email
+        alert("Granting badge to " + email)
+        #Meteor.call 'grantBadgeEmail', email, badge._id, share.alertProblem
 
 Template.view_badge.helpers
-
   badge: ->
     return Router.current().data().badge
   badge_organization: ->
     return organizations.findOne({url: this.issuer})
-
   users: ->
     usernameSearch = Session.get("usernameSearch")
     if not usernameSearch or usernameSearch.length <= 1
       return []
-
     query = new RegExp( Session.get("usernameSearch"), 'i' );
     return Meteor.users.find { $or: [ {'username': query}, {'password': query} ] }
-
   hasBadge: (badge) ->
     if badge
       badgeAssertions.find(

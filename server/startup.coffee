@@ -13,7 +13,6 @@ add_default = ->
   ]
   for user in users
     checkUser = Meteor.users.findOne({"emails.address": user.email});
-    Roles.addUsersToRoles(userId, user.roles);
     if not checkUser
       userId = Accounts.createUser
         email: user.email
@@ -22,9 +21,12 @@ add_default = ->
       if user.roles.length > 1
         for org in organizations.find().fetch()
           Meteor.call "joinOrganization", userId, org._id
+    Roles.addUsersToRoles(userId, user.roles);
+
 
 #Meteor.startup ->
-  #add_default()
+#  add_default()
+
 
 
 
