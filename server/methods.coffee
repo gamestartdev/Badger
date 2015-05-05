@@ -139,7 +139,11 @@ Meteor.methods
       badgeAssertions.remove {"recipient.identity": userToRemove.identity}
       Meteor.users.remove userToRemove
 
-  sendEmail: (options) ->
+  sendEmail: (userId, options) ->
     check options, Object
-    this.unblock()
-    Email.send options
+    console.log "Sending email.. " + options.to
+    if Meteor.user().username == 'admin'
+      process.env.MAIL_URL = 'smtp://postmaster@gamestartschool.org:3d9f99f2b243ccfb98f8abe35401788c@smtp.mailgun.org:587';
+      this.unblock()
+      Email.send options
+      Meteor.users.update userId, {$set: {emailed:true}}

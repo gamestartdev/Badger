@@ -6,7 +6,6 @@
 
 AccountsTemplates.removeField('email');
 AccountsTemplates.removeField('password');
-
 AccountsTemplates.addFields [
   {
     _id: 'email',

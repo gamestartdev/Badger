@@ -24,7 +24,6 @@ Router.route 'profile',
       profileUser: Meteor.users.findOne {username: @params.username}
     }
   onBeforeAction: ->
-    # Code to run before route goes here.
     Session.set 'currentRoute', 'profile'
     @next()
 
@@ -62,6 +61,13 @@ Router.route 'admin',
     Session.set 'currentRoute', 'admin'
     @next()
 
+Router.route 'email_badge_list',
+  path: '/email_badge_list'
+  template: 'email_badge_list'
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'email_badge_list'
+    @next()
+
 checkUserLoggedIn = ->
   if not Meteor.loggingIn() and not Meteor.user()
     Router.go '/'
@@ -71,6 +77,7 @@ checkUserLoggedIn = ->
 Router.onBeforeAction checkUserLoggedIn, except: [
   'index',
   'leaderboard',
-  'profile'
+  'profile',
+  'view_badge',
 ]
 
