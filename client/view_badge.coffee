@@ -19,7 +19,7 @@ Template.view_badge.events
       if email
         user = Meteor.users.findOne {"emails.address": email}
         alert("Granting badge to " + email)
-        console.log "Granting badge to " + email + " " + user.username
+        console.log "Granting badge to " + email + " " + user
         if user
           Meteor.call 'grantBadge', user._id, badge._id, share.alertProblem
 
