@@ -64,6 +64,13 @@ Router.route 'admin',
     Session.set 'currentRoute', 'admin'
     @next()
 
+Router.route 'award',
+  path: '/award'
+  template: 'award'
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'award'
+    @next()
+
 Router.route 'email_badge_list',
   path: '/email_badge_list'
   template: 'email_badge_list'

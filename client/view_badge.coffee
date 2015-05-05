@@ -17,8 +17,11 @@ Template.view_badge.events
     emails = $('.manyUsers').val().replace(',', ' ').split(' ')
     for email in emails
       if email
+        user = Meteor.users.findOne {"emails.address": email}
         alert("Granting badge to " + email)
-        Meteor.call 'grantBadgeEmail', email, badge._id, share.alertProblem
+        console.log "Granting badge to " + email + " " + user.username
+        if user
+          Meteor.call 'grantBadge', user._id, badge._id, share.alertProblem
 
 Template.view_badge.helpers
   badge: ->

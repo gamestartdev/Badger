@@ -18,14 +18,15 @@
 
         {{#each badgesForOrg}}
             <div class="row">
-                <div class="small-3 columns">
+                <!-- <div class="small-3 columns">
                   <button class="awardBadge expand">Award!</button>
+                </div>
+                -->
+                <div class="small-4 columns">
+                  <h4>{{name}}</h4><h6>x awarded</h6>
                 </div>
                 <div class="small-2 columns">
                     <img src="{{image}}" width="50">
-                </div>
-                <div class="small-4 columns">
-                  <h4>{{name}}</h4><h6>x awarded</h6>
                 </div>
                 <div class="small-3 columns">
                     <button class="editBadge expand" style="background-color: red">Edit</button>
