@@ -27,6 +27,7 @@ Accounts.onCreateUser((options,user)->
     salt: salt
   })
   user.identity = id
+  user.isIssuer = true
 
   return user
 )

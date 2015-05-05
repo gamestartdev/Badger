@@ -18,13 +18,13 @@ Meteor.methods
   createBadge: (badgeData) ->
     check(badgeData, {name: String, email: String, image: String, \
                       origin: Match.Any, layerData: Match.Any, \
-                      issuer: String, description: String})
-    console.log "Creating Badge"
+                      issuer: String, description: String, _id: Match.Any})
+    console.log "Creating Badge " + badgeData['_id']
     console.log badgeData
 
     imageID = images.insert({data: badgeData.image})
 
-    bid = badgeClasses.insert({
+    badge =
       name: badgeData.name,
       image: "/v1/data/badges/images/" + imageID,
       criteria: "/",
@@ -32,7 +32,11 @@ Meteor.methods
       description: badgeData.description,
       alignment: [],
       tags: [],
-    })
+
+    if badgeData._id
+      badgeClasses.update badgeData._id, badge
+    else
+      badgeClasses.insert badge
 
   removeBadge: (badgeId) ->
     check(badgeId, String)
@@ -98,8 +102,7 @@ Meteor.methods
     check(bid, String)
     toUser = Meteor.users.findOne({_id: uid},
                                {_id: 1, identity: 1})
-    if(badgeAssertions.findOne({uid: bid,\
-                                "recipient.identity": toUser.identity }))
+    if(badgeAssertions.findOne({uid: bid, "recipient.identity": toUser.identity }))
       throw new Meteor.Error("assertion-exists",
                              "This user has already earned that badge")
 

@@ -28,11 +28,14 @@ Router.route 'profile',
     @next()
 
 Router.route 'create',
-  path: '/create'
+  path: '/create/:badgeId'
   template: 'create'
+  data: ->
+    badge: badgeClasses.findOne({_id: @params.badgeId})
   onBeforeAction: ->
     Session.set 'currentRoute', 'create'
     @next()
+
 
 Router.route 'leaderboard',
   path: '/leaderboard'

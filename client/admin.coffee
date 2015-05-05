@@ -10,14 +10,14 @@ Template.org_admin.events
       console.log "Removing "+this
       Meteor.call "removeOrganization", this._id
 
-  'click .removeBadge': ->
-    if window.confirm "Perminantly Remove "+this.name + "?"
-      console.log "Removing "+this
-      Meteor.call "removeBadge", this._id
 
   'click .createBadge': ->
     Session.set('selectedOrganization', this.url)
-    Router.go('/create')
+    Router.go('/create/new')
+
+  'click .editBadge': ->
+    Session.set('selectedOrganization', this.issuer)
+    Router.go('/create/' + this._id)
 
   'click .awardBadge': ->
     Router.go('/view_badge/' + this._id)

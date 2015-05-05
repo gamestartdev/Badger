@@ -1,4 +1,12 @@
+Template.badge_builder.helpers
+  badge: -> return Router.current().data().badge or {}
+
 Template.badge_builder.events
+  'click .removeBadge': ->
+    if window.confirm "Perminantly Remove "+this.name + "?"
+      console.log "Removing "+this
+      Meteor.call "removeBadge", this._id
+      Router.go('/admin')
 
   'click .useBadgeBuilder': (e,t) ->
     openDesigner = ->
@@ -18,15 +26,30 @@ Template.badge_builder.events
     reader.readAsDataURL(f)
 
   'click .cameraSubmit': (e) ->
-    commitBadge()
+    target = $(e.target)
+    target.css('background-color', 'darkgrey')
+    target.html('Submitting...')
+    target.toggleClass( "cameraSubmit" )
+    commitBadge($(e.target).attr('data-_id'))
 
 Template.badge_builder.rendered = ->
+  badge = Router.current().data().badge
+  canvas = $("#badgeCanvas")[0]
+  canvas.width = 300
+  canvas.height = 300
+  context = canvas.getContext("2d")
+  image = new Image()
+  image.onload = ->
+    context.drawImage(image, 0, 0, canvas.width, canvas.height)
+  image.src = badge.image
+
+
   window.onmessage = (e) ->
     if e.origin == 'https://www.openbadges.me'
       imageURI = JSON.parse(e.data).image
       convertToSmallPngSrc(imageURI)
 
-commitBadge = ->
+commitBadge = (_id) ->
   canvas = $("#badgeCanvas")[0]
   imageFromCanvas = canvas.toDataURL("image/png")
 
@@ -38,6 +61,7 @@ commitBadge = ->
     issuer: $("#selectedOrganization").val()
     layerData: "nope"
     email: "what@sdf.com"
+    _id: _id or false
 
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
     Meteor.call "createBadge", badgeData, (error, reason) ->

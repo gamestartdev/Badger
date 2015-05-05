@@ -12,13 +12,13 @@ Template.view_badge.events
   'keyup input.username-search': (evt) ->
     Session.set("usernameSearch", evt.currentTarget.value);
 
-  'click .submitManyUsers': (e) ->
-    badge = template.data.badge
+  'click .submitManyUsers': (e, t) ->
+    badge = t.data.badge
     emails = $('.manyUsers').val().replace(',', ' ').split(' ')
     for email in emails
       if email
         alert("Granting badge to " + email)
-        #Meteor.call 'grantBadgeEmail', email, badge._id, share.alertProblem
+        Meteor.call 'grantBadgeEmail', email, badge._id, share.alertProblem
 
 Template.view_badge.helpers
   badge: ->
