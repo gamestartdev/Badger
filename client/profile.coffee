@@ -8,7 +8,10 @@ Template.profileContent.helpers
     console.log "BADGE DATA"
     console.log user
     if user
-      badges = share.badgesForUser(user)
+      if user.username is "admin"
+        badges = badgeClasses.find {}
+      else
+        badges = share.badgesForUser(user)
       data =
         badges: badges
         count: badges.count()

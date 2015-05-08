@@ -41,7 +41,8 @@ Template.badge_builder.rendered = ->
   image = new Image()
   image.onload = ->
     context.drawImage(image, 0, 0, canvas.width, canvas.height)
-  image.src = badge.image
+  if badge
+    image.src = badge.image
 
 
   window.onmessage = (e) ->
