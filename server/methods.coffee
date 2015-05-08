@@ -3,7 +3,7 @@ Meteor.methods
   createBadge: (badgeData) ->
     check(badgeData, {name: String, image: String, \
                       origin: Match.Any, issuer: String, description: String, _id: Match.Any,
-                      tags: Array, criteria: String, evidence: String})
+                      tags: Array, criteria: String})
 
     console.log "Creating Badge " + badgeData['_id']
     console.log badgeData
@@ -12,11 +12,11 @@ Meteor.methods
     badge =
       name: badgeData.name,
       image: "/v1/data/badges/images/" + imageID,
-      criteria: criteria,
+      criteria: badgeData.criteria,
       issuer: badgeData.issuer,
       description: badgeData.description,
       alignment: [],
-      tags: tags,
+      tags: badgeData.tags,
 
     if badgeData._id
       badgeClasses.update badgeData._id, badge

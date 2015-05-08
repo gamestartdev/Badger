@@ -33,22 +33,20 @@ Template.badge_builder.events
     commitBadge($(e.target).attr('data-_id'))
 
 Template.badge_builder.rendered = ->
-  badge = Router.current().data().badge
-  canvas = $("#badgeCanvas")[0]
-  canvas.width = 300
-  canvas.height = 300
-  context = canvas.getContext("2d")
-  image = new Image()
-  image.onload = ->
-    context.drawImage(image, 0, 0, canvas.width, canvas.height)
-  if badge
-    image.src = badge.image
-
-
   window.onmessage = (e) ->
     if e.origin == 'https://www.openbadges.me'
       imageURI = JSON.parse(e.data).image
       convertToSmallPngSrc(imageURI)
+    badge = Router.current().data().badge
+    if badge
+      canvas = $("#badgeCanvas")[0]
+      canvas.width = 300
+      canvas.height = 300
+      context = canvas.getContext("2d")
+      image = new Image()
+      image.onload = ->
+        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+      image.src = badge.image
 
 commitBadge = (_id) ->
   canvas = $("#badgeCanvas")[0]
