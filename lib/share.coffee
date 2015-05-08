@@ -1,3 +1,6 @@
+share.splitCommas = (s)->
+  return s.replace(',', ' ').split(' ')
+
 share.isAdmin = (user) ->
   return Roles.userIsInRole(user, ['admin'])
 

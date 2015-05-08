@@ -14,7 +14,7 @@ Template.view_badge.events
 
   'click .submitManyUsers': (e, t) ->
     badge = t.data.badge
-    emails = $('.manyUsers').val().replace(',', ' ').split(' ')
+    emails = share.splitCommas($('.manyUsers').val())
     for email in emails
       if email
         user = Meteor.users.findOne {"emails.address": email}

@@ -10,7 +10,6 @@ Template.org_admin.events
       console.log "Removing "+this
       Meteor.call "removeOrganization", this._id
 
-
   'click .createBadge': ->
     Session.set('selectedOrganization', this.url)
     Router.go('/create/new')

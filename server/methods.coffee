@@ -1,37 +1,22 @@
 Meteor.methods
 
-  testMeth: (a,e,c)->
-    check(a, Number)
-    check(e, Number)
-    check(c, Number)
-    if Meteor.user().username == 'denrei'
-
-      console.log "TESTT"
-      console.log a
-      console.log e
-      console.log c
-
-      return 1
-    else
-      return 'No way burrito!'
-
   createBadge: (badgeData) ->
-    check(badgeData, {name: String, email: String, image: String, \
-                      origin: Match.Any, layerData: Match.Any, \
-                      issuer: String, description: String, _id: Match.Any})
+    check(badgeData, {name: String, image: String, \
+                      origin: Match.Any, issuer: String, description: String, _id: Match.Any,
+                      tags: Array, criteria: String, evidence: String})
+
     console.log "Creating Badge " + badgeData['_id']
     console.log badgeData
-
     imageID = images.insert({data: badgeData.image})
 
     badge =
       name: badgeData.name,
       image: "/v1/data/badges/images/" + imageID,
-      criteria: "/",
+      criteria: criteria,
       issuer: badgeData.issuer,
       description: badgeData.description,
       alignment: [],
-      tags: [],
+      tags: tags,
 
     if badgeData._id
       badgeClasses.update badgeData._id, badge

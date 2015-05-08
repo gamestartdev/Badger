@@ -60,8 +60,8 @@ commitBadge = (_id) ->
     name: $("#badgename").val()
     description: $("#badge-description").val()
     issuer: $("#selectedOrganization").val()
-    layerData: "nope"
-    email: "what@sdf.com"
+    tags: share.splitCommas($("#badge-tags").val())
+    criteria: $("#badge-criteria").val()
     _id: _id or false
 
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
