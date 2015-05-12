@@ -1,4 +1,8 @@
-
+hasBadge = (badge, user) ->
+  badgeAssertions.find(
+    uid: badge?._id
+    "recipient.identity": user?.identity
+  ).count() != 0
 
 Template.view_badge.events
   'click .btn-grant-badge': (event, template) ->
@@ -23,6 +27,7 @@ Template.view_badge.events
         if user
           Meteor.call 'grantBadge', user._id, badge._id, share.alertProblem
 
+
 Template.view_badge.helpers
   badge: ->
     return Router.current().data().badge
@@ -35,14 +40,27 @@ Template.view_badge.helpers
     query = new RegExp( Session.get("usernameSearch"), 'i' );
     return Meteor.users.find { $or: [ {'username': query}, {'password': query} ] }
   hasBadge: (badge) ->
-    if badge
-      badgeAssertions.find(
-        uid: badge._id
-        "recipient.identity": this.identity
-      ).count() != 0
+    return hasBadge badge, this
 
   isIssuer: (badge) ->
     user = Meteor.user()
     if badge and user
       orgUrls = _.pluck(organizations.find({users: user._id}).fetch(), 'url')
       return badgeClasses.find({ _id: badge._id, issuer: { $in: orgUrls }}).count() > 0
+
+Template.push_badge.helpers
+  hasBadge: ->
+      return hasBadge Router.current().data().badge, Meteor.user()
+
+Template.push_badge.events
+  'click .pushToBackpack': (e, t) ->
+    assertion = badgeAssertions.findOne
+      "recipient.identity": Meteor.user()?.identity
+      uid: t.data.badge?._id
+
+    #alert(assertion)
+    assertionUrl = assertion?.verify.url
+    #alert(assertionUrl)
+    OpenBadges.issue [assertionUrl], (errors, successes) ->
+      alert(JSON.stringify(errors))
+      alert(JSON.stringify(successes))

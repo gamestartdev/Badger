@@ -1,6 +1,8 @@
 <template name="view_badge">
     <h5 style="text-align: center">Congrats on your badges! <a href="http://gamestartschool.org/classes" target="_blank">Sign up for a GameStart class to earn more!</a></h5>
 
+
+    {{> push_badge}}
     {{#with badge}}
         <div class="row" style="text-align:center">
             <h1 class="badge_name">{{name}}</h1>
@@ -53,4 +55,10 @@
     {{/each}}
     {{/if}}
 
+</template>
+
+<template name="push_badge">
+    {{#if hasBadge}}
+        <button class="pushToBackpack">Push to Mozilla!</button>
+    {{/if}}
 </template>
