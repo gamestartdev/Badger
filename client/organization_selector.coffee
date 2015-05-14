@@ -2,7 +2,7 @@ Template.organization_selector.helpers(
   userOrganizations: ->
     user = Meteor.user()
     if user
-      organizations.find({users: user._id})
+      issuerOrganizations.find({users: user._id})
   selectedOrganization: ->
     return Session.get('selectedOrganization')
 )

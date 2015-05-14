@@ -27,12 +27,12 @@ Template.edit_user.helpers
   isAdmin: -> share.isAdmin(Meteor.user())
   isSuperAdmin: -> return Meteor.user() and Meteor.user().username == "admin"
   isInOrg: (user) ->
-    return organizations.findOne {_id:this._id, users: user._id}
+    return issuerOrganizations.findOne {_id:this._id, users: user._id}
   myOrganizations: ->
     if share.isAdmin(Meteor.user())
-      myOrgs = organizations.find()
+      myOrgs = issuerOrganizations.find()
     else
-      myOrgs = organizations.find({users: Meteor.userId()})
+      myOrgs = issuerOrganizations.find({users: Meteor.userId()})
     return myOrgs
 
 Template.edit_user.events

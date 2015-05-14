@@ -1,6 +1,6 @@
 Template.org_admin.helpers
-  allOrganizations: -> organizations.find()
-  myOrganizations: -> organizations.find({users: Meteor.userId()})
+  allOrganizations: -> issuerOrganizations.find()
+  myOrganizations: -> issuerOrganizations.find({users: Meteor.userId()})
   badgesForOrg: ->
     return badgeClasses.find { issuer:  this.url}
 

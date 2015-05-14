@@ -1,5 +1,5 @@
 Meteor.subscribe 'allUsers'
-Meteor.subscribe 'organizations'
+Meteor.subscribe 'issuerOrganizations'
 Meteor.subscribe 'badgeClasses'
 Meteor.subscribe 'badgeAssertions'
 

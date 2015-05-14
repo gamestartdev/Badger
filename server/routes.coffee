@@ -1,19 +1,17 @@
 formatUrl = (s) ->
   return Meteor.absoluteUrl s, {replaceLocalhost:true}
 
-Router.route('/v1/data/badges/issuers/:issuerid',
+Router.route('/openbadges/issuer/:issuerid',
   ->
     data =
       name: 'GameStart Default Issuer'
       url: 'http://www.gamestartschool.org'
-
-    console.log "what"
     @response.writeHead(200, { 'Content-Type': 'application/json' })
     @response.end(JSON.stringify data)
   where: 'server',
 )
 
-Router.route('/v1/data/badges/images/:imageid',
+Router.route('/openbadges/image/:imageid',
   ->
     image = images.findOne({_id: @params.imageid})
     data = new Buffer(image.data.substr(image.data.indexOf(",") + 1), 'base64')
@@ -22,7 +20,7 @@ Router.route('/v1/data/badges/images/:imageid',
   where: 'server',
 )
 
-Router.route('/v1/data/badges/classes/:classid',
+Router.route('/openbadges/class/:classid',
   ->
     data = badgeClasses.findOne {_id: @params.classid}
     delete data._id
@@ -30,14 +28,14 @@ Router.route('/v1/data/badges/classes/:classid',
 
     data.criteria = formatUrl data.criteria
     data.image = formatUrl data.image
-    data.issuer = formatUrl 'v1/data/badges/issuers/gamestart'
+    data.issuer = formatUrl 'openbadges/issuer/gamestart'
 
     @response.writeHead(200, { 'Content-Type': 'application/json' })
     @response.end(JSON.stringify data)
   where: 'server',
 )
 
-Router.route('/v1/data/badges/assertions/:assertionid',
+Router.route('/openbadges/assertion/:assertionid',
   ->
     data = badgeAssertions.findOne {_id: @params.assertionid}
     delete data._id

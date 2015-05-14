@@ -32,7 +32,7 @@ Template.view_badge.helpers
   badge: ->
     return Router.current().data().badge
   badge_organization: ->
-    return organizations.findOne({url: this.issuer})
+    return issuerOrganizations.findOne({_id: this.issuer})
   users: ->
     usernameSearch = Session.get("usernameSearch")
     if not usernameSearch or usernameSearch.length <= 1
@@ -43,10 +43,7 @@ Template.view_badge.helpers
     return hasBadge badge, this
 
   isIssuer: (badge) ->
-    user = Meteor.user()
-    if badge and user
-      orgUrls = _.pluck(organizations.find({users: user._id}).fetch(), 'url')
-      return badgeClasses.find({ _id: badge._id, issuer: { $in: orgUrls }}).count() > 0
+      return issuerOrganizations.find ({_id:badge?.issuer, users: Meteor.user()?._id}).count() > 0
 
 Template.push_badge.onRendered ->
   $('head').append('<script src="https://backpack.openbadges.org/issuer.js"></script>')

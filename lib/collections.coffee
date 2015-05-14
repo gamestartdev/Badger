@@ -1,5 +1,5 @@
 @images = new Mongo.Collection("images")
-@organizations = new Mongo.Collection("issuerOrganizations")
+@issuerOrganizations = new Mongo.Collection("issuerOrganizations")
 @badgeClasses = new Mongo.Collection("badgeClasses")
 @badgeAssertions = new Mongo.Collection("badgeAssertions")
 @identityObjects = new Mongo.Collection("identityObjects")

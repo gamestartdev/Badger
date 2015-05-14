@@ -19,7 +19,7 @@ add_default = ->
         password: user.password
         username: user.username
       if user.roles.length > 1
-        for org in organizations.find().fetch()
+        for org in issuerOrganizations.find().fetch()
           Meteor.call "joinOrganization", userId, org._id
     Roles.addUsersToRoles(userId, user.roles);
 

@@ -11,7 +11,7 @@ Meteor.methods
 
     badge =
       name: badgeData.name,
-      image: "/v1/data/badges/images/" + imageID,
+      image: "/openbadges/image/" + imageID,
       criteria: badgeData.criteria,
       issuer: badgeData.issuer,
       description: badgeData.description,
@@ -31,27 +31,23 @@ Meteor.methods
   createOrganization: (org) ->
     check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
     if share.isAdmin(Meteor.user()) or Meteor.user().isIssuer
-      if(organizations.findOne({url: org.url}))
-        throw new Meteor.Error("organization-exists", "An organization already exists with that URL")
-
-      oid = organizations.insert({
+      oid = issuerOrganizations.insert
         name: org.name
         url: org.url
         email: org.email
         description: org.description
         image: org.image
         users: [ Meteor.userId() ]
-      })
 
   removeOrganization: (orgId) ->
     check(orgId, String)
     if share.isAdmin(Meteor.user())
       console.log Meteor.user().username + " is Removing organization "+ orgId
-      org = organizations.findOne({_id: orgId})
+      org = issuerOrganizations.findOne({_id: orgId})
       for badge in badgeClasses.find({issuer: org.url})
         badgeAssertions.remove({uid: badge._id})
       badgeClasses.remove({issuer: org.url})
-      organizations.remove(org)
+      issuerOrganizations.remove(org)
 
 
   toggleIssuerRole: (userId) ->
@@ -73,14 +69,14 @@ Meteor.methods
   joinOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    if share.isAdmin(Meteor.user()) or (Meteor.userId() in organizations.findOne(orgId).users)
-      organizations.update orgId, { $addToSet: { users: userId } }
+    if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
+      issuerOrganizations.update orgId, { $addToSet: { users: userId } }
 
   leaveOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
-    if share.isAdmin(Meteor.user()) or (Meteor.userId() in organizations.findOne(orgId).users)
-      organizations.update {_id: orgId}, { $pull: { users: userId } }
+    if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
+      issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
   grantBadge: (uid, bid) ->
     check(uid, String)
@@ -98,7 +94,7 @@ Meteor.methods
     assertionId = badgeAssertions.insert({
       uid: badge._id,
       recipient: identityObject,
-      badge: "/v1/data/badges/classes/" + badge._id,
+      badge: "/openbadges/class/" + badge._id,
       issuedOn: time,
       evidence: "", #TODO
     })
@@ -106,7 +102,7 @@ Meteor.methods
       $set: {
         verify: {
           type: "hosted",
-          url: "/v1/data/badges/assertions/" + assertionId
+          url: "/openbadges/assertion/" + assertionId
         }
       }
     })

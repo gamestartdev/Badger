@@ -22,7 +22,7 @@ Template.leaderboard.helpers
   badges_earned_count: ->
     return badgeAssertions.find().count()
   organization_count: ->
-    return organizations.find().count()
+    return issuerOrganizations.find().count()
 
   players: ->
     return find_players()

@@ -5,8 +5,8 @@ share.isAdmin = (user) ->
   return Roles.userIsInRole(user, ['admin'])
 
 share.badgesForOrgs = (user) ->
-  orgUrls = _.pluck(organizations.find({users: user._id}).fetch(), 'url')
-  return badgeClasses.find {issuer: { $in: orgUrls}}
+  orgIds = _.pluck(issuerOrganizations.find({users: user._id}).fetch(), '_id')
+  return badgeClasses.find {issuer: { $in: orgIds}}
 
 share.badgesForUser = (user) ->
   assertions = badgeAssertions.find({"recipient.identity": user.identity}).fetch()
