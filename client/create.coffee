@@ -62,6 +62,10 @@ commitBadge = (_id) ->
     criteria: $("#badge-criteria").val()
     _id: _id or false
 
+  console.log "---------"
+  console.log "Should be an Org ID: " + badgeData.issuer
+  console.log "---------"
+
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
     Meteor.call "createBadgeClass", badgeData, (error, reason) ->
       if error

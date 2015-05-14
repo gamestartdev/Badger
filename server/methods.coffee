@@ -7,11 +7,11 @@ Meteor.methods
 
     console.log "Creating Badge " + badgeData['_id']
     console.log badgeData
-    imageID = images.insert({data: badgeData.image})
+    imageId = images.insert({data: badgeData.image})
 
     badge =
       name: badgeData.name,
-      image: "/openbadges/image/" + imageID,
+      image: imageId,
       criteria: badgeData.criteria,
       issuer: badgeData.issuer,
       description: badgeData.description,
@@ -44,16 +44,15 @@ Meteor.methods
     if share.isAdmin(Meteor.user())
       console.log Meteor.user().username + " is Removing organization "+ orgId
       org = issuerOrganizations.findOne({_id: orgId})
-      for badge in badgeClasses.find({issuer: org.url})
+      for badge in badgeClasses.find({issuer: org._id})
         badgeAssertions.remove({uid: badge._id})
-      badgeClasses.remove({issuer: org.url})
+      badgeClasses.remove({issuer: org._id})
       issuerOrganizations.remove(org)
-
 
   toggleIssuerRole: (userId) ->
     check(userId, String)
     if share.isAdmin(Meteor.user())
-      user = Meteor.users.findOne({_id: userId})
+      user = Meteor.users.findOne userId
       user.isIssuer = !user.isIssuer
       Meteor.users.update(user._id, user)
 
@@ -78,49 +77,25 @@ Meteor.methods
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
       issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
-  createBadgeAssertion: (uid, bid) ->
-    check(uid, String)
-    check(bid, String)
-    toUser = Meteor.users.findOne({_id: uid},
-                               {_id: 1, identity: 1})
-    if(badgeAssertions.findOne({uid: bid, "recipient.identity": toUser.identity }))
-      throw new Meteor.Error("assertion-exists",
-                             "This user has already earned that badge")
+  createBadgeAssertion: (userId, badgeId) ->
+    check(userId, String)
+    check(badgeId, String)
+    badgeAssertions.insert
+      badgeId: badgeClasses.findOne (badgeId)?._id
+      userId: Meteor.users.findOne(userId)?._id
+      issuedOn: new Date()
+      evidence: ""
 
-    badge = badgeClasses.findOne({_id: bid})
-    identityObject = identityObjects.findOne({identity: toUser.identity},
-                                             {_id: 0})
-    assertionId = badgeAssertions.insert({
-      uid: badge._id,
-      recipient: identityObject,
-      badge: "/openbadges/badgeClass/" + badge._id,
-      issuedOn: new Date(),
-      evidence: "", #TODO
-    })
-    badgeAssertions.update({ _id: assertionId }, {
-      $set: {
-        verify: {
-          type: "hosted",
-          url: "/openbadges/badgeAssertion/" + assertionId
-        }
-      }
-    })
-
-  removeBadgeAssertion: (uid, bid) ->
-    check(uid, String)
-    check(bid, String)
-    toUser = Meteor.users.findOne({_id: uid}, {_id: 1, identity: 1})
-    if(!badgeAssertions.remove({uid: bid,\
-                                "recipient.identity": toUser.identity }))
-      throw new Meteor.Error("assertion-does-not-exist",
-                             "This user doesn't have this badge")
+  removeBadgeAssertion: (assertionId) ->
+    check(assertionId, String)
+    badgeAssertions.remove assertionId
 
   removeUser: (userId) ->
     check(userId, String)
-    userToRemove = Meteor.users.findOne {_id: userId}
-    if share.isAdmin(Meteor.user()) and userToRemove
-      badgeAssertions.remove {"recipient.identity": userToRemove.identity}
-      Meteor.users.remove userToRemove
+    user = Meteor.users.findOne {_id: userId}
+    if share.isAdmin(Meteor.user()) and user
+      badgeAssertions.remove {userId: user._id}
+      Meteor.users.remove user
 
   sendEmail: (userId, options) ->
     check options, Object

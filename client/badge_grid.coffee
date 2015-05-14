@@ -1,2 +1,3 @@
 Template.badge_grid.helpers
-  absoluteURL: -> Meteor.absoluteUrl()
+  view_badge_url: -> Meteor.absoluteUrl() + 'view_badge/' + this._id
+  image_url: -> share.openBadgesUrl 'image', this.image

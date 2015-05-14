@@ -9,13 +9,13 @@ share.badgesForOrgs = (user) ->
   return badgeClasses.find {issuer: { $in: orgIds}}
 
 share.badgesForUser = (user) ->
-  assertions = badgeAssertions.find({"recipient.identity": user.identity}).fetch()
+  assertions = badgeAssertions.find({userId: user?._id}).fetch()
   earned_badge_ids = _.pluck(assertions, 'uid')
   return badgeClasses.find {_id: { $in: earned_badge_ids} }
 
 share.determineEmail = (user)->
   if user.emails
-    emailAddress = user.emails[0].address
+    return user.emails[0].address
   else if user.services
     services = user.services
     emailAddress = switch
@@ -26,6 +26,10 @@ share.determineEmail = (user)->
       else null
   else
     null
+
+share.openBadgesUrl = (m, id) ->
+  path = 'openbadges/' + m + '/' + if typeof id is 'string' then id else id['_id']
+  return Meteor.absoluteUrl path, {replaceLocalhost:true}
 
 
 share.alertProblem = (error, response) ->

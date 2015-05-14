@@ -1,7 +1,3 @@
-formatUrl = (s) ->
-  path = if typeof s is 'string' then s else s['_id']
-  return Meteor.absoluteUrl path, {replaceLocalhost:true}
-
 
 Router.route('/openbadges/:o/:id',
   ->
@@ -14,21 +10,21 @@ Router.route('/openbadges/:o/:id',
         badge = badgeClasses.findOne {_id: @params.id}
         name: badge.name
         description: badge.description
-        criteria: formatUrl badge.criteria
-        image: formatUrl badge.image
-        issuer: formatUrl 'openbadges/issuerOrganization/' + badge.issuer
+        criteria: badge.criteria
+        image: share.openBadgesUrl 'image', badge.image
+        issuer: share.openBadgesUrl 'issuerOrganization', badge.issuer
       when 'badgeAssertion'
         assertion = badgeAssertions.findOne {_id: @params.id}
-        uid: assertion.uid
+        uid: assertion._id
         issuedOn: assertion.issuedOn.toISOString()
-        badge: formatUrl assertion.badge
+        badge: share.openBadgesUrl 'badgeClass', assertion.badgeId
         verify:
           type: 'hosted'
-          url: formatUrl assertion.verify.url
+          url: share.openBadgesUrl 'badgeAssertion', assertion._id
         recipient:
           type: 'email'
           hashed: false
-          identity: assertion.identity #BROKEN
+          identity: share.determineEmail Meteor.users.find(assertion.userId)
       when 'image'
         contentType = 'image/png'
         image = images.findOne({_id: @params.id})
@@ -38,3 +34,15 @@ Router.route('/openbadges/:o/:id',
     @response.end(if data instanceof Buffer then data else JSON.stringify data)
   where: 'server',
 )
+
+
+hashStuff_notusedyet = ->
+  salt = CryptoJS.enc.Hex.stringify(CryptoJS.lib.WordArray.random(16))
+  id = "sha256$" +
+    CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(userData.email + salt))
+  identityObjectID = identityObjects.insert({
+    identity: id,
+    type: "email",
+    hashed: true,
+    salt: salt
+  })

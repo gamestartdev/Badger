@@ -2,7 +2,7 @@ Template.org_admin.helpers
   allOrganizations: -> issuerOrganizations.find()
   myOrganizations: -> issuerOrganizations.find({users: Meteor.userId()})
   badgesForOrg: ->
-    return badgeClasses.find { issuer:  this.url}
+    return badgeClasses.find { issuer:  this._id}
 
 Template.org_admin.events
   'click .deleteOrg': ->
@@ -11,7 +11,7 @@ Template.org_admin.events
       Meteor.call "removeOrganization", this._id
 
   'click .createBadgeClass': ->
-    Session.set('selectedOrganization', this.url)
+    Session.set('selectedOrganization', this._id)
     Router.go('/create/new')
 
   'click .editBadge': ->

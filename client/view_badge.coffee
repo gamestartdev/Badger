@@ -1,15 +1,16 @@
 hasBadge = (badge, user) ->
   badgeAssertions.find(
     uid: badge?._id
-    "recipient.identity": user?.identity
+    userId: user?._id
   ).count() != 0
 
 Template.view_badge.events
   'click .btn-grant-badge': (event, template) ->
     user = Blaze.getData(event.target)
     badge = template.data.badge
-    if(badgeAssertions.find({uid: badge._id, "recipient.identity": user.identity }).count())
-      Meteor.call 'removeBadgeAssertion', user._id, badge._id, share.alertProblem
+    assertion = badgeAssertions.findOne({uid: badge?._id, userId: user?._id })
+    if assertion
+      Meteor.call 'removeBadgeAssertion', assertion._id, share.alertProblem
     else
       Meteor.call 'createBadgeAssertion', user._id, badge._id, share.alertProblem
 
@@ -43,7 +44,9 @@ Template.view_badge.helpers
     return hasBadge badge, this
 
   isIssuer: (badge) ->
-      return issuerOrganizations.find ({_id:badge?.issuer, users: Meteor.user()?._id}).count() > 0
+      return issuerOrganizations.find ({_id:badge?.issuer, users: Meteor.userId()}).count() > 0
+  badge_image: ->
+    share.openBadgesUrl 'image', this.image
 
 Template.push_badge.onRendered ->
   $('head').append('<script src="https://backpack.openbadges.org/issuer.js"></script>')
@@ -55,12 +58,11 @@ Template.push_badge.helpers
 Template.push_badge.events
   'click .pushToBackpack': (e, t) ->
     assertion = badgeAssertions.findOne
-      "recipient.identity": Meteor.user()?.identity
+      userId: Meteor.userId()
       uid: t.data.badge?._id
 
-    assertionUrl = Meteor.absoluteUrl() +  assertion?.verify.url
+    assertionUrl = share.openBadgesUrl 'badgeAssertion', assertion?._id
     console.log assertionUrl
-
     OpenBadges.issue assertionUrl, (errors, successes) ->
       console.log errors
       console.log successes
