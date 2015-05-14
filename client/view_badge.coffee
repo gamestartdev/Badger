@@ -5,37 +5,27 @@ hasBadge = (badge, user) ->
   ).count() != 0
 
 Template.view_badge.events
-  'submit .toggleBadgeAssertion': (event, template) ->
-    event.preventDefault()
+  'keyup input.username-search': (evt) ->
+    Session.set("usernameSearch", evt.currentTarget.value);
 
-    badge = template.data.badge
+  'submit .toggleBadgeAssertion': (e, t) ->
+    e.preventDefault()
     user = this
-    evidence = event.target.evidence.value
-
-    console.log badge
-    console.log user
-    console.log evidence
-
-    assertion = badgeAssertions.findOne { badgeId: badge?._id, userId: user?._id }
+    badge = t.data.badge
+    evidence = e.target.evidence.value
+    assertion = badgeAssertions.findOne { userId: user?._id, badgeId: badge?._id }
     if assertion?
       Meteor.call 'removeBadgeAssertion', assertion._id, share.alertProblem
     else
       Meteor.call 'createBadgeAssertion', user._id, badge._id, evidence, share.alertProblem
 
-  'keyup input.username-search': (evt) ->
-    Session.set("usernameSearch", evt.currentTarget.value);
-
-  'click .submitManyUsers': (e, t) ->
+  'submit .submitManyUsers': (e, t) ->
     badge = t.data.badge
+    evidence = e.target.evidence.value
     emails = share.splitCommas($('.manyUsers').val())
     for email in emails
-      if email
         user = Meteor.users.findOne {"emails.address": email}
-        alert("Granting badge to " + email)
-        console.log "Granting badge to " + email + " " + user
-        if user
-          Meteor.call 'createBadgeAssertion', user._id, badge._id, evidence, share.alertProblem
-
+        Meteor.call('createBadgeAssertion', user._id, badge._id, evidence, share.alertProblem) if user? and email?
 
 Template.view_badge.helpers
   badge: ->

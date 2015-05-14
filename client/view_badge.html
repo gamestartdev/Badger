@@ -1,5 +1,7 @@
 <template name="view_badge">
-    <h5 style="text-align: center">Congrats on your badges! <a href="http://gamestartschool.org/classes" target="_blank">Sign up for a GameStart class to earn more!</a></h5>
+    <h5 style="text-align: center">Congrats on your badges! <a href="http://gamestartschool.org/classes"
+                                                               target="_blank">Sign up for a GameStart class to earn
+        more!</a></h5>
 
     {{> push_badge}}
     {{#with badge}}
@@ -9,47 +11,54 @@
             <p>{{description}}</p>
             <h6>{{criteria}}</h6>
             <h6>{{tags}}</h6>
-
             {{#with badge_organization}}
-            <div class="panel">
-                <h4>{{name}}</h4>
-                <h6>{{url}}</h6>
-                <h6>{{email}}</h6>
-                <h6>{{description}}</h6>
-            </div>
+                <div class="panel">
+                    <h4>{{name}}</h4>
+                    <h6>{{url}}</h6>
+                    <h6>{{email}}</h6>
+                    <h6>{{description}}</h6>
+                </div>
             {{/with}}
         </div>
     {{/with}}
 
     {{#if isIssuer badge}}
-    <h5>Assign to many users by email:</h5>
-    <div class="row">
-        <div class="small-9 columns">
-            <textarea class="manyUsers"></textarea>
+        <div class="panel">
+            <h5>Award Badge to many users by email:</h5>
+            <div class="row">
+                <form class="submitManyUsers">
+                    <div class="small-9 columns">
+                        <input type="text" name="evidence" value="" placeholder="Evidence...">
+                        <textarea class="manyUsers"></textarea>
+                    </div>
+                    <div class="small-3 columns">
+                        <input type="submit" value="Assign" class="button expand">
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="small-3 columns">
-            <button class="submitManyUsers expand">Assign</button>
-        </div>
-    </div>
-    <label>Search Usernames:
-        <input type="text" class="username-search">
-    </label>
 
-    {{#each users}}
-        <div class="row">
-            <form class="toggleBadgeAssertion">
-                <div class="small-4 columns">{{ username }}</div>
-                <div class="small-5 columns">
-                    <input type="text" name="evidence" value="" placeholder="Evidence...">
+        <div class="panel">
+            <h5>Award Badge by Username:</h5>
+            <label>
+                <input type="text" class="username-search" placeholder="Username...">
+            </label>
+            {{#each users}}
+                <div class="row">
+                    <form class="toggleBadgeAssertion">
+                        <div class="small-4 columns">{{ username }}</div>
+                        <div class="small-5 columns">
+                            <input type="text" name="evidence" value="" placeholder="Evidence...">
+                        </div>
+                        <div class="small-3 columns">
+                            <input type="submit" class="button expand"
+                                   value="{{#if hasBadge badge}}Revoke{{else}}Award{{/if}}"
+                                   style="background-color:{{#if hasBadge badge}}red{{else}}#008CBA{{/if}}">
+                        </div>
+                    </form>
                 </div>
-                <div class="small-3 columns">
-                    <inpuit type="submit" class="button expand" style="background-color:{{#if hasBadge badge}}red{{else}}#008CBA{{/if}}">
-                        {{#if hasBadge badge}}Revoke{{else}}Award{{/if}}
-                    </inpuit>
-                </div>
-            </form>
+            {{/each}}
         </div>
-    {{/each}}
     {{/if}}
 
 </template>
