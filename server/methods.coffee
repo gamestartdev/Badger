@@ -7,16 +7,15 @@ Meteor.methods
 
     console.log "Creating Badge " + badgeData['_id']
     console.log badgeData
-    imageId = images.insert({data: badgeData.image})
 
     badge =
-      name: badgeData.name,
-      image: imageId,
-      criteria: badgeData.criteria,
-      issuer: badgeData.issuer,
-      description: badgeData.description,
-      alignment: [],
-      tags: badgeData.tags,
+      name: badgeData.name
+      image: images.insert({data: badgeData.image})
+      criteria: badgeData.criteria
+      issuer: badgeData.issuer
+      description: badgeData.description
+      alignment: []
+      tags: badgeData.tags
 
     if badgeData._id
       badgeClasses.update badgeData._id, badge
@@ -25,12 +24,12 @@ Meteor.methods
 
   removeBadgeClass: (badgeId) ->
     check(badgeId, String)
-    badgeAssertions.remove({uid: badgeId})
-    badgeClasses.remove({_id: badgeId})
+    badgeAssertions.remove {badgeId: badgeId}
+    badgeClasses.remove {_id: badgeId}
 
   createOrganization: (org) ->
     check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
-    if share.isAdmin(Meteor.user()) or Meteor.user().isIssuer
+    if share.isAdmin(Meteor.user()) or share.isIssuer(Meteor.user())
       oid = issuerOrganizations.insert
         name: org.name
         url: org.url
@@ -45,25 +44,28 @@ Meteor.methods
       console.log Meteor.user().username + " is Removing organization "+ orgId
       org = issuerOrganizations.findOne({_id: orgId})
       for badge in badgeClasses.find({issuer: org._id})
-        badgeAssertions.remove({uid: badge._id})
-      badgeClasses.remove({issuer: org._id})
+        badgeAssertions.remove {badgeId: badge._id}
+      badgeClasses.remove {issuer: org._id}
       issuerOrganizations.remove(org)
 
   toggleIssuerRole: (userId) ->
     check(userId, String)
     if share.isAdmin(Meteor.user())
       user = Meteor.users.findOne userId
-      user.isIssuer = !user.isIssuer
-      Meteor.users.update(user._id, user)
+      if share.isIssuer(user)
+        Meteor.users.update userId, {$pull: {roles: 'issuer'}}
+      else
+        Meteor.users.update userId, {$addToSet: {roles: 'issuer'}}
 
   toggleAdminRole: (userId) ->
     check(userId, String)
     if share.isAdmin(Meteor.user())
       console.log "ADMIN"
-      if Roles.userIsInRole(userId, ['admin'])
-        Roles.setUserRoles(userId, [])
+      user = Meteor.users.findOne userId
+      if share.isAdmin(user)
+        Meteor.users.update userId, {$pull: {roles: 'admin'}}
       else
-        Roles.addUsersToRoles(userId, ['admin'])
+        Meteor.users.update userId, {$addToSet: {roles: 'admin'}}
 
   joinOrganization: (userId, orgId) ->
     check(userId, String)
@@ -77,14 +79,15 @@ Meteor.methods
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
       issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
-  createBadgeAssertion: (userId, badgeId) ->
+  createBadgeAssertion: (userId, badgeId, evidence) ->
     check(userId, String)
     check(badgeId, String)
+    check(evidence, String)
     badgeAssertions.insert
-      badgeId: badgeClasses.findOne (badgeId)?._id
-      userId: Meteor.users.findOne(userId)?._id
+      badgeId: badgeId
+      userId: userId
       issuedOn: new Date()
-      evidence: ""
+      evidence: evidence
 
   removeBadgeAssertion: (assertionId) ->
     check(assertionId, String)

@@ -1,7 +1,6 @@
 <template name="view_badge">
     <h5 style="text-align: center">Congrats on your badges! <a href="http://gamestartschool.org/classes" target="_blank">Sign up for a GameStart class to earn more!</a></h5>
 
-
     {{> push_badge}}
     {{#with badge}}
         <div class="row" style="text-align:center">
@@ -36,21 +35,19 @@
         <input type="text" class="username-search">
     </label>
 
-    {{#each isIssuer}}
-        {{name}}
-    {{/each}}
-
     {{#each users}}
         <div class="row">
-            <div class="small-4 columns">{{ username }}</div>
-            <div class="small-5 columns">
-                <input type="text" value="" placeholder="Evidence...">
-            </div>
-            <div class="small-3 columns">
-                <button type="submit" class="btn btn-grant-badge expand" style="background-color:{{#if hasBadge badge}}red{{else}}#008CBA{{/if}}">
-                    {{#if hasBadge badge}}Revoke{{else}}Award{{/if}}
-                </button>
-            </div>
+            <form class="toggleBadgeAssertion">
+                <div class="small-4 columns">{{ username }}</div>
+                <div class="small-5 columns">
+                    <input type="text" name="evidence" value="" placeholder="Evidence...">
+                </div>
+                <div class="small-3 columns">
+                    <inpuit type="submit" class="button expand" style="background-color:{{#if hasBadge badge}}red{{else}}#008CBA{{/if}}">
+                        {{#if hasBadge badge}}Revoke{{else}}Award{{/if}}
+                    </inpuit>
+                </div>
+            </form>
         </div>
     {{/each}}
     {{/if}}

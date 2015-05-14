@@ -2,7 +2,9 @@ share.splitCommas = (s)->
   return (v for v in s.replace(',', ' ').split(' ') when v)
 
 share.isAdmin = (user) ->
-  return Roles.userIsInRole(user, ['admin'])
+  return user?.isAdmin
+share.isIssuer = (user) ->
+  return user?.isIssuer
 
 share.badgesForOrgs = (user) ->
   orgIds = _.pluck(issuerOrganizations.find({users: user._id}).fetch(), '_id')
@@ -10,7 +12,7 @@ share.badgesForOrgs = (user) ->
 
 share.badgesForUser = (user) ->
   assertions = badgeAssertions.find({userId: user?._id}).fetch()
-  earned_badge_ids = _.pluck(assertions, 'uid')
+  earned_badge_ids = _.pluck(assertions, 'badgeId')
   return badgeClasses.find {_id: { $in: earned_badge_ids} }
 
 share.determineEmail = (user)->
@@ -28,7 +30,7 @@ share.determineEmail = (user)->
     null
 
 share.openBadgesUrl = (m, id) ->
-  path = 'openbadges/' + m + '/' + if typeof id is 'string' then id else id['_id']
+  path = 'openbadges/' + m + '/' + if typeof id is 'string' then id else id?['_id']
   return Meteor.absoluteUrl path, {replaceLocalhost:true}
 
 

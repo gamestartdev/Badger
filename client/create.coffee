@@ -1,5 +1,8 @@
 Template.badge_builder.helpers
-  badge: -> return Router.current().data().badge or {}
+  badge: ->
+    return Router.current().data()
+  organization: ->
+    issuerOrganizations.findOne this.issuer
 
 Template.badge_builder.events
   'click .removeBadgeClass': ->
@@ -22,7 +25,7 @@ Template.badge_builder.events
     reader = new FileReader()
     reader.onload = (e) ->
       imageURI = e.target.result
-      convertToSmallPngSrc(imageURI)
+      drawToCanvasAsResizedPng(imageURI)
     reader.readAsDataURL(f)
 
   'click .cameraSubmit': (e) ->
@@ -36,17 +39,10 @@ Template.badge_builder.rendered = ->
   window.onmessage = (e) ->
     if e.origin == 'https://www.openbadges.me'
       imageURI = JSON.parse(e.data).image
-      convertToSmallPngSrc(imageURI)
-    badge = Router.current().data().badge
-    if badge
-      canvas = $("#badgeCanvas")[0]
-      canvas.width = 300
-      canvas.height = 300
-      context = canvas.getContext("2d")
-      image = new Image()
-      image.onload = ->
-        context.drawImage(image, 0, 0, canvas.width, canvas.height)
-      image.src = badge.image
+      drawToCanvasAsResizedPng(imageURI)
+
+  badge = Router.current().data()
+  drawToCanvasAsResizedPng('/openbadges/image/'+ badge.image) if badge.image?
 
 commitBadge = (_id) ->
   canvas = $("#badgeCanvas")[0]
@@ -62,10 +58,6 @@ commitBadge = (_id) ->
     criteria: $("#badge-criteria").val()
     _id: _id or false
 
-  console.log "---------"
-  console.log "Should be an Org ID: " + badgeData.issuer
-  console.log "---------"
-
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
     Meteor.call "createBadgeClass", badgeData, (error, reason) ->
       if error
@@ -75,11 +67,11 @@ commitBadge = (_id) ->
   else
     alert('Please choose an organization, enter a name, and provide a description.')
 
-convertToSmallPngSrc = (imageURI) ->
+drawToCanvasAsResizedPng = (imageURI) ->
   image = new Image()
-
   image.onload = ->
-    canvas = document.getElementById("badgeCanvas")
+    canvas = $("#badgeCanvas")[0]
+    canvas.className += ' ready'
     canvas.width = 300
     canvas.height = 300
     ctx = canvas.getContext("2d")

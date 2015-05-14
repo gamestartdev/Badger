@@ -4,8 +4,9 @@ Router.route('/openbadges/:o/:id',
     contentType = 'application/json'
     data = switch @params.o
       when 'issuerOrganization'
-        name: 'GameStart Default Issuer'
-        url: 'http://www.gamestartschool.org'
+        org = issuerOrganizations.findOne {_id: @params.id}
+        name: org.name
+        url: org.url
       when 'badgeClass'
         badge = badgeClasses.findOne {_id: @params.id}
         name: badge.name
@@ -34,7 +35,6 @@ Router.route('/openbadges/:o/:id',
     @response.end(if data instanceof Buffer then data else JSON.stringify data)
   where: 'server',
 )
-
 
 hashStuff_notusedyet = ->
   salt = CryptoJS.enc.Hex.stringify(CryptoJS.lib.WordArray.random(16))

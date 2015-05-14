@@ -37,7 +37,6 @@ Template.edit_user.helpers
 
 Template.edit_user.events
   'click .userRow': (e,t) ->
-    console.log t.data
     Session.set('selectedUserId', t.data._id)
 
   'click .removeUser': (e,t) ->

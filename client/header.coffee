@@ -5,8 +5,6 @@ Template.header.helpers
     else
       "GameStart Badging Alpha Demo v0.0.2"
 
-  isAdmin: -> share.isAdmin(Meteor.user())
-
 Template.header.events
   'click .logout': (e,t) ->
     Meteor.logout (error)->

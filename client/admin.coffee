@@ -3,6 +3,8 @@ Template.org_admin.helpers
   myOrganizations: -> issuerOrganizations.find({users: Meteor.userId()})
   badgesForOrg: ->
     return badgeClasses.find { issuer:  this._id}
+  badge_image: -> share.openBadgesUrl 'image', this.image
+  isAdmin: -> Meteor.user().isAdmin
 
 Template.org_admin.events
   'click .deleteOrg': ->
@@ -11,18 +13,11 @@ Template.org_admin.events
       Meteor.call "removeOrganization", this._id
 
   'click .createBadgeClass': ->
-    Session.set('selectedOrganization', this._id)
-    Router.go('/create/new')
+    Router.go 'create', {}, {query: {issuer: this._id} }
 
   'click .editBadge': ->
-    Session.set('selectedOrganization', this.issuer)
-    Router.go('/create/' + this._id)
-
-  'click .awardBadge': ->
-    Router.go('/view_badge/' + this._id)
+    Router.go 'create', {badgeId: this._id}
 
 Template.admin.helpers
   isIssuer: ->
-    user = Meteor.user()
-    if user
-      return Meteor.user().isIssuer
+    share.isIssuer(Meteor.user())

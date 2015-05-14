@@ -20,5 +20,4 @@ service-configuration
 http
 ewall:foundation
 useraccounts:foundation
-alanning:roles
 email
