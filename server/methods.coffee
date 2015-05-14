@@ -1,6 +1,6 @@
 Meteor.methods
 
-  createBadge: (badgeData) ->
+  createBadgeClass: (badgeData) ->
     check(badgeData, {name: String, image: String, \
                       origin: Match.Any, issuer: String, description: String, _id: Match.Any,
                       tags: Array, criteria: String})
@@ -23,7 +23,7 @@ Meteor.methods
     else
       badgeClasses.insert badge
 
-  removeBadge: (badgeId) ->
+  removeBadgeClass: (badgeId) ->
     check(badgeId, String)
     badgeAssertions.remove({uid: badgeId})
     badgeClasses.remove({_id: badgeId})
@@ -78,7 +78,7 @@ Meteor.methods
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
       issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
-  grantBadge: (uid, bid) ->
+  createBadgeAssertion: (uid, bid) ->
     check(uid, String)
     check(bid, String)
     toUser = Meteor.users.findOne({_id: uid},
@@ -90,24 +90,23 @@ Meteor.methods
     badge = badgeClasses.findOne({_id: bid})
     identityObject = identityObjects.findOne({identity: toUser.identity},
                                              {_id: 0})
-    time = new Date().getTime()
     assertionId = badgeAssertions.insert({
       uid: badge._id,
       recipient: identityObject,
-      badge: "/openbadges/class/" + badge._id,
-      issuedOn: time,
+      badge: "/openbadges/badgeClass/" + badge._id,
+      issuedOn: new Date(),
       evidence: "", #TODO
     })
     badgeAssertions.update({ _id: assertionId }, {
       $set: {
         verify: {
           type: "hosted",
-          url: "/openbadges/assertion/" + assertionId
+          url: "/openbadges/badgeAssertion/" + assertionId
         }
       }
     })
 
-  revokeBadge: (uid, bid) ->
+  removeBadgeAssertion: (uid, bid) ->
     check(uid, String)
     check(bid, String)
     toUser = Meteor.users.findOne({_id: uid}, {_id: 1, identity: 1})

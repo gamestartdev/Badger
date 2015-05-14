@@ -2,10 +2,10 @@ Template.badge_builder.helpers
   badge: -> return Router.current().data().badge or {}
 
 Template.badge_builder.events
-  'click .removeBadge': ->
+  'click .removeBadgeClass': ->
     if window.confirm "Perminantly Remove "+this.name + "?"
       console.log "Removing "+this
-      Meteor.call "removeBadge", this._id
+      Meteor.call "removeBadgeClass", this._id
       Router.go('/admin')
 
   'click .useBadgeBuilder': (e,t) ->
@@ -63,7 +63,7 @@ commitBadge = (_id) ->
     _id: _id or false
 
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
-    Meteor.call "createBadge", badgeData, (error, reason) ->
+    Meteor.call "createBadgeClass", badgeData, (error, reason) ->
       if error
         alert error
       else

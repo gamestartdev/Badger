@@ -9,9 +9,9 @@ Template.view_badge.events
     user = Blaze.getData(event.target)
     badge = template.data.badge
     if(badgeAssertions.find({uid: badge._id, "recipient.identity": user.identity }).count())
-      Meteor.call 'revokeBadge', user._id, badge._id, share.alertProblem
+      Meteor.call 'removeBadgeAssertion', user._id, badge._id, share.alertProblem
     else
-      Meteor.call 'grantBadge', user._id, badge._id, share.alertProblem
+      Meteor.call 'createBadgeAssertion', user._id, badge._id, share.alertProblem
 
   'keyup input.username-search': (evt) ->
     Session.set("usernameSearch", evt.currentTarget.value);
@@ -25,7 +25,7 @@ Template.view_badge.events
         alert("Granting badge to " + email)
         console.log "Granting badge to " + email + " " + user
         if user
-          Meteor.call 'grantBadge', user._id, badge._id, share.alertProblem
+          Meteor.call 'createBadgeAssertion', user._id, badge._id, share.alertProblem
 
 
 Template.view_badge.helpers
