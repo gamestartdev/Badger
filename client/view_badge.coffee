@@ -48,6 +48,9 @@ Template.view_badge.helpers
       orgUrls = _.pluck(organizations.find({users: user._id}).fetch(), 'url')
       return badgeClasses.find({ _id: badge._id, issuer: { $in: orgUrls }}).count() > 0
 
+Template.push_badge.onRendered ->
+  $('head').append('<script src="https://backpack.openbadges.org/issuer.js"></script>')
+
 Template.push_badge.helpers
   hasBadge: ->
       return hasBadge Router.current().data().badge, Meteor.user()
@@ -58,9 +61,9 @@ Template.push_badge.events
       "recipient.identity": Meteor.user()?.identity
       uid: t.data.badge?._id
 
-    #alert(assertion)
-    assertionUrl = assertion?.verify.url
-    #alert(assertionUrl)
-    OpenBadges.issue [assertionUrl], (errors, successes) ->
-      alert(JSON.stringify(errors))
-      alert(JSON.stringify(successes))
+    assertionUrl = Meteor.absoluteUrl() +  assertion?.verify.url
+    console.log assertionUrl
+
+    OpenBadges.issue assertionUrl, (errors, successes) ->
+      console.log errors
+      console.log successes
