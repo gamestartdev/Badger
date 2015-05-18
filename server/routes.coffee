@@ -25,7 +25,7 @@ Router.route('/openbadges/:o/:id',
         recipient:
           type: 'email'
           hashed: false
-          identity: share.determineEmail Meteor.users.find(assertion.userId)
+          identity: share.determineEmail Meteor.users.findOne(assertion.userId)
       when 'image'
         contentType = 'image/png'
         image = images.findOne({_id: @params.id})

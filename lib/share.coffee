@@ -16,8 +16,10 @@ share.badgesForUser = (user) ->
   return badgeClasses.find {_id: { $in: earned_badge_ids} }
 
 share.determineEmail = (user)->
-  if user.emails
+  console.log user
+  if user.emails?
     return user.emails[0].address
+
   else if user.services
     services = user.services
     emailAddress = switch
