@@ -11,9 +11,12 @@ Router.route('/openbadges/:o/:id',
         badge = badgeClasses.findOne {_id: @params.id}
         name: badge.name
         description: badge.description
-        criteria: badge.criteria
+        criteria: share.openBadgesUrl 'criteria', badge._id
         image: share.openBadgesUrl 'image', badge.image
         issuer: share.openBadgesUrl 'issuerOrganization', badge.issuer
+      when 'criteria'
+        badge = badgeClasses.findOne {_id: @params.id}
+        badge.criteria
       when 'badgeAssertion'
         assertion = badgeAssertions.findOne {_id: @params.id}
         uid: assertion._id
