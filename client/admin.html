@@ -1,8 +1,9 @@
 <template name="admin">
-  {{#if isIssuer}}
-      <a href="{{pathFor 'issuerOrganization'}}" class="button expand">New Organization</a>
-  {{/if}}
   {{> org_admin }}
+
+    {{#if isIssuer}}
+        <a href="{{pathFor 'issuerOrganization'}}" class="button expand">Create New Organization</a>
+    {{/if}}
   {{> admin_users}}
 </template>
 
