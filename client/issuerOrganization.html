@@ -1,0 +1,22 @@
+<template name="issuerOrganization">
+    <form class="organization-form">
+        <input type="hidden" name="_id" value="{{_id}}">
+        <label for="organizationName">Name</label>
+        <input type="text" name="name" class="form-control"
+               placeholder="Organization Name" value="{{name}}">
+
+        <label for="organizationEmailAddress">Admininistrator Email Address</label>
+        <input type="email" name="email" class="form-control"
+               placeholder="Administrator Email" value="{{email}}">
+
+        <label for="organizationURL">Website</label>
+        <input type="url" name="url" class="form-control"
+               placeholder="Organization URL" value="{{ url }}">
+
+        <label for="organizationDescription">Description</label>
+        <input type="text" name="description" class="form-control"
+               placeholder="A breif description of the organization" value="{{description}}">
+
+        <button type="submit" class="expand">Create</button>
+    </form>
+</template>

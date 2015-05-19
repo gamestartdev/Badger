@@ -56,6 +56,15 @@ Router.route 'view_badge',
     Session.set 'usernameSearch', ''
     @next()
 
+Router.route 'issuerOrganization',
+  path: '/issuerOrganization/:id?'
+  template: 'issuerOrganization'
+  data: ->
+    return issuerOrganizations.findOne {_id: @params.id}
+  onBeforeAction: ->
+    Session.set 'currentRoute', 'issuerOrganization'
+    @next()
+
 Router.route 'admin',
   path: '/admin'
   template: 'admin'

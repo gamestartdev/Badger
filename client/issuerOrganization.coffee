@@ -1,5 +1,5 @@
-Template.create_organization.rendered = ->
-  $(".create-organization").validate
+Template.issuerOrganization.rendered = ->
+  $(".organization-form").validate
     rules:
       organizationName:
         required: true
@@ -21,17 +21,14 @@ Template.create_organization.rendered = ->
       organizationURL:
         required: "Full URL including 'http://'"
 
-    submitHandler: ->
-      $('#create-organization-modal').foundation('reveal', 'close')
-      organization =
-        name: $('[name="organizationName"]').val()
-        url: $('[name="organizationURL"]').val()
-        email: $('[name="organizationEmailAddress"]').val()
-        description: $('[name="organizationDescription"]').val()
-        image: ""
-      Meteor.call 'createOrganization', organization, share.alertProblem
-
-Template.create_organization.events
+Template.issuerOrganization.events
   'submit form': (e) ->
-    e.preventDefault()
-
+    organization =
+      name: e.target.name.value
+      url: e.target.url.value
+      email: e.target.email.value
+      description: e.target.description.value
+      image: ""
+    Meteor.call 'createOrganization', organization, share.alertProblem
+    Router.go('admin')
+    return false

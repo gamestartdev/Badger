@@ -1,15 +1,20 @@
 <template name="admin">
   {{#if isIssuer}}
-    {{> create_organization}}
+    {{> insert_organization}}
   {{/if}}
   {{> org_admin }}
   {{> admin_users}}
+</template>
+
+<template name="insert_organization">
+    <a href="{{pathFor 'issuerOrganization'}}" class="button expand">New Organization</a>
 </template>
 
 <template name="org_admin">
   {{#each myOrganizations}}
       <div class="panel"  style="text-align: center">
           <h1>{{name}}</h1>
+          {{>issuerOrganization}}
           <div class="row">
               <div class="small-12 columns">
                   <button class="createBadgeClass expand">Create New Badge</button>
