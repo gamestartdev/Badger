@@ -1,5 +1,5 @@
 Template.create_organization.rendered = ->
-  $("#create-organization").validate
+  $(".create-organization").validate
     rules:
       organizationName:
         required: true
