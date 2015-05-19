@@ -4,14 +4,8 @@ Template.org_admin.helpers
   badgesForOrg: ->
     return badgeClasses.find { issuer:  this._id}
   badge_image: -> share.openBadgesUrl 'image', this.image
-  isAdmin: -> Meteor.user().isAdmin
 
 Template.org_admin.events
-  'click .deleteOrg': ->
-    if window.confirm "Perminantly Remove "+this.name + "?"
-      console.log "Removing "+this
-      Meteor.call "removeOrganization", this._id
-
   'click .createBadgeClass': ->
     Router.go 'create', {}, {query: {issuer: this._id} }
 

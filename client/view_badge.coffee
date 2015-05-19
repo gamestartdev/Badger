@@ -4,7 +4,7 @@ hasBadge = (badge, user) ->
     userId: user?._id
   ).count() != 0
 
-Template.view_badge.events
+Template.viewBadge.events
   'keyup input.username-search': (evt) ->
     Session.set("usernameSearch", evt.currentTarget.value);
 
@@ -27,7 +27,7 @@ Template.view_badge.events
         user = Meteor.users.findOne {"emails.address": email}
         Meteor.call('createBadgeAssertion', user._id, badge._id, evidence, share.alertProblem) if user? and email?
 
-Template.view_badge.helpers
+Template.viewBadge.helpers
   badge: ->
     return Router.current().data().badge
   badge_organization: ->

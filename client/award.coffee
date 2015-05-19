@@ -6,5 +6,5 @@ Template.award.helpers
 
 Template.award.events
   'click .awardBadge': ->
-    Router.go('/view_badge/' + this._id)
+    Router.go('viewBadge', {_id: this._id })
 

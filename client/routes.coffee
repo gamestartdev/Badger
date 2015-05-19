@@ -9,7 +9,6 @@ Router.configure
 
 Router.route 'index',
   path: '/'
-  template: 'index'
   onBeforeAction: ->
     # Code to run before route goes here.
     Session.set 'currentRoute', 'index'
@@ -17,7 +16,6 @@ Router.route 'index',
 
 Router.route 'profile',
   path: '/profile/:username'
-  template: 'profile'
   data: ->
     return {
       profileUser: Meteor.users.findOne {username: @params.username}
@@ -28,60 +26,52 @@ Router.route 'profile',
 
 Router.route 'create',
   path: '/create/:badgeId?'
-  template: 'create'
   data: ->
     return badgeClasses.findOne({_id: @params.badgeId}) or @params.query
   onBeforeAction: ->
     Session.set 'currentRoute', 'create'
     @next()
 
-
 Router.route 'leaderboard',
   path: '/leaderboard'
-  template: 'leaderboard'
   layoutTemplate: 'layoutLeaderboard',
   onBeforeAction: ->
     Session.set 'currentRoute', 'leaderboard'
     @next()
 
-Router.route 'view_badge',
-  path: '/view_badge/:badgeId'
-  template: 'view_badge'
+Router.route 'viewBadge',
+  path: '/viewBadge/:_id'
   data: ->
     return {
-      badge: badgeClasses.findOne({_id: @params.badgeId})
+      badge: badgeClasses.findOne({_id: @params._id})
     }
   onBeforeAction: ->
-    Session.set 'currentRoute', 'view_badge'
+    Session.set 'currentRoute', 'viewBadge'
     Session.set 'usernameSearch', ''
     @next()
 
 Router.route 'issuerOrganization',
-  path: '/issuerOrganization/:id?'
-  template: 'issuerOrganization'
+  path: '/issuerOrganization/:_id?'
   data: ->
-    return issuerOrganizations.findOne {_id: @params.id}
+    return issuerOrganizations.findOne {_id: @params._id}
   onBeforeAction: ->
     Session.set 'currentRoute', 'issuerOrganization'
     @next()
 
 Router.route 'admin',
   path: '/admin'
-  template: 'admin'
   onBeforeAction: ->
     Session.set 'currentRoute', 'admin'
     @next()
 
 Router.route 'award',
   path: '/award'
-  template: 'award'
   onBeforeAction: ->
     Session.set 'currentRoute', 'award'
     @next()
 
 Router.route 'email_badge_list',
   path: '/email_badge_list'
-  template: 'email_badge_list'
   onBeforeAction: ->
     Session.set 'currentRoute', 'email_badge_list'
     @next()
@@ -96,6 +86,6 @@ Router.onBeforeAction checkUserLoggedIn, except: [
   'index',
   'leaderboard',
   'profile',
-  'view_badge',
+  'viewBadge',
 ]
 

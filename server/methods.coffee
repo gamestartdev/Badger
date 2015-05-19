@@ -28,9 +28,9 @@ Meteor.methods
     badgeClasses.remove {_id: badgeId}
 
   createOrganization: (org) ->
-    check(org, {name: String, url: String, email: String, description: String, image: Match.Any})
+    check(org, {_id: String, name: String, url: String, email: String, description: String, image: Match.Any})
     if share.isAdmin(Meteor.user()) or share.isIssuer(Meteor.user())
-      oid = issuerOrganizations.insert
+      issuerOrganizations.upsert {_id: org._id },
         name: org.name
         url: org.url
         email: org.email
@@ -40,8 +40,8 @@ Meteor.methods
 
   removeOrganization: (orgId) ->
     check(orgId, String)
+    console.log Meteor.user().username + " is Removing organization "+ orgId
     if share.isAdmin(Meteor.user())
-      console.log Meteor.user().username + " is Removing organization "+ orgId
       org = issuerOrganizations.findOne({_id: orgId})
       for badge in badgeClasses.find({issuer: org._id})
         badgeAssertions.remove {badgeId: badge._id}

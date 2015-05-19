@@ -6,6 +6,6 @@ Template.index.helpers
       data =
         badges: badges
         count: badges.count()
-        badge_ref: '/view_badge/' + this._id
+        badge_ref: '/viewBadge/' + this._id
         total_badge_count: badgeClasses.find().count()
       return data
