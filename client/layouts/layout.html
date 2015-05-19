@@ -1,0 +1,17 @@
+<template name="layout">
+    <div class="row root-row">
+        {{>header}}
+        <div class="container">
+            {{>yield}}
+        </div>
+    </div>
+    <div class="row" style="text-align: center">
+        <a href="http://www.gamestartschool.org" target="_blank">
+            <img src="/gamestartLogo_sm.png">
+        </a>
+        <a href="http://openbadges.org/" target="_blank">
+            <img src="/openbadgesLogo_sm.png">
+        </a>
+    </div>
+
+</template>

@@ -34,5 +34,3 @@ Template.leaderboard.helpers
   badge_image: ->
     share.openBadgesUrl 'image', this.image
 
-  raffleWinner: ->
-    return Session.get('raffleUser')

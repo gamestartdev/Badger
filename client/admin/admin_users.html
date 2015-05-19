@@ -1,0 +1,43 @@
+<template name="admin_users">
+    <h1>Add/Remove Users from Organizations</h1>
+    {{#each users}}
+        <div class="panel">
+            <div class="row userRow">
+                <h3>{{username}}</h3>
+                {{#if isSelected}}
+                    {{#if isSuperAdmin }}
+                        <div class="small-4 columns">
+                            <button class="toggleAdminRole">Admin?</button>
+                        </div>
+                        <!--
+                        <div class="small-4 columns">
+                            <button class="sendEmail">Email</button>
+                        </div>
+                        -->
+                    {{/if}}
+                    {{#if isAdmin }}
+                        <div class="small-4 columns">
+                            <button class="removeUser" style="background-color: red">Remove User</button>
+                        </div>
+
+                        <div class="small-4 columns">
+                            <button class="toggleIssuerRole">{{#if isIssuer}}Revoke Issuer{{else}}Promote to
+                                Issuer{{/if}}</button>
+                        </div>
+                    {{/if}}
+
+                    {{#each myOrganizations}}
+                        <div class="small-4 columns">
+                            {{#if isInOrg ..}}
+                                <button class="leave" style="background-color: red">Remove from {{name}}</button>
+                            {{else}}
+                                <button class="join" style="background-color: green">Add to {{name}}</button>
+                            {{/if}}
+                        </div>
+                    {{/each}}
+
+                {{/if}}
+            </div>
+        </div>
+    {{/each}}
+</template>
