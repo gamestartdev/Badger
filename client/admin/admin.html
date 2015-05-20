@@ -49,5 +49,18 @@
                 {{username}} <a href="#" class="removeUserFromOrganization">X</a>
             {{/each}}
         </div>
+        <div class="row">
+            {{> usernameSearch 'addUserToOrganizationRow'}}
+        </div>
     </div>
+</template>
+
+
+<template name="addUserToOrganizationRow">
+    <form class="addUserToOrganizationRow">
+        <div class="small-9 columns">{{ username }}</div>
+        <div class="small-3 columns">
+            <input type="submit" class="button expand" value="{{username}}">
+        </div>
+    </form>
 </template>

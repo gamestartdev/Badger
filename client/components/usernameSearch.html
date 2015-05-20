@@ -1,0 +1,8 @@
+<template name="usernameSearch">
+    <input type="text" class="usernameSearchField" placeholder="Username...">
+  {{#each users}}
+      <div class="row">
+        {{> UI.dynamic template=..}}
+      </div>
+  {{/each}}
+</template>

@@ -21,3 +21,13 @@ Template.admin_organization.events
   'click .removeUserFromOrganization': (e,t) ->
     if share.confirm "Remove {#this._id} from organization?"
       Meteor.call "removeUserFromOrganization", this._id, t.data._id, share.alertProblem
+
+
+Template.addUserToOrganizationRow.helpers
+  what: ->
+    return "yup"
+Template.addUserToOrganizationRow.events
+  'submit .addUserToOrganizationRow': (e, t) ->
+    e.preventDefault()
+    user = this
+    console.log user

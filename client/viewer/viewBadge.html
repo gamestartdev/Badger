@@ -40,15 +40,11 @@
 
         <div class="panel">
             <h5>Award Badge by Username:</h5>
-            <input type="text" class="username-search" placeholder="Username...">
-            {{#each users}}
-                <div class="row">
-                    {{>toggleBadgeAssertionForUser}}
-                </div>
-            {{/each}}
+            {{> usernameSearch 'toggleBadgeAssertionForUser'}}
         </div>
     {{/if}}
 </template>
+
 
 <template name="toggleBadgeAssertionForUser">
     <form class="toggleBadgeAssertion">
