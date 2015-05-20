@@ -30,13 +30,20 @@ Meteor.methods
   createOrganization: (org) ->
     check(org, {_id: String, name: String, url: String, email: String, description: String, image: Match.Any})
     if share.isAdmin(Meteor.user()) or share.isIssuer(Meteor.user())
-      issuerOrganizations.upsert {_id: org._id },
+      organizationData =
         name: org.name
         url: org.url
         email: org.email
         description: org.description
         image: org.image
         users: [ Meteor.userId() ]
+      if org._id
+        console.log "updateee"
+        issuerOrganizations.update org._id, organizationData
+      else
+        console.log "insertttt"
+        issuerOrganizations.insert organizationData
+
 
   removeOrganization: (orgId) ->
     check(orgId, String)

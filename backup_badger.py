@@ -6,8 +6,11 @@ user, result 		= result.split(":", 1)
 password, result 	= result.split("@", 1)
 host, database 		= result.split("/", 1)
 
-dump = "mongodump -u %s -p %s -h %s -d %s /bu" % (user, password, host, database)
+dump = "mongodump -u %s -p %s -h %s -d %s" % (user, password, host, database)
+restore = "mongorestore -u %s -p %s -h %s -d %s %s" % (user, password, host, database, database)
+
 print dump
 subprocess.check_output(dump, stdin=subprocess.PIPE, shell=True)
 
-#restore = "mongorestore -u client -h c0.meteor.m0.mongolayer.com:27017 -d myapp_meteor_com -p 'password' folder/"
+# print restore
+# subprocess.check_output(restore, stdin=subprocess.PIPE, shell=True)

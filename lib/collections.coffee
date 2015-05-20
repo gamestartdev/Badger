@@ -1,7 +1,7 @@
-@images = new Mongo.Collection("images")
-@issuerOrganizations = new Mongo.Collection("issuerOrganizations")
-@badgeClasses = new Mongo.Collection("badgeClasses")
-@badgeAssertions = new Mongo.Collection("badgeAssertions")
+@images = new Mongo.Collection "images", {idGeneration: 'STRING'}
+@issuerOrganizations = new Mongo.Collection "issuerOrganizations", {idGeneration: 'STRING'}
+@badgeClasses = new Mongo.Collection "badgeClasses", {idGeneration: 'STRING'}
+@badgeAssertions = new Mongo.Collection "badgeAssertions", {idGeneration: 'STRING'}
 
 AccountsTemplates.removeField('email');
 AccountsTemplates.removeField('password');
