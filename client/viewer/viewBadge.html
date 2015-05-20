@@ -1,8 +1,4 @@
 <template name="viewBadge">
-    <h5 style="text-align: center">Congrats on your badges! <a href="http://gamestartschool.org/classes"
-                                                               target="_blank">Sign up for a GameStart class to earn
-        more!</a></h5>
-
     {{> pushBadge}}
     {{#with badge}}
         <div class="row" style="text-align:center">
@@ -43,8 +39,8 @@
             {{> usernameSearch 'toggleBadgeAssertionForUser'}}
         </div>
     {{/if}}
+    <a href="{{pathFor 'index'}}" class="button expand">Return to My Badges</a>
 </template>
-
 
 <template name="toggleBadgeAssertionForUser">
     <form class="toggleBadgeAssertion">

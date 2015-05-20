@@ -2,8 +2,10 @@ Template.pushBadge.onRendered ->
   $('head').append('<script src="https://backpack.openbadges.org/issuer.js"></script>')
 
 Template.pushBadge.helpers
-  userHasBadge: ->
-    return share.userHasBadge Meteor.user(), Router.current().data().badge
+  assertion: ->
+    return badgeAssertions.findOne
+      badgeId: Router.current().data().badge?._id
+      userId: Meteor.userId()
 
 Template.pushBadge.events
   'click .pushToBackpack': (e, t) ->

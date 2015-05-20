@@ -29,10 +29,6 @@ Template.badge_builder.events
     reader.readAsDataURL(f)
 
   'click .cameraSubmit': (e) ->
-    target = $(e.target)
-    target.css('background-color', 'darkgrey')
-    target.html('Submitting...')
-    target.toggleClass( "cameraSubmit" )
     commitBadge($(e.target).attr('data-_id'))
 
 Template.badge_builder.rendered = ->
@@ -59,13 +55,17 @@ commitBadge = (_id) ->
     _id: _id or false
 
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
+    cameraSubmitButtons = $('.cameraSubmit')
+    cameraSubmitButtons.css('background-color', 'darkgrey')
+    cameraSubmitButtons.html('Submitting...')
+    #cameraSubmitButtons.toggleClass( "cameraSubmit" )
     Meteor.call "createBadgeClass", badgeData, (error, reason) ->
       if error
         alert error
       else
         Router.go('/admin')
   else
-    alert('Please choose an organization, enter a name, and provide a description.')
+    alert('Please enter a name and provide a description.')
 
 drawToCanvasAsResizedPng = (imageURI) ->
   image = new Image()

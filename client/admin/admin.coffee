@@ -19,15 +19,14 @@ Template.admin_organization.events
   'click .editBadge': ->
     Router.go 'create', {badgeId: this._id}
   'click .removeUserFromOrganization': (e,t) ->
-    if share.confirm "Remove {#this._id} from organization?"
-      Meteor.call "removeUserFromOrganization", this._id, t.data._id, share.alertProblem
+    user = this
+    organization = t.data
+    if share.confirm "Remove #{user.username} from #{organization.name}?"
+      Meteor.call "removeUserFromOrganization", user._id, organization._id, share.alertProblem
 
-
-Template.addUserToOrganizationRow.helpers
-  what: ->
-    return "yup"
 Template.addUserToOrganizationRow.events
   'submit .addUserToOrganizationRow': (e, t) ->
     e.preventDefault()
     user = this
-    console.log user
+    organization = Template.parentData(6) #Yikes.
+    Meteor.call "addUserToOrganization", user._id, organization._id, share.alertProblem
