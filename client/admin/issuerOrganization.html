@@ -12,7 +12,7 @@
 
             <label for="url">Website</label>
             <input type="url" name="url" class="form-control"
-                   placeholder="Organization URL" value="{{ url }}">
+                   placeholder="Organization URL" value="{{#if url}}{{ url }}{{else}}http://{{/if}}">
 
             <label for="description">Description</label>
             <input type="text" name="description" class="form-control"

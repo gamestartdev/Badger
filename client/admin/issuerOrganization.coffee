@@ -1,25 +1,19 @@
 Template.issuerOrganization.rendered = ->
   $(".organization-form").validate
     rules:
-      organizationName:
+      name:
         required: true
-      organizationURL:
+      url:
         required: true
-      organizationEmailAddress:
+      email:
         required: true
         email: true
-      organizationDescription:
-        required: false
-      organizationImage:
+      description:
         required: false
     messages:
-      organizationEmailAddress:
-        required: "Please enter an email"
-        email: "The email address you have entered is invalid"
-      organizationName:
-        required: "Please enter a name for your orignization"
-      organizationURL:
-        required: "Full URL including 'http://'"
+      email: "The email address you have entered is invalid"
+      name: "Please enter a name for your organization"
+      url: "Full URL including 'http://'"
 
 Template.issuerOrganization.helpers
   isAdmin: -> Meteor.user().isAdmin
