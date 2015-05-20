@@ -15,9 +15,10 @@ Template.admin_organization.helpers
 
 Template.admin_organization.events
   'click .createBadgeClass': ->
-    Router.go 'create', {}, {query: {issuer: this._id} }
+    console.log this
+    Router.go 'create', {}, { query: { issuer: this._id } }
   'click .editBadge': ->
-    Router.go 'create', {badgeId: this._id}
+    Router.go 'create', { badgeId: this._id }
   'click .removeUserFromOrganization': (e,t) ->
     user = this
     organization = t.data

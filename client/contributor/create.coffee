@@ -59,6 +59,8 @@ commitBadge = (_id) ->
     cameraSubmitButtons.css('background-color', 'darkgrey')
     cameraSubmitButtons.html('Submitting...')
     #cameraSubmitButtons.toggleClass( "cameraSubmit" )
+
+
     Meteor.call "createBadgeClass", badgeData, (error, reason) ->
       if error
         alert error

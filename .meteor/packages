@@ -8,7 +8,6 @@ coffeescript
 underscore
 accounts-password
 accounts-base
-
 jquery
 check
 audit-argument-checks
