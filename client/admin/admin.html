@@ -1,31 +1,33 @@
 <template name="admin">
-  {{> org_admin }}
-
-    {{#if isIssuer}}
-        <a href="{{pathFor 'issuerOrganization'}}" class="button expand">Create New Organization</a>
-    {{/if}}
-  {{> admin_users}}
+    {{#with currentUser }}
+        {{#each myOrganizations}}
+            {{> admin_organization }}
+        {{/each}}
+        {{#if isIssuer}}
+            <a href="{{pathFor 'issuerOrganization'}}" class="button expand">Create New Organization</a>
+        {{/if}}
+        {{#if isAdmin}}
+            {{> admin_users}}
+        {{/if}}
+    {{/with}}
 </template>
 
-<template name="org_admin">
-  {{#each myOrganizations}}
-      <div class="panel"  style="text-align: center">
-          <div class="small-9 columns">
-              <h1>{{name}}</h1>
-          </div>
-          <div class="small-3 columns">
-              <h1><a href="{{pathFor 'issuerOrganization'}}" class="button expand" style="background-color:green">Edit</a></h1>
-          </div>
-          <div class="row">
-              <div class="small-12 columns">
-                  <button class="createBadgeClass expand">Create New Badge</button>
-              </div>
-          </div>
+<template name="admin_organization">
+    <div class="panel" style="text-align: center">
+        <div class="row">
+            <div class="small-9 columns">
+                <h1>{{name}}</h1>
+            </div>
+            <div class="small-3 columns">
+                <h1><a href="{{pathFor 'issuerOrganization'}}" class="button expand"
+                       style="background-color:green">Edit</a></h1>
+            </div>
+        </div>
 
         {{#each badgesForOrg}}
             <div class="row">
                 <div class="small-4 columns">
-                  <h4>{{name}}</h4><h6>x awarded</h6>
+                    <h4>{{name}}</h4><h6>x awarded</h6>
                 </div>
                 <div class="small-2 columns">
                     <img src="{{badge_image}}" width="50">
@@ -35,7 +37,17 @@
                 </div>
             </div>
         {{/each}}
-      </div>
-  {{/each}}
 
+        <div class="row">
+            <div class="small-12 columns">
+                <button class="createBadgeClass expand">Create New Badge</button>
+            </div>
+        </div>
+
+        <div class="row">
+            {{#each usersForOrg}}
+                {{username}} <a href="#" class="removeUserFromOrganization">X</a>
+            {{/each}}
+        </div>
+    </div>
 </template>

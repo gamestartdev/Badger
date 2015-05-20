@@ -1,7 +1,6 @@
 Template.admin_users.helpers
   isSuperAdmin: -> return Meteor.user() and Meteor.user().username == "admin"
-  users: ->
-    return  Meteor.users.find().fetch()
+  users: -> return  Meteor.users.find().fetch()
   isSelected: -> this._id == Session.get('selectedUserId')
   isAdmin: -> share.isAdmin(Meteor.user())
   isSuperAdmin: -> return Meteor.user() and Meteor.user().username == "admin"
@@ -17,12 +16,10 @@ Template.admin_users.helpers
 Template.admin_users.events
   'click .userRow': (e,t) ->
     Session.set('selectedUserId', t.data._id)
-  'click .removeUser': (e,t) ->
-    Meteor.call "removeUser", this._id
   'click .join': (e,t) ->
-    Meteor.call "joinOrganization", t.data._id, this._id
+    Meteor.call "addUserToOrganization", t.data._id, this._id
   'click .leave': (e,t) ->
-    Meteor.call "leaveOrganization", t.data._id, this._id
+    Meteor.call "removeUserFromOrganization", t.data._id, this._id
   'click .toggleIssuerRole': ->
     Meteor.call "toggleIssuerRole", this._id
   'click .toggleAdminRole': ->

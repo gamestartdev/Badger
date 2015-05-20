@@ -38,7 +38,7 @@ Template.issuerOrganization.events
     return false
 
   'click .deleteOrg': ->
-    if window.confirm "Perminantly Remove "+this.name + "?"
+    if share.confirm "Perminantly Remove "+this.name + "?"
       console.log "Removing "+this
       Meteor.call "removeOrganization", this._id
       Router.go('admin')

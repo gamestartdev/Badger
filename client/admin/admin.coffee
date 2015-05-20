@@ -1,17 +1,23 @@
-Template.org_admin.helpers
-  allOrganizations: -> issuerOrganizations.find()
-  myOrganizations: -> issuerOrganizations.find({users: Meteor.userId()})
-  badgesForOrg: ->
-    return badgeClasses.find { issuer:  this._id}
-  badge_image: -> share.openBadgesUrl 'image', this.image
-
-Template.org_admin.events
-  'click .createBadgeClass': ->
-    Router.go 'create', {}, {query: {issuer: this._id} }
-
-  'click .editBadge': ->
-    Router.go 'create', {badgeId: this._id}
-
 Template.admin.helpers
   isIssuer: ->
     share.isIssuer(Meteor.user())
+  myOrganizations: ->
+    if Meteor.user()?.isAdmin
+      return issuerOrganizations.find()
+    return issuerOrganizations.find({users: Meteor.userId()})
+
+Template.admin_organization.helpers
+  badgesForOrg: ->
+    return badgeClasses.find { issuer:  this._id}
+  usersForOrg: ->
+    return Meteor.users.find { _id: {$in: this.users }}
+  badge_image: -> share.openBadgesUrl 'image', this.image
+
+Template.admin_organization.events
+  'click .createBadgeClass': ->
+    Router.go 'create', {}, {query: {issuer: this._id} }
+  'click .editBadge': ->
+    Router.go 'create', {badgeId: this._id}
+  'click .removeUserFromOrganization': (e,t) ->
+    if share.confirm "Remove {#this._id} from organization?"
+      Meteor.call "removeUserFromOrganization", this._id, t.data._id, share.alertProblem

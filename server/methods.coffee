@@ -67,13 +67,13 @@ Meteor.methods
       else
         Meteor.users.update userId, {$addToSet: {roles: 'admin'}}
 
-  joinOrganization: (userId, orgId) ->
+  addUserToOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
       issuerOrganizations.update orgId, { $addToSet: { users: userId } }
 
-  leaveOrganization: (userId, orgId) ->
+  removeUserFromOrganization: (userId, orgId) ->
     check(userId, String)
     check(orgId, String)
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
@@ -93,18 +93,18 @@ Meteor.methods
     check(assertionId, String)
     badgeAssertions.remove assertionId
 
-  removeUser: (userId) ->
-    check(userId, String)
-    user = Meteor.users.findOne {_id: userId}
-    if share.isAdmin(Meteor.user()) and user
-      badgeAssertions.remove {userId: user._id}
-      Meteor.users.remove user
-
-  sendEmail: (userId, options) ->
-    check options, Object
-    console.log "Sending email.. " + options.to
-    if Meteor.user().username == 'admin'
-      process.env.MAIL_URL = 'smtp://postmaster@gamestartschool.org:3d9f99f2b243ccfb98f8abe35401788c@smtp.mailgun.org:587';
-      this.unblock()
-      Email.send options
-      Meteor.users.update userId, {$set: {emailed:true}}
+#  removeUser: (userId) ->
+#    check(userId, String)
+#    user = Meteor.users.findOne {_id: userId}
+#    if share.isAdmin(Meteor.user()) and user
+#      badgeAssertions.remove {userId: user._id}
+#      Meteor.users.remove user
+#
+#  sendEmail: (userId, options) ->
+#    check options, Object
+#    console.log "Sending email.. " + options.to
+#    if Meteor.user().username == 'admin'
+#      process.env.MAIL_URL = 'smtp://postmaster@gamestartschool.org:3d9f99f2b243ccfb98f8abe35401788c@smtp.mailgun.org:587';
+#      this.unblock()
+#      Email.send options
+#      Meteor.users.update userId, {$set: {emailed:true}}

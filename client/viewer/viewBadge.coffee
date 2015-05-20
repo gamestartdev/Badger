@@ -1,9 +1,3 @@
-hasBadge = (badge, user) ->
-  badgeAssertions.find(
-    badgeId: badge?._id
-    userId: user?._id
-  ).count() != 0
-
 Template.viewBadge.events
   'keyup input.username-search': (evt) ->
     Session.set("usernameSearch", evt.currentTarget.value);
@@ -38,8 +32,6 @@ Template.viewBadge.helpers
       return []
     query = new RegExp( Session.get("usernameSearch"), 'i' );
     return Meteor.users.find { $or: [ {'username': query}, {'password': query} ] }
-  hasBadge: (badge) ->
-    return hasBadge badge, this
 
   isIssuer: (badge) ->
     orgs = issuerOrganizations.find {_id: badge?.issuer, users: Meteor.userId()}
@@ -47,21 +39,9 @@ Template.viewBadge.helpers
   badge_image: ->
     share.openBadgesUrl 'image', this.image
 
-Template.push_badge.onRendered ->
-  $('head').append('<script src="https://backpack.openbadges.org/issuer.js"></script>')
-
-Template.push_badge.helpers
-  hasBadge: ->
-      return hasBadge Router.current().data().badge, Meteor.user()
-
-Template.push_badge.events
-  'click .pushToBackpack': (e, t) ->
-    assertion = badgeAssertions.findOne
-      badgeId: t.data.badge?._id
-      userId: Meteor.userId()
-
-    assertionUrl = share.openBadgesUrl 'badgeAssertion', assertion?._id
-    console.log assertionUrl
-    OpenBadges.issue assertionUrl, (errors, successes) ->
-      console.log errors
-      console.log successes
+Template.toggleBadgeAssertionForUser.helpers
+  badge: ->
+    return Router.current().data().badge
+  userHasBadge: (badge) ->
+    user = this
+    return share.userHasBadge user, badge

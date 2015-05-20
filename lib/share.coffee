@@ -1,6 +1,15 @@
 share.splitCommas = (s)->
   return (v for v in s.replace(',', ' ').split(' ') when v)
 
+share.userHasBadge = (user, badge) ->
+  badgeAssertions.find(
+    badgeId: badge?._id
+    userId: user?._id
+  ).count() != 0
+
+share.confirm = (s) ->
+  return window.confirm s
+
 share.isAdmin = (user) ->
   return user?.isAdmin
 share.isIssuer = (user) ->
