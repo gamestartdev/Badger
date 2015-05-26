@@ -1,4 +1,6 @@
-out = "C:\dump2"
+from os.path import join, expanduser
+home = expanduser("~")
+out = join(home, "dump2")
 
 import subprocess, os, time
 get_url = "meteor mongo --url badger.gamestartschool.org"
@@ -12,10 +14,10 @@ dump = "mongodump -u %s -p %s -h %s -d %s -o %s" % (user, password, host, databa
 localDump = "mongodump -h localhost:3001 -d meteor -o %s" % (out)
 
 restore = "mongorestore -u %s -p %s -h %s -d %s --drop %s\\%s" % (user, password, host, database.strip(), out, database.strip())
-localRestore = "mongorestore -h localhost:3001 -d meteor --drop %s\\meteor" % (out)
+localRestore = "mongorestore -h localhost:3001 -d meteor --drop %s/badger_gamestartschool_org" % (out)
 
 
 #print dump
 #subprocess.check_output(dump, stdin=subprocess.PIPE, shell=True)
 
-subprocess.check_output(restore, stdin=subprocess.PIPE, shell=True)
+subprocess.check_output(localRestore, stdin=subprocess.PIPE, shell=True)
