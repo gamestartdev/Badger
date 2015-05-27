@@ -37,5 +37,30 @@ AccountsTemplates.addFields [
       signUp: "At least six characters"
     },
     required: true,
-  }
+  },
+  {
+    _id: "gender",
+    type: "select",
+    displayName: "Gender",
+    select: [
+      {
+        text: "Prefer not to say",
+        value: "",
+      },
+      {
+        text: "Male",
+        value: "male",
+      },
+      {
+        text: "Female",
+        value: "female",
+      },
+    ],
+  },
+  {
+    _id: "age",
+    type: "select",
+    displayName: "Age",
+    select: { text: n.toString(), value: n } for n in [4..18]
+  },
 ]
