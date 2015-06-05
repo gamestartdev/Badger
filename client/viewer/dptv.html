@@ -1,0 +1,10 @@
+<template name="dptv">
+  {{#if currentUser }}
+    {{#with badge_data}}
+        <h5>Badges Earned: {{count}}</h5>
+      {{> badge_grid }}
+    {{/with}}
+  {{else}}
+    {{> atForm }}
+  {{/if}}
+</template>

@@ -8,6 +8,9 @@ coffeescript
 underscore
 accounts-password
 accounts-base
+accounts-facebook
+mrt:accounts-persona
+
 jquery
 check
 audit-argument-checks

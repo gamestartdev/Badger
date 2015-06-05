@@ -10,6 +10,9 @@ Router.configure
 Router.route 'index',
   path: '/'
 
+Router.route 'dptv',
+  path: '/dptv'
+
 Router.route 'profile',
   path: '/profile/:username'
   data: ->
@@ -49,5 +52,3 @@ Router.route 'award',
 
 Router.route 'email_badge_list',
   path: '/email_badge_list'
-
-

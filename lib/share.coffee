@@ -32,6 +32,7 @@ share.determineEmail = (user)->
   else if user.services
     services = user.services
     emailAddress = switch
+      when services.persona then services.persona.email
       when services.facebook then services.facebook.email
       when services.github then services.github.email
       when services.google then services.google.email
