@@ -9,6 +9,7 @@ underscore
 accounts-password
 accounts-base
 accounts-facebook
+
 #mrt:accounts-persona
 
 jquery
