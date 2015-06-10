@@ -42,11 +42,17 @@ AccountsTemplates.addFields [
   errStr: 'Invalid Earner Name'
   placeholder: "Earner Full Name"
 ,
+  _id: "age"
+  type: "select"
+  displayName: "Age"
+  select: { text: n.toString(), value: n } for n in [4..60]
+,
   _id: 'parentname'
   type: 'text'
   displayName: "Name of Parent if earner is under 13"
   errStr: 'Invalid Parent Name Name'
   placeholder: "Parent Full Name"
+  template: 'whatever'
 ,
   _id: "gender"
   type: "select"
@@ -65,11 +71,6 @@ AccountsTemplates.addFields [
     text: "Prefer not to share"
     value: "Prefer not to share"
   ]
-,
-  _id: "age"
-  type: "select"
-  displayName: "Age"
-  select: { text: n.toString(), value: n } for n in [4..18]
 ,
   _id: "zip"
   type: "text"
