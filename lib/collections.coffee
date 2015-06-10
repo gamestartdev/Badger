@@ -51,6 +51,7 @@ AccountsTemplates.addFields [
   _id: "gender"
   type: "select"
   displayName: "Gender"
+  required: true
   select: [
     text: ""
     value: ""
@@ -60,6 +61,9 @@ AccountsTemplates.addFields [
   ,
     text: "Female"
     value: "female"
+  ,
+    text: "Prefer not to share"
+    value: "Prefer not to share"
   ]
 ,
   _id: "age"
