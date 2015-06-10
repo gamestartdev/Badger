@@ -15,19 +15,19 @@ AccountsTemplates.addFields [
   re: /.+@(.+){2,}\.(.+){2,}/
   errStr: 'Invalid emaisdasfdlkl'
 ,
-  _id: "username"
-  type: "text"
-  displayName: "username"
-  required: true
-  minLength: 5
-,
-  _id: 'username_and_email'
-  type: 'text'
-  required: true
-  displayName: "Login"
-  placeholder:
-    signIn: "Username or email"
-,
+#  _id: "username"
+#  type: "text"
+#  displayName: "username"
+#  required: true
+#  minLength: 5
+#,
+#  _id: 'username_and_email'
+#  type: 'text'
+#  required: true
+#  displayName: "Login"
+#  placeholder:
+#    signIn: "Username or email"
+#,
   _id: 'password'
   type: 'password'
   placeholder:
