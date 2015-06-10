@@ -72,11 +72,4 @@ AccountsTemplates.addFields [
   displayName: "Zip Code"
   re: /\d{5}(?:[-\s]\d{4})?/
   errStr: 'Invalid zip code'
-,
-  _id: "ethnicity"
-  type: "select"
-  displayName: "Race and Ethnicity"
-  select: { text: s, value: s } for s in ['', 'Non-Resident Alien', 'Race and Ethnicity unknown',
-                                          'Black, non-Hispanic', 'American Indian/Alaskan Native',
-                                          'Asian/Pacific Islander','Hispanic', 'White, non-Hispanic']
 ]
