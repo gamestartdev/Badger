@@ -72,4 +72,9 @@ AccountsTemplates.addFields [
   displayName: "Zip Code"
   re: /\d{5}(?:[-\s]\d{4})?/
   errStr: 'Invalid zip code'
+,
+  _id: "release"
+  type: "checkbox"
+  displayName: "By registering for an account on this system, the badge earner (and his/her parent/guardian, if a minor) understands that Be Summer Smart is a pilot project that will collect anonymized demographic data. At the conclusion of Summer 2015, participants may be invited, via the email address provided at registration, to participate in an anonymous survey or to opt into a conversation with researchers."
+  required: true
 ]
