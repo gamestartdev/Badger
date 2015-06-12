@@ -3,7 +3,7 @@
         {{#each myOrganizations}}
             {{> admin_organization }}
         {{/each}}
-        {{#if isIssuer}}
+        {{#if isAdmin}}
             <a href="{{pathFor 'issuerOrganization'}}" class="button expand">Create New Organization</a>
         {{/if}}
     {{/with}}
@@ -35,12 +35,12 @@
             </div>
         {{/each}}
 
+        {{#if isAdmin}}
         <div class="row">
             <div class="small-12 columns">
                 <button class="createBadgeClass expand">Create New Badge</button>
             </div>
         </div>
-
         <div class="row">
             <h3>Current members:</h3>
             {{#each usersForOrg}}
@@ -50,6 +50,8 @@
         <div class="row">
             {{> usernameSearch 'addUserToOrganizationRow'}}
         </div>
+        {{/if}}
+
     </div>
 </template>
 
