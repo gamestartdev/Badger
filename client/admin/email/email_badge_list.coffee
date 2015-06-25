@@ -8,10 +8,9 @@ Template.email_badge_list.events
   'click .sendEmail': ->
 
     user = this
-    dataContext =
-      badges: share.badgesForUser(user)
-
+    dataContext = badges: share.badgesForUser(user)
     html = Blaze.toHTMLWithData Template.badgeEmail, dataContext
+
     options =
       from: "info@gamestartschool.org"
       to: share.determineEmail(user)
@@ -19,6 +18,5 @@ Template.email_badge_list.events
       subject: "Digital Badges Recap for: " + user.username
       text: "Congrats on your badges!  GameStart classes start April 25th, check them out now!  http://www.gamestartschool.org/classes"
       html: html
-    console.log "Emailing: " + user.username
-    Meteor.call 'sendEmail', user._id, options
+    Meteor.call 'sendEmail', options
 

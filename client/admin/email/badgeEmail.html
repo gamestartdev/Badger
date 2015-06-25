@@ -3,42 +3,21 @@
         <td valign="top"
             style="padding-bottom: 0px;padding-top: 5px;border-collapse: collapse;color: #505050;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: left;"
             class="couponContent">
-            <h1>Thanks for coming to the GameStart Festival!</h1>
-            <h2>We had a blast, and hope you did too!</h2>
-            <p><span style="font-size:17px">GameStart will be using in-class achievements with digital badges, just like the ones you earned at the festival!</span></p>
-            {{#if badges.length}}
-            <p>Take a look at all of your badges!</p>
-            {{/if}}
+            <h1>Congratulations!</h1>
+            <h2>You have been awarded a Be Summer Smart Digital Badge!</h2>
+            <p><span style="font-size:17px"><a href="http://badger.gamestartschool.org">Register or login here</a> using this email address to see your previous Badges, and discover your next Badge Earning opportunity!</span></p>
         </td>
     </tr>
 
-    <tr mc:repeatable="repeat_1" mc:repeatindex="0" mc:hideable="hideable_repeat_1_1" mchideable="hideable_repeat_1_1">
-        <td align="center" colspan="2" style="padding-bottom: 0px;border-collapse: collapse;">
-            <table border="0" cellpadding="20" cellspacing="0" width="560" class="">
-                <tr>
-                    <td style="padding-top: 0;border-collapse: collapse;">
-                        {{#each badges}}
-                            <a href="http://badges.meteor.com/viewBadge/{{_id}}">
-                                <img src="http://badges.meteor.com/openbadges/image/{{image}}" width="160" height="160"/>
-                                <!-- <h4 class="badge_name" style="text-align: center">{{name}}</h4> -->
-                            </a>
-                        {{/each}}
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>    </tr>
-    <tr>
-        <td valign="top"
+    <tr></tr>
+    <tr><td valign="top"
             style="padding-bottom: 0px;padding-top: 20px;border-collapse: collapse;color: #505050;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: left;"
             class="couponContent">
-            <h3>There is still time to <a href="http://gamestartschool.org/classes" target="_blank">register</a> for the April 25 session!</h3>
+            <h3>At GameStart, we teach kids to program using video games. <a href="http://gamestartschool.org/classes" target="_blank">Register online</a> for Summer Camp and Saturday morning classes!</h3>
                 <br><span style="font-size:17px">All of our classes will be held at our new location at <strong>2765 Plymouth Road.</strong>&nbsp;<br>
                                                 <br>A <strong>full list of classes</strong> can be found on our <a href="http://gamestartschool.org/classes" target="_blank"
-                                                                                                                   style="color: #26ABE2;font-weight: normal;text-decoration: underline;">website</a>. Check out our brand new classes below!</span>
-        </td>
-    </tr>
+                                                                                                                   style="color: #26ABE2;font-weight: normal;text-decoration: underline;">website</a>!</span>
+    </td></tr>
     <br><br>
 </template>
 

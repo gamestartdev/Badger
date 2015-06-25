@@ -1,7 +1,9 @@
+# tail -f /Users/thedenrei/Badger/.meteor/local/log/jasmine-server-integration.log
+
 beforeEach ->
   jasmine.addMatchers
-    hasProperty: ->
+    collectionCountEquals: ->
       return {
       compare: (actual, expected) ->
-        return { pass: actual[expected]? }
+        return { pass: actual.find().count() == expected }
       }

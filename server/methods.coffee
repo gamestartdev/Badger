@@ -93,7 +93,7 @@ Meteor.methods
     check(email, Match.Optional(String))
     badgeAssertions.insert
       badgeId: badgeId
-      userId: userId
+      userId: userId or Meteor.users.findOne({ 'emails.address': email })?._id
       issuedOn: new Date()
       evidence: evidence
       email: email
@@ -108,12 +108,11 @@ Meteor.methods
 #    if share.isAdmin(Meteor.user()) and user
 #      badgeAssertions.remove {userId: user._id}
 #      Meteor.users.remove user
-#
-#  sendEmail: (userId, options) ->
-#    check options, Object
-#    console.log "Sending email.. " + options.to
-#    if Meteor.user().username == 'admin'
-#      process.env.MAIL_URL = 'smtp://postmaster@gamestartschool.org:3d9f99f2b243ccfb98f8abe35401788c@smtp.mailgun.org:587';
-#      this.unblock()
-#      Email.send options
-#      Meteor.users.update userId, {$set: {emailed:true}}
+
+  sendMail: (options) ->
+    check options, Object
+    if share.isIssuer(Meteor.user())
+      console.log "Sending email: " + options.to
+      this.unblock()
+      process.env.MAIL_URL = 'smtp://postmaster@mailgun.gamestartschool.org:a473788c2caf7849d90165e993b1cb36@smtp.mailgun.org:587'
+      Email.send options
