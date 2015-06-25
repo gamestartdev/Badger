@@ -1,10 +1,10 @@
 
-sendMail = (email) ->
+sendMail = (email, badgeName) ->
   options =
     from: "thardy@dptv.org"
     to: email
     cc: "badges@gamestartschool.org"
-    subject: "Your new Digital Badge!"
+    subject: badgeName
     text: "Congrats on your badges!  Register or login now at http://badger.gamestartschool.org"
     html: Blaze.toHTMLWithData Template.badgeEmail, {}
   console.log "Sending email to " + email
@@ -20,7 +20,7 @@ Template.viewBadge.events
       user = Meteor.users.findOne {"emails.address": email}
       if email
         Meteor.call('createBadgeAssertion', user?._id, badge._id, evidence, email, share.alertProblem)
-        sendMail(email)
+        sendMail(email, badge.name)
 
 Template.viewBadge.helpers
   badge: ->
@@ -56,4 +56,4 @@ Template.toggleBadgeAssertionForUser.events
     else
       email = share.determineEmail(user)
       Meteor.call 'createBadgeAssertion', user._id, badge._id, evidence, email, share.alertProblem
-      sendMail(email)
+      sendMail(email, badge.name)
