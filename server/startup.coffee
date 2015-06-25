@@ -13,10 +13,6 @@ add_default = ->
         username: user.username
       Meteor.users.update userId, {$set: {isAdmin: 'admin' in user.roles, isIssuer: 'issuer' in user.roles}}
 
+
 Meteor.startup ->
   add_default()
-
-
-
-
-

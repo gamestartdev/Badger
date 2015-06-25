@@ -24,3 +24,6 @@ http
 ewall:foundation
 useraccounts:foundation
 email
+
+sanjo:jasmine
+velocity:html-reporter

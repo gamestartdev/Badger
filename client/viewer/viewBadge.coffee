@@ -6,7 +6,7 @@ Template.viewBadge.events
     emails = share.splitCommas($('.manyUsers').val())
     for email in emails
         user = Meteor.users.findOne {"emails.address": email}
-        Meteor.call('createBadgeAssertion', user._id, badge._id, evidence, share.alertProblem) if user? and email?
+        Meteor.call('createBadgeAssertion', user?._id, badge._id, evidence, email, share.alertProblem) if email?
 
 Template.viewBadge.helpers
   badge: ->
@@ -40,4 +40,4 @@ Template.toggleBadgeAssertionForUser.events
     if assertion?
       Meteor.call 'removeBadgeAssertion', assertion._id, share.alertProblem
     else
-      Meteor.call 'createBadgeAssertion', user._id, badge._id, evidence, share.alertProblem
+      Meteor.call 'createBadgeAssertion', user._id, badge._id, evidence, share.determineEmail(user), share.alertProblem

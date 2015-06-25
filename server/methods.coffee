@@ -86,15 +86,17 @@ Meteor.methods
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
       issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
-  createBadgeAssertion: (userId, badgeId, evidence) ->
-    check(userId, String)
+  createBadgeAssertion: (userId, badgeId, evidence, email) ->
+    check(userId, Match.Optional(String))
     check(badgeId, String)
     check(evidence, String)
+    check(email, Match.Optional(String))
     badgeAssertions.insert
       badgeId: badgeId
       userId: userId
       issuedOn: new Date()
       evidence: evidence
+      email: email
 
   removeBadgeAssertion: (assertionId) ->
     check(assertionId, String)
