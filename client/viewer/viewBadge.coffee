@@ -19,7 +19,7 @@ Template.viewBadge.events
     for email in emails
       user = Meteor.users.findOne {"emails.address": email}
       if email
-        Meteor.call('createBadgeAssertion', user?._id, badge._id, evidence, email, share.alertProblem)
+        Meteor.call('createBadgeAssertion', user?._id or undefined, badge._id, evidence, email, share.alertProblem)
         sendMail(email, badge.name)
 
 Template.viewBadge.helpers

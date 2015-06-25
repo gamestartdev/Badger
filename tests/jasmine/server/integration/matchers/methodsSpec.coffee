@@ -35,7 +35,7 @@ describe 'createBadgeAssertion', ->
 
   it 'should create a BadgeAssertion without userId', ->
     assertionEmail = this.userEmail
-    Meteor.call 'createBadgeAssertion', undefined, "a", "b", assertionEmail
+    Meteor.call 'createBadgeAssertion', null, "a", "b", assertionEmail
     expect(badgeAssertions.find().count()).toBe(1)
     actualAssertion = badgeAssertions.find().fetch()[0]
     expect(actualAssertion.userId).toBe(this.userId)

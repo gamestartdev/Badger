@@ -19,25 +19,23 @@
     {{/with}}
 
     {{#if isIssuer badge}}
-        <!--
         <div class="panel">
             <h5>Award Badge to many users by email:</h5>
             <div class="row">
                 <form class="submitManyUsers">
                     <div class="small-9 columns">
-                        <input type="text" name="evidence" value="" placeholder="Evidence...">
-                        <textarea class="manyUsers"></textarea>
+                        <input type="text" name="evidence" value="" placeholder="Enter Evidence Here...">
+                        <textarea class="manyUsers" placeholder="example1@email.com, example2@email.com, example3@email.com"></textarea>
                     </div>
                     <div class="small-3 columns">
-                        <input type="submit" value="Assign" class="button expand">
+                        <input type="submit" value="Award All Emails" class="button expand">
                     </div>
                 </form>
             </div>
         </div>
-        -->
 
         <div class="panel">
-            <h5>Award Badge to User:</h5>
+            <h5>Award Badge by Finding Email:</h5>
             {{> usernameSearch 'toggleBadgeAssertionForUser'}}
         </div>
     {{/if}}
@@ -48,7 +46,7 @@
     <form class="toggleBadgeAssertion">
         <div class="small-4 columns">{{ username }}</div>
         <div class="small-5 columns">
-            <input type="text" name="evidence" value="" placeholder="Evidence...">
+            <input type="text" name="evidence" value="" placeholder="Enter Evidence Here...">
         </div>
         <div class="small-3 columns">
             <input type="submit" class="button expand"

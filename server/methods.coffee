@@ -87,10 +87,11 @@ Meteor.methods
       issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
   createBadgeAssertion: (userId, badgeId, evidence, email) ->
-    check(userId, Match.Optional(String))
+    check(userId, Match.Any)
     check(badgeId, String)
     check(evidence, String)
     check(email, Match.Optional(String))
+
     badgeAssertions.insert
       badgeId: badgeId
       userId: userId or Meteor.users.findOne({ 'emails.address': email })?._id
