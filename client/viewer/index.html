@@ -1,11 +1,27 @@
 <template name="index">
+    <div class="row" style="text-align: center">
+        <!--<a href="http://www.dptv.org/" target="_blank" style="padding:10px">-->
+            <img src="/DPTV_logo.png" width="300">
+        <!--</a>-->
+    </div>
+
     {{#if currentUser }}
         {{#with badge_data}}
             <h5>Badges Earned: {{count}}</h5>
-
             {{> badge_grid }}
         {{/with}}
     {{else}}
         {{> atForm }}
     {{/if}}
+</template>
+
+<template name="whatever">
+    <div class="at-input row" id="parentname-row">
+    <div class="large-12 columns">
+        <label for="at-field-parentname">
+            Name of Parent
+        </label>
+        <input type="text" id="at-field-parentname" name="at-field-parentname" placeholder="Parent Full Name" aria-label="Name of Parent if earner is under 13 (Optional)">
+    </div>
+    </div>
 </template>

@@ -1,6 +1,5 @@
 Template.admin.helpers
-  isIssuer: ->
-    share.isIssuer(Meteor.user())
+  isAdmin: -> share.isAdmin(Meteor.user())
   myOrganizations: ->
     if Meteor.user()?.isAdmin
       return issuerOrganizations.find()
@@ -12,6 +11,7 @@ Template.admin_organization.helpers
   usersForOrg: ->
     return Meteor.users.find { _id: {$in: this.users }}
   badge_image: -> share.openBadgesUrl 'image', this.image
+  isAdmin: -> share.isAdmin(Meteor.user())
 
 Template.admin_organization.events
   'click .createBadgeClass': ->
