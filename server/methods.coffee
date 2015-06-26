@@ -38,10 +38,8 @@ Meteor.methods
         image: org.image
         users: [ Meteor.userId() ]
       if org._id
-        console.log "updateee"
         issuerOrganizations.update org._id, organizationData
       else
-        console.log "insertttt"
         issuerOrganizations.insert organizationData
 
 

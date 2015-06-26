@@ -15,7 +15,9 @@ Template.viewBadge.events
     e.preventDefault()
     badge = t.data.badge
     evidence = e.target.evidence.value
-    emails = share.splitCommas($('.manyUsers').val())
+    emailTextArea = $('.manyUsers')
+    emails = share.splitCommas(emailTextArea.val())
+    emailTextArea.val('')
     for email in emails
       user = Meteor.users.findOne {"emails.address": email}
       if email
