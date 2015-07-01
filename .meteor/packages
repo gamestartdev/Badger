@@ -9,6 +9,7 @@ underscore
 accounts-password
 accounts-base
 accounts-facebook
+
 #mrt:accounts-persona
 
 jquery
@@ -23,3 +24,6 @@ http
 ewall:foundation
 useraccounts:foundation
 email
+
+sanjo:jasmine
+velocity:html-reporter

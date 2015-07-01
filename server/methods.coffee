@@ -38,10 +38,8 @@ Meteor.methods
         image: org.image
         users: [ Meteor.userId() ]
       if org._id
-        console.log "updateee"
         issuerOrganizations.update org._id, organizationData
       else
-        console.log "insertttt"
         issuerOrganizations.insert organizationData
 
 
@@ -86,15 +84,18 @@ Meteor.methods
     if share.isAdmin(Meteor.user()) or (Meteor.userId() in issuerOrganizations.findOne(orgId).users)
       issuerOrganizations.update {_id: orgId}, { $pull: { users: userId } }
 
-  createBadgeAssertion: (userId, badgeId, evidence) ->
-    check(userId, String)
+  createBadgeAssertion: (userId, badgeId, evidence, email) ->
+    check(userId, Match.Any)
     check(badgeId, String)
     check(evidence, String)
+    check(email, Match.Optional(String))
+
     badgeAssertions.insert
       badgeId: badgeId
-      userId: userId
+      userId: userId or Meteor.users.findOne({ 'emails.address': email })?._id
       issuedOn: new Date()
       evidence: evidence
+      email: email
 
   removeBadgeAssertion: (assertionId) ->
     check(assertionId, String)
@@ -106,12 +107,11 @@ Meteor.methods
 #    if share.isAdmin(Meteor.user()) and user
 #      badgeAssertions.remove {userId: user._id}
 #      Meteor.users.remove user
-#
-#  sendEmail: (userId, options) ->
-#    check options, Object
-#    console.log "Sending email.. " + options.to
-#    if Meteor.user().username == 'admin'
-#      process.env.MAIL_URL = 'smtp://postmaster@gamestartschool.org:3d9f99f2b243ccfb98f8abe35401788c@smtp.mailgun.org:587';
-#      this.unblock()
-#      Email.send options
-#      Meteor.users.update userId, {$set: {emailed:true}}
+
+  sendMail: (options) ->
+    check options, Object
+    if share.isIssuer(Meteor.user())
+      console.log "Sending email: " + options.to
+      this.unblock()
+      process.env.MAIL_URL = 'smtp://postmaster@mailgun.gamestartschool.org:a473788c2caf7849d90165e993b1cb36@smtp.mailgun.org:587'
+      Email.send options

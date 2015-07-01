@@ -1,9 +1,9 @@
 Template.header.helpers
   header_text: ->
     if Meteor.user() and Meteor.user().username
-      Meteor.user().username + "'s Badges"
+      Meteor.user().username
     else
-      "GameStart Badging Alpha Demo v0.0.2"
+      "GameStart Badging Pilot v0.1.1"
 
 Template.header.events
   'click .logout': (e,t) ->

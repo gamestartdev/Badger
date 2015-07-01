@@ -46,7 +46,7 @@ commitBadge = (_id) ->
 
   badgeData =
     image: imageFromCanvas
-    origin:Meteor.absoluteUrl()
+    origin: Meteor.absoluteUrl()
     name: $("#badgename").val()
     description: $("#badge-description").val()
     issuer: $("#selectedOrganization").val()
