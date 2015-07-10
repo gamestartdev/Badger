@@ -1,1 +1,7 @@
-local
+local/build
+local/db/_tmp
+local/db/mongod.lock
+local/isopacks
+local/log
+local/run
+local/shell
