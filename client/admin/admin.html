@@ -15,10 +15,13 @@
             <div class="small-9 columns">
                 <h1>{{name}}</h1>
             </div>
-            <div class="small-3 columns">
+
+        {{#if isAdmin}}
+        <div class="small-3 columns">
                 <h1><a href="{{pathFor 'issuerOrganization'}}" class="button expand"
                        style="background-color:green">Edit Org</a></h1>
             </div>
+        {{/if}}
         </div>
 
         {{#each badgesForOrg}}
@@ -35,12 +38,14 @@
             </div>
         {{/each}}
 
-        {{#if isAdmin}}
+        {{#if isIssuer}}
         <div class="row">
             <div class="small-12 columns">
                 <button class="createBadgeClass expand">Create New Badge</button>
             </div>
         </div>
+
+        {{#if isAdmin}}
         <div class="row">
             <h3>Current members:</h3>
             {{#each usersForOrg}}
@@ -50,6 +55,8 @@
         <div class="row">
             {{> usernameSearch 'addUserToOrganizationRow'}}
         </div>
+        {{/if}}
+
         {{/if}}
 
     </div>

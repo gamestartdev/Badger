@@ -12,6 +12,8 @@ Template.admin_organization.helpers
     return Meteor.users.find { _id: {$in: this.users }}
   badge_image: -> share.openBadgesUrl 'image', this.image
   isAdmin: -> share.isAdmin(Meteor.user())
+  isIssuer: -> share.isIssuer(Meteor.user())
+
 
 Template.admin_organization.events
   'click .createBadgeClass': ->
