@@ -21,10 +21,10 @@
                 <textarea id="badge-description" placeholder="Badge Description...">{{description}}</textarea>
             </div>
             <div class="row">
-                <textarea id="badge-criteria" placeholder="Badge Criteria...">{{criteria}}</textarea>
+                <textarea id="badge-criteria" hidden placeholder="Badge Criteria...">{{criteria}}</textarea>
             </div>
             <div class="row">
-                <textarea id="badge-tags" placeholder="Badge Tags...">{{#with tags}}{{this}}{{/with}}</textarea>
+                <textarea id="badge-tags" hidden placeholder="Badge Tags...">{{#with tags}}{{this}}{{/with}}</textarea>
             </div>
 
             <div class="panel">
@@ -47,6 +47,11 @@
                 </div>
             </div>
             <div class="row">
+
+                <div class="small-4 columns">
+                    <a href="/admin" class="button expand" style="background-color: red">Back</a>
+                </div>
+
                 {{#if _id}}
                     <div class="small-4 columns">
                         <button class="cameraSubmit expand" data-_id="{{_id}}">Update Existing</button>
@@ -56,9 +61,12 @@
                         <button class="cameraSubmit expand">Create New</button>
                     </div>
 
+                {{#if isAdmin }}
                     <div class="small-4 columns">
                         <button class="removeBadgeClass expand" style="background-color: red">Delete</button>
                     </div>
+                {{/if}}
+
                 {{else}}
                     <button class="cameraSubmit expand">Create Badge</button>
                 {{/if}}

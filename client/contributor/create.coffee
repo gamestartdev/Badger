@@ -3,6 +3,8 @@ Template.badge_builder.helpers
     return Router.current().data()
   organization: ->
     issuerOrganizations.findOne this.issuer
+  isAdmin: ->
+    share.isAdmin(Meteor.user())
 
 Template.badge_builder.events
   'click .removeBadgeClass': ->

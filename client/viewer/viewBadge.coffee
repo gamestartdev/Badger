@@ -1,15 +1,3 @@
-
-sendMail = (email, badgeName) ->
-  options =
-    from: "thardy@dptv.org"
-    to: email
-    cc: "badges@gamestartschool.org"
-    subject: badgeName
-    text: "Congrats on your badges!  Register or login now at http://badger.gamestartschool.org"
-    html: Blaze.toHTMLWithData Template.badgeEmail, {}
-  console.log "Sending email to " + email
-  Meteor.call 'sendMail', options
-
 Template.viewBadge.events
   'submit .submitManyUsers': (e, t) ->
     e.preventDefault()
@@ -59,3 +47,17 @@ Template.toggleBadgeAssertionForUser.events
       email = share.determineEmail(user)
       Meteor.call 'createBadgeAssertion', user._id, badge._id, evidence, email, share.alertProblem
       sendMail(email, badge.name)
+
+sendMail = (email, badgeName) ->
+
+  return
+
+  options =
+    from: "thardy@dptv.org"
+    to: email
+    cc: "badges@gamestartschool.org"
+    subject: badgeName
+    text: "Congrats on your badges!  Register or login now at http://badger.gamestartschool.org"
+    html: Blaze.toHTMLWithData Template.badgeEmail, {}
+  console.log "Sending email to " + email
+  Meteor.call 'sendMail', options
