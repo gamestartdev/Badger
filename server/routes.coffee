@@ -1,3 +1,14 @@
+Router.onBeforeAction Iron.Router.bodyParser.urlencoded { extended: false }
+
+Router.route '/test',
+  where: 'server',
+  action: () ->
+    console.log this.request.files
+
+    #Access-Control-Allow-Origin: *
+    @response.writeHead(200, { 'Access-Control-Allow-Origin': '*' })
+    @response.end('goodjob.')
+
 
 Router.route('/openbadges/:o/:_id',
   ->

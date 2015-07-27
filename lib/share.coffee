@@ -43,7 +43,11 @@ share.determineEmail = (user)->
 
 share.openBadgesUrl = (m, id) ->
   path = 'openbadges/' + m + '/' + if typeof id is 'string' then id else id?['_id']
-  return Meteor.absoluteUrl path, {replaceLocalhost:true}
+
+  absoluteUrl = Meteor.absoluteUrl path, {replaceLocalhost:true}
+  absoluteUrl = 'http://3.3.3.4:3000/' + path
+
+  return absoluteUrl
 
 
 share.alertProblem = (error, response) ->

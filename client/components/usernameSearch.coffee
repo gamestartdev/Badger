@@ -4,6 +4,7 @@ Template.usernameSearch.helpers
     if not usernameSearch or usernameSearch.length <= 1
       return []
     query = new RegExp( Session.get("usernameSearch"), 'i' );
+
     return Meteor.users.find { $or: [ {'username': query}, {'password': query} ] }
 
 Template.usernameSearch.events
