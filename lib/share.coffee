@@ -45,7 +45,7 @@ share.openBadgesUrl = (m, id) ->
   path = 'openbadges/' + m + '/' + if typeof id is 'string' then id else id?['_id']
 
   absoluteUrl = Meteor.absoluteUrl path, {replaceLocalhost:true}
-  absoluteUrl = 'http://3.3.3.4:3000/' + path
+  absoluteUrl = 'http://3.3.3.3:3000/' + path
 
   return absoluteUrl
 
