@@ -1,6 +1,8 @@
 Template.usernameSearch.helpers
   users: ->
     usernameSearch = Session.get("usernameSearch")
+    if usernameSearch is "zall"
+      return Meteor.users.find()
     if not usernameSearch or usernameSearch.length <= 1
       return []
     query = new RegExp( Session.get("usernameSearch"), 'i' );
