@@ -1,5 +1,5 @@
-Meteor.publish 'allUsers', ->
-  return Meteor.users.find()
+Meteor.publish 'users', ->
+  return Meteor.users.find {}, {fields: {username:1, role:1, email:1} }
 
 Meteor.publish 'issuerOrganizations', ->
   return issuerOrganizations.find()

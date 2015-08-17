@@ -15,4 +15,5 @@ add_default = ->
 
 
 Meteor.startup ->
+  console.log "Main Server Startup"
   add_default()
