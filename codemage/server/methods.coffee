@@ -1,23 +1,9 @@
-Meteor.publish 'tombs', -> return tombs.find {}
 Meteor.publish 'spells', -> return spells.find {}
 Meteor.publish 'enchantments', -> return enchantments.find {}
 
 currentVersion = "0.0.1"
 defaultNamespace = "org.gamestartschool.codemage"
 
-addTomb = (name, enchantmentIds) ->
-  check(name, String)
-  check(spellIds, Match.Optional(Array))
-  tombs.insert
-    name: name
-    enchantmentIds: enchantmentIds
-    version: currentVersion
-    namespace: defaultNamespace
-
-removeTomb = (tombId) ->
-  check(tombId, String)
-  console.log "Removing tomb: " + tombId
-  tombs.remove tombId
 
 addEnchantment = (name, tool, trigger, spellIds) ->
   check(name, String)

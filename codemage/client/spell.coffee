@@ -13,7 +13,6 @@ Template.allSpells.events
     spell = this
     Router.go('viewBadge', {_id: spell._id })
 
-
 Template.spell.helpers
   spell: Router.current()?.data()
   enchantments: enchantments.find()

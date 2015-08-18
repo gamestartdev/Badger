@@ -1,10 +1,3 @@
-Router.route 'tomb',
-  path: '/tomb/:_id?'
-  data: ->
-    return {
-      tomb: tombs.findOne({_id: @params._id})
-    }
-
 Router.route 'enchantment',
   path: '/enchantment/:_id?'
   data: ->
