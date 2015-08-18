@@ -1,18 +1,20 @@
-<template name="tomb">
-    <div class="row">
-        <div class="large-3 columns">
-            {{#each spells}}
-                <h5>
-                    <a class="view-spell" href="{{pathFor 'tomb'}}">{{name}}</a>
-                    <span class="remove-spell">- X -</span>
-                </h5>
-            {{/each}}
-            <h5 class="button add-spell">New Spell</h5>
+<template name="allSpells">
+    {{#if currentUser}}
+        <div class="row">
+            <div class="large-3 columns">
+                {{#each spells}}
+                    <h5>
+                        <a class="view-spell" href="{{pathFor 'tomb'}}">{{name}}</a>
+                        <span class="remove-spell">- X -</span>
+                    </h5>
+                {{/each}}
+                <h5 class="button add-spell">New Spell</h5>
+            </div>
+            <div class="large-9 columns">
+                {{>spell}}
+            </div>
         </div>
-        <div class="large-9 columns">
-            {{>spell}}
-        </div>
-    </div>
+    {{/if}}
 </template>
 
 <template name="spell">

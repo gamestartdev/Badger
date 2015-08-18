@@ -1,27 +1,21 @@
-Meteor.subscribe 'spells'
-Meteor.subscribe 'enchantments'
-
-Router.route 'tomb',
-  path: '/tomb/:_id?'
-  data: ->
-    return {
-      spell: spells.findOne({_id: @params._id})
-    }
-  onBeforeAction: ->
-    #Session.set 'usernameSearch', ''
-    @next()
-
-Template.tomb.helpers
+Template.allSpells.helpers
   spells: -> return spells.find { userId: Meteor.userId() }
+  currentUser: -> Meteor.user()
 
-Template.tomb.events
-  'click .add-spell': -> Meteor.call 'addSpell', Meteor.userId()
-  'click .remove-spell':(e,t) -> Meteor.call 'removeSpell', this._id
+Template.allSpells.events
+  'click .add-spell': ->
+    spellName = Meteor.user()?.username + "'s New Spell"
+    Meteor.call 'addSpell', spellName, share.codeMageConstants.defaultCode
+  'click .remove-spell':(e,t) ->
+    spell = this
+    Meteor.call 'removeSpell', spell._id
   'click .goToSpell': ->
-    Router.go('viewBadge', {_id: this._id })
+    spell = this
+    Router.go('viewBadge', {_id: spell._id })
+
 
 Template.spell.helpers
-  spell: Router.current().data()
+  spell: Router.current()?.data()
   enchantments: enchantments.find()
 
 Template.spell.events
