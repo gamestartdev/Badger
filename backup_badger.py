@@ -18,8 +18,7 @@ host, database 		= result.split("/", 1)
 #remoteDump = 'mongodump -u %s -p %s -h %s -d %s -o "%s"' % (user, password, host, database.strip(), out)
 localDump = "mongodump -h localhost:3001 -d meteor -o %s" % (out)
 #DANGER# restore = "mongorestore -u %s -p %s -h %s -d %s --drop %s\\%s" % (user, password, host, database.strip(), out, database.strip())
-#localRestore = 'mongorestore -h localhost:3001 -d meteor --drop C:/Users/gamestart/Badger/backups/backup_2015-08-12_21.00.06.128000/meteor'
-
+#localRestore = 'mongorestore -h localhost:3001 -d meteor --drop C:/Users/gamestart/Badger/backups/backup_2015-08-17_15.36.32.137000/meteor'
 
 subprocess.check_output(localDump, stdin=subprocess.PIPE, shell=True)
 print "Complete."
