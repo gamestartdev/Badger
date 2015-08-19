@@ -1,45 +1,64 @@
 package org.gamestartschool.codemage;
 
+import static ch.lambdaj.Lambda.convert;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gamestartschool.codemage.Main.EDummyEnchantmentBinding;
 import org.gamestartschool.codemage.Main.EDummyEnchantmentTrigger;
 
+import ch.lambdaj.function.convert.Converter;
+
 class MongoEnchantment implements IEnchantment, IMongoDocument {
 	public final String name;
-	public final String trigger;
-	public String minecraftPlayerId;
-	public String binding;
-	public MongoSpell[] spells;
+	public final IEnchantmentTrigger trigger;
+	public IEnchantmentBinding binding;
+	public List<String> spellIds;
+	public String id;
+	public String userId;
 	
-	public MongoEnchantment(String name, String binding, String trigger, String minecraftPlayerId, MongoSpell[] spells) {
+	public MongoEnchantment(String id, String userId, String name, IEnchantmentBinding binding, IEnchantmentTrigger trigger, List<String> spellIds) {
+		this.id = id;
+		this.userId = userId;
 		this.name = name;
 		this.binding = binding;
 		this.trigger = trigger;
-		this.minecraftPlayerId = minecraftPlayerId;
-		this.spells = spells;
+		this.spellIds = spellIds;
 	}
 	
+	@Override
+	public String toString() {
+		return "MongoEnchantment [name=" + name + ", trigger=" + trigger + ", binding=" + binding + ", spells=" + spellIds
+				+ ", id=" + id + ", userId=" + userId + "]";
+	}
+
 	@Override
 	public String getName() {
 		return name;
 	}
 	
 	@Override
-	public String getMinecraftPlayerId() {
-		return minecraftPlayerId;
-	}
-
-	@Override
 	public IEnchantmentBinding getBinding() {
-		return EDummyEnchantmentBinding.valueOf(binding);
+		return binding;
 	}
 
 	@Override
 	public IEnchantmentTrigger getTrigger() {
-		return EDummyEnchantmentTrigger.valueOf(trigger);
+		return trigger;
 	}
 
 	@Override
-	public ISpell[] getSpells() {
-		return spells;
+	public List<ISpell> getSpells() {
+		return convert(spellIds, new Converter<String, ISpell>(){
+			public ISpell convert(String id) {
+	                return CodeMageCollections.spells.get(id);
+	        }
+		});
+	}
+
+	@Override
+	public String getId() {
+		return id;
 	}
 }

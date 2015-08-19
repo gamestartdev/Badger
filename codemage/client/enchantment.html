@@ -1,0 +1,16 @@
+<template name="enchantment">
+    {{#each enchantments}}
+    <h5>
+        <a href="{{pathFor 'enchantment' }}">{{name}} - {{binding}} - {{trigger}}</a>
+        <span class="remove-enchantment">- X -</span>
+    </h5>
+    {{/each}}
+    <h5 class="button add-enchantment">New Enchantment</h5>
+
+
+    {{#if _id}}
+    {{#each spells}}
+        <button class="addSpellToEnchantment">{{name}}</button>
+    {{/each}}
+    {{/if}}
+</template>

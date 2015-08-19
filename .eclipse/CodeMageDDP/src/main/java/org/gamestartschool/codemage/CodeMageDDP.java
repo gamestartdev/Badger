@@ -9,8 +9,6 @@ import java.util.Map;
 import com.keysolutions.ddpclient.DDPClient;
 import com.keysolutions.ddpclient.DDPListener;
 import com.keysolutions.ddpclient.UsernameAuth;
-import ch.lambdaj.function.matcher.Predicate;
-import static ch.lambdaj.Lambda.*;
 
 public class CodeMageDDP {
 	
@@ -51,7 +49,7 @@ public class CodeMageDDP {
 		String dummyCodeMageServerIp = "127.0.0.1";
 		String dummyCodeMageServerPort = "54175";
 		ddpClient.call("codeMageServerStatus", new Object[]{ dummyCodeMageServerIp, dummyCodeMageServerPort, status } );
-		System.out.println("Ready.");
+		System.out.println(status);
 	}
 	
 	private void createSubscription(ACodeMageCollection<?> collection) {
@@ -74,22 +72,12 @@ public class CodeMageDDP {
 		});
 	}
 
-	public List<MongoEnchantment> getEnchantments(String minecraftPlayerId) {
-		return filter(new EnchantmentsByPlayerId(minecraftPlayerId), CodeMageCollections.enchantments.getAll());
-	}
-
-	class EnchantmentsByPlayerId extends Predicate<MongoEnchantment> {
-
-		private String minecraftPlayerId;
-
-		public EnchantmentsByPlayerId(String minecraftPlayerId) {
-			this.minecraftPlayerId = minecraftPlayerId;
+	public IUser getUser(String minecraftPlayerId) {
+		for (IUser user : CodeMageCollections.users.getAll()) {
+			if(minecraftPlayerId.equals(user.getMinecraftUserId())){
+				return user;
+			}
 		}
-
-		@Override
-		public boolean apply(MongoEnchantment e) {
-			return minecraftPlayerId.equals(e.getMinecraftPlayerId());
-		}
-		
+		return NullUser.NULL;
 	}
 }

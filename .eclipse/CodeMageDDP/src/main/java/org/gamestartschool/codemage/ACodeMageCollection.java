@@ -54,7 +54,12 @@ abstract class ACodeMageCollection<T extends IMongoDocument> extends DDPListener
                 String msgtype = (String) json.get(DDPClient.DdpMessageField.MSG);
                 
                 if (msgtype.equals(DdpMessageType.ADDED)) {
-                    this.Added((String) json.get(DdpMessageField.ID), (Map<String, Object>) json.get(DdpMessageField.FIELDS));
+                	
+                	try {
+                		this.Added((String) json.get(DdpMessageField.ID), (Map<String, Object>) json.get(DdpMessageField.FIELDS));
+                	} catch (RuntimeException e){
+                		System.out.println("Failed to decode DDP object: "+json);
+                	}
                 }
             };
         }

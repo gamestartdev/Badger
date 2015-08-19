@@ -1,9 +1,10 @@
 package org.gamestartschool.codemage;
 
+import java.util.List;
+
 public interface IEnchantment {
 	public String getName();
-	public String getMinecraftPlayerId();
 	public IEnchantmentBinding getBinding();
 	public IEnchantmentTrigger getTrigger();
-	public ISpell[] getSpells();
+	public List<ISpell> getSpells();
 }

@@ -1,5 +1,5 @@
 Template.spell.helpers
-  enchantments: enchantments.find()
+  enchantments: enchantments.find {userId: Meteor.userId()}
 
 Template.spell.events
   'input .code-area': (e, t) ->

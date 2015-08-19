@@ -52,28 +52,35 @@ public class Main {
 	static String meterUsername = "gss";
 	static String meteorPassword = "asdfasdf";
 	
-	static String minecraftPlayerId = "GameStartSchool";
+	static String minecraftPlayerId1 = "GameStartSchool";
+	static String minecraftPlayerId2 = "denrei";
 
+	
 	public static void main(String[] args) throws InterruptedException, URISyntaxException {
 		
-		//Example usage of the CodeMageDDP Provider object
 		CodeMageDDP ddp = new CodeMageDDP(meteorIp, meteorPort);
 		ddp.connect(meterUsername, meteorPassword);
 		
-		//Can't rely on this list being up-to-date during gameplay... need a better architecture
-		List<MongoEnchantment> enchantments = ddp.getEnchantments(minecraftPlayerId);
+		runWoodenSwordSwingCodeForPlayer(ddp, minecraftPlayerId1);
+		runWoodenSwordSwingCodeForPlayer(ddp, minecraftPlayerId2);
+
+		System.out.println("Done!");
+	}
+
+
+	private static void runWoodenSwordSwingCodeForPlayer(CodeMageDDP ddp, String minecraftPlayerId) {
+		IUser user = ddp.getUser(minecraftPlayerId);
+		List<IEnchantment> enchantments = user.getEnchantments();
 		
 		//Lets pretend I swing my wooden sword...
 		for (IEnchantment e : enchantments) {
 			if(EDummyEnchantmentTrigger.PRIMARY.equals(e.getTrigger()) 
 					&& EDummyEnchantmentBinding.WOODEN_SWORD.equals(e.getBinding())){
 				for (ISpell spell : e.getSpells()) {
-					System.out.println("Running code!: \n" + spell.getCode());
+					System.out.println(minecraftPlayerId + " is running code!: \n" + spell.getCode());
 				}
-			
 			}
 		}
-		System.out.println("Done!");
 	}
 	
 	

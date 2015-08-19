@@ -1,12 +1,12 @@
 Template.tomb.helpers
   myTombs: -> return tombs.find {userId:  Meteor.userId() }
   spells: -> return spells.find { tombId: this._id }
-  minecraftId: -> return Meteor.user()?.profile?.minecraftId
+  minecraftPlayerId: -> return Meteor.user()?.minecraftPlayerId
   currentUser: -> Meteor.user()
 
 Template.tomb.events
   'input .minecraft-id-input': (e, t) ->
-    Meteor.call 'updateMinecraftId', e.target.value
+    Meteor.call 'updateMinecraftPlayerId', e.target.value
 
   'click .add-tomb': (e,t) ->
     tombName = Meteor.user()?.username + "'s New Tomb"
