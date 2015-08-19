@@ -1,9 +1,14 @@
-Meteor.publish 'spells', -> return spells.find {}
-Meteor.publish 'enchantments', -> return enchantments.find {}
+addTomb = (name) ->
+  check(name, String)
+  tombs.insert
+    name: name
+    userId: Meteor.userId()
 
-currentVersion = "0.0.1"
-defaultNamespace = "org.gamestartschool.codemage"
-
+removeTomb = (tombId) ->
+  check(tombId, String)
+  console.log "Removing tomb: " + tombId
+  spells.remove {tombId: tombId}
+  tombs.remove tombId
 
 addEnchantment = (name, tool, trigger, spellIds) ->
   check(name, String)
@@ -17,15 +22,16 @@ addEnchantment = (name, tool, trigger, spellIds) ->
     trigger: trigger
     spellIds: spellIds? or []
     code: "from codemage import *"
-    version: currentVersion
-    namespace: defaultNamespace
+    version: share.codeMageConstants.currentVersion
+    namespace: share.codeMageConstants.defaultNamespace
 
 removeEnchantment = (enchantmentId) ->
   check(enchantmentId, String)
   console.log "Removing enchantment: " + enchantmentId
   enchantments.remove enchantmentId
 
-addSpell = (name, code, enchantmentId) ->
+addSpell = (tombId, name, code, enchantmentId) ->
+  check(tombId, String)
   check(name, String)
   check(code, String)
   check(enchantmentId, Match.Optional(Array))
@@ -34,11 +40,17 @@ addSpell = (name, code, enchantmentId) ->
   console.log "Adding spell: " + userId + " " + code  + " " + enchantmentId
   spells.insert
     userId: userId
-    enchantmentId: enchantmentId
+    tombId: tombId
     name: name
     code: code
-    version: currentVersion
-    namespace: defaultNamespace
+    enchantmentId: enchantmentId
+    version: share.codeMageConstants.currentVersion
+    namespace: share.codeMageConstants.defaultNamespace
+
+updateSpell = (spellId, code) ->
+  check(spellId, String)
+  check(code, String)
+  spells.update spellId, {$set:{code: code}}
 
 removeSpell = (spellId) ->
   check(spellId, String)
@@ -51,7 +63,21 @@ codeMageServerStatus = (codeMageServerIp, codeMageServerPort, status) ->
   check(status, String)
   console.log userId + " " + name + " " + status
 
+updateMinecraftId = (minecraftId) ->
+  check(minecraftId, String)
+  Meteor.users.update Meteor.userId, {$set: {'profile.minecraftId': minecraftId}}
+  console.log Meteor.user().profile
+
 Meteor.methods
+  addTomb: addTomb
+  removeTomb: removeTomb
+
+  addEnchantment: addEnchantment
+  removeEnchantment: removeEnchantment
+
   addSpell: addSpell
+  updateSpell: updateSpell
   removeSpell: removeSpell
+
+  updateMinecraftId: updateMinecraftId
   codeMageServerStatus: codeMageServerStatus

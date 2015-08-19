@@ -1,0 +1,26 @@
+<template name="tomb">
+    <h1>My Minecraft Id:</h1>
+    <input type="text" class="minecraft-id-input" value="{{minecraftId}}">
+
+    {{#each myTombs}}
+        <h5>
+            <a class="view-spell" href="{{pathFor 'tomb' }}">{{name}}</a>
+            <span class="remove-tomb">- X -</span>
+        </h5>
+    {{/each}}
+    <h5 class="button add-tomb">New Tomb</h5>
+
+    {{#if _id}}
+    <h1>Tomb: {{name}}</h1>
+    <div class="row">
+        {{#each spells}}
+        <h5>
+            <a class="view-spell" href="{{pathFor 'spell' }}">{{name}}</a>
+            <span class="remove-spell">- X -</span>
+        </h5>
+        <textarea disabled>{{code}}</textarea>
+        {{/each}}
+        <h5 class="button add-spell">New Spell</h5>
+    </div>
+    {{/if}}
+</template>

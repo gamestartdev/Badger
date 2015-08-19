@@ -1,4 +1,8 @@
 share.codeMageConstants = {}
+
+share.codeMageConstants.currentVersion = "0.0.1"
+share.codeMageConstants.defaultNamespace = "org.gamestartschool.codemage"
+
 share.codeMageConstants.tools = []
 for adj in ['wooden', 'stone', 'iron', 'diamond']
   for tool in ['sword', 'axe', 'pickaxe']
