@@ -7,6 +7,7 @@ time_string = str(datetime.now()).replace(" ", "_").replace(":", ".")
 out = join(home, "Badger/backups/backup_"+ time_string)
 
 import subprocess, os, time
+"""
 get_url = "meteor mongo --url badger.gamestartschool.org"
 print "Getting credentials for backup: " + out
 result = subprocess.check_output(get_url, stdin=subprocess.PIPE, shell=True)
@@ -14,6 +15,7 @@ result 				= result.replace("mongodb://", "")
 user, result 		= result.split(":", 1)
 password, result 	= result.split("@", 1)
 host, database 		= result.split("/", 1)
+"""
 
 #remoteDump = 'mongodump -u %s -p %s -h %s -d %s -o "%s"' % (user, password, host, database.strip(), out)
 localDump = "mongodump -h localhost:3001 -d meteor -o %s" % (out)
