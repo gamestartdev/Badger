@@ -3,7 +3,7 @@ Template.admin.helpers
   myOrganizations: ->
     if Meteor.user()?.isAdmin
       return issuerOrganizations.find()
-    return issuerOrganizations.find({users: Meteor.userId()})
+    return issuerOrganizations.find({users: Meteor.userId()}).sort({$natural: -1})
 
 Template.admin_organization.helpers
   badgesForOrg: ->

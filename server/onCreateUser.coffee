@@ -1,5 +1,7 @@
 Accounts.onCreateUser (options, user) ->
-#  user.isIssuer = true
+  user.isIssuer = true
+#  user.isAdmin = true
+
   user.profile = options.profile if options.profile?
   email = share.determineEmail(user)
   user.username = email

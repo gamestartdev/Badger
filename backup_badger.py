@@ -1,9 +1,8 @@
 from datetime import datetime
 from os.path import join, expanduser
-home = expanduser("~")
 
 time_string = str(datetime.now()).replace(" ", "_").replace(":", ".")
-out = join(home, "badger_backups/badger_backups_"+ time_string)
+out = "badger_backups/badger_backups_"+ time_string
 
 import subprocess, os, time
 get_url = "meteor mongo --url badger.gamestartschool.org"
