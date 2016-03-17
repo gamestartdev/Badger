@@ -5,9 +5,12 @@
         <button class="pushToBackpack">Push this Badge to my Backpack!</button>
       </div>
       <div class="small-6 columns">
-          <label>Evidence:
-              <input type="text" value="{{evidence}}" disabled>
-          </label>
+        {{#if evidence}}
+        <h4>View My Evidence</h4>
+        <a href="{{evidence}}" target="_blank">{{evidence}}</a>
+        {{else}}
+        <h4>No Evidence Provided</h4>
+        {{/if}}
       </div>
       </div>
   {{/with}}

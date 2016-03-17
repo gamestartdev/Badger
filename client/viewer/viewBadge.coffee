@@ -37,6 +37,9 @@ Template.viewBadge.helpers
   perUserTemplate: ->
     return
 
+  assertions: ->
+    badge = Router.current().data().badge
+    return badgeAssertions.find({badgeId: badge._id})
 
 Template.toggleBadgeAssertionForUser.helpers
   badge: ->

@@ -38,6 +38,23 @@
             <h5>Award Badge by Finding Email:</h5>
             {{> usernameSearch 'toggleBadgeAssertionForUser'}}
         </div>
+
+        <div class="panel">
+
+            <h5>This badge has been awarded to:</h5>
+            {{#each assertions}}
+            <div class="row">
+                <div class="small-4 columns">{{_id}}</div>
+                <div class="small-4 columns">{{email}}</div>
+                
+                <div class="small-4 columns">
+                    {{#if evidence}}
+                    <a href="{{evidence}}">View Evidence</a>
+                    {{else}}<i>No evidence</i>{{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
     {{/if}}
     <a href="{{pathFor 'index'}}" class="button expand">Return to My Badges</a>
 </template>
