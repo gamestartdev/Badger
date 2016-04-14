@@ -27,3 +27,5 @@ email
 
 sanjo:jasmine
 velocity:html-reporter
+standard-minifier-css
+standard-minifier-js
