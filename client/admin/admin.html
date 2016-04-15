@@ -1,6 +1,6 @@
 <template name="admin" xmlns="http://www.w3.org/1999/html">
     {{#with currentUser }}
-        {{#if isAdmin}}
+        {{#if isIssuer}}
             <a href="{{pathFor 'issuerOrganization'}}" class="button expand">Create New Organization</a>
         {{/if}}
 

@@ -3,7 +3,7 @@ Template.admin.helpers
   myOrganizations: ->
     if Meteor.user()?.isAdmin
       return issuerOrganizations.find()
-    return issuerOrganizations.find({users: Meteor.userId()}).sort({$natural: -1})
+    return issuerOrganizations.find({users: Meteor.userId()})
 
 Template.admin_organization.helpers
   badgesForOrg: ->
@@ -26,7 +26,7 @@ Template.admin_organization.events
       Meteor.call "removeUserFromOrganization", user._id, organization._id, share.alertProblem
 
 Template.addUserToOrganizationRow.events
-  'submit .addUserToOrganizationRow': (e, t) ->
+  'submit .addUserToOrganizationRow': (e) ->
     e.preventDefault()
     user = this
     organization = Template.parentData(6) #Yikes.
