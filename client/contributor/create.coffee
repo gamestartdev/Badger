@@ -52,6 +52,7 @@ commitBadge = (_id) ->
     issuer: $("#selectedOrganization").val()
     tags: share.splitCommas($("#badge-tags").val())
     criteria: $("#badge-criteria").val()
+    criteria: $("#badge-rubric").val()
     _id: _id or false
 
   if badgeData.name and badgeData.description and badgeData.issuer and badgeData.image
